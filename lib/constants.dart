@@ -14,3 +14,9 @@ const pAttributeLowColor = Color(0x219653);
 const pAttributeMediumColor = Color(0xF2C94C);
 
 const kDefaultPaddin = 20.0;
+
+final pDefualtShadow = BoxShadow(
+  offset: Offset(5, 5),
+  blurRadius: 10,
+  color: Color(0xFFE9E9E9).withOpacity(0.56),
+);
