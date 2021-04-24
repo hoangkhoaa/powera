@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:powera/ui/screens/device/components/head_body.dart';
 import 'package:powera/size_config.dart';
 
 class Body extends StatelessWidget {
@@ -13,6 +13,7 @@ class Body extends StatelessWidget {
         top: false,
         child: Column(
           children: [
+            HomeHeader(),
             VerticalSpacing(),
             VerticalSpacing(),
             VerticalSpacing(),
