@@ -1,6 +1,59 @@
 import 'package:flutter/material.dart';
 import 'package:powera/constants.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:powera/size_config.dart';
+
+class CustomBottomNavBar extends StatelessWidget {
+  const CustomBottomNavBar({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    SizeConfig().init(context);
+    return Container(
+      color: Colors.white,
+      child: SafeArea(
+        child: Padding(
+          padding:
+              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(0)),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              NavItem(
+                isActive: true,
+                icon: "assets/icons/ic_heat.svg",
+                title: "Heat",
+                press: () {
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //       builder: (context) => EventsScreen(),
+                  //     ));
+                },
+              ),
+              NavItem(
+                icon: "assets/icons/ic_light.svg",
+                title: "Light",
+                press: () {},
+              ),
+              NavItem(
+                icon: "assets/icons/ic_temp.svg",
+                title: "Humidity",
+                press: () {},
+              ),
+              NavItem(
+                icon: "assets/icons/ic_settings.svg",
+                title: "settings",
+                press: () {},
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
 
 class NavItem extends StatelessWidget {
   const NavItem({
@@ -25,20 +78,19 @@ class NavItem extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),
-          boxShadow: [if (isActive) pDefualtShadow],
         ),
         child: Column(
           children: [
             SvgPicture.asset(
               icon,
-              color: pTextColorGray2,
-              height: 28,
+              color: isActive ? pItemColorChose : pItemColor,
+              height: 30,
             ),
             Spacer(),
             Text(
               title,
               style: TextStyle(
-                fontSize: 11,
+                fontSize: 12,
                 fontWeight: FontWeight.bold,
               ),
             )

@@ -9,7 +9,7 @@ AppBar buildAppBar(BuildContext context,
     leading: IconButton(
       icon: Icon(
         Icons.menu,
-        color: pItemOffColor,
+        color: pItemColor,
       ),
       onPressed: () {},
     ),
@@ -22,7 +22,10 @@ AppBar buildAppBar(BuildContext context,
     centerTitle: true,
     actions: [
       IconButton(
-        icon: ClipOval(child: Image.asset("assets/images/profile.jpg")),
+        icon: ClipOval(
+            child: Image.asset(
+          "assets/images/profile.jpg",
+        )),
         onPressed: () {},
       )
     ],
