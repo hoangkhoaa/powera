@@ -20,46 +20,53 @@ class HomeHeader extends StatelessWidget {
             "assets/images/pbackground.png",
             fit: BoxFit.cover,
             width: double.infinity,
-            height: getProportionateScreenHeight(250),
+            height: getProportionateScreenHeight(370),
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SizedBox(width: getProportionateScreenWidth(30)),
-                  Text(
-                    "Welcome",
-                    style: TextStyle(
-                        fontSize: getProportionateScreenWidth(30),
-                        fontWeight: FontWeight.normal,
-                        color: pTextColorGray2,
-                        height: 1),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: getProportionateScreenWidth(30),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SizedBox(width: getProportionateScreenWidth(30)),
-                  Text(
-                    "Hoang Khoa",
-                    style: TextStyle(
-                        fontSize: getProportionateScreenWidth(50),
-                        fontWeight: FontWeight.bold,
-                        color: pTextColorGray2,
-                        height: 0.5),
-                  ),
-                ],
-              )
-            ],
+          Container(
+            width: double.infinity,
+            height: getProportionateScreenHeight(370),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: getProportionateScreenHeight(90),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SizedBox(width: getProportionateScreenWidth(30)),
+                    Text(
+                      "Welcome",
+                      style: TextStyle(
+                          fontSize: getProportionateScreenWidth(30),
+                          fontWeight: FontWeight.normal,
+                          color: pTextColorGray2,
+                          height: 1),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: getProportionateScreenWidth(30),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SizedBox(width: getProportionateScreenWidth(30)),
+                    Text(
+                      "Hoang Khoa",
+                      style: TextStyle(
+                          fontSize: getProportionateScreenWidth(50),
+                          fontWeight: FontWeight.bold,
+                          color: pTextColorGray2,
+                          height: 0.5),
+                    ),
+                  ],
+                )
+              ],
+            ),
           ),
           Positioned(
-              bottom: -getProportionateScreenHeight(90), child: DeviceCard())
+              bottom: getProportionateScreenHeight(20), child: DeviceCard())
         ],
       ),
     );

@@ -14,44 +14,48 @@ class DeviceCard extends StatelessWidget {
       child: SizedBox(
         width: getProportionateScreenWidth(327),
         height: getProportionateScreenHeight(140),
-        child: Padding(
-          padding: EdgeInsets.all(20),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Device Name",
-                    style: TextStyle(
-                        fontSize: getProportionateScreenWidth(30),
-                        fontWeight: FontWeight.bold,
-                        color: pTextColorGray2,
-                        height: 0.5),
-                  ),
-                  SizedBox(height: getProportionateScreenHeight(15)),
-                  Container(
-                    width: getProportionateScreenWidth(190),
-                    child: Text(
-                      "This is a short description about device",
-                      style: TextStyle(
-                          fontSize: getProportionateScreenWidth(17),
-                          fontWeight: FontWeight.normal,
-                          color: pTextColorGray2,
-                          height: 1),
-                      textAlign: TextAlign.left,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.all(20),
+              child: Text(
+                "Device Name",
+                style: TextStyle(
+                    fontSize: getProportionateScreenWidth(30),
+                    fontWeight: FontWeight.bold,
+                    color: pTextColorGray2,
+                    height: 0.5),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Flexible(
+                  flex: 8,
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(20.0, 0, 5.0, 5.0),
+                    child: Container(
+                      child: Text(
+                        "This is a short description about device",
+                        style: TextStyle(
+                            fontSize: getProportionateScreenWidth(17),
+                            fontWeight: FontWeight.normal,
+                            color: pTextColorGray3,
+                            height: 1),
+                      ),
                     ),
                   ),
-                ],
-              ),
-              Expanded(
-                  child: Align(
-                alignment: Alignment.bottomRight,
-                child: PowerButton(),
-              ))
-            ],
-          ),
+                ),
+                Flexible(
+                  flex: 3,
+                  child: PowerButton(),
+                )
+              ],
+            )
+          ],
         ),
       ),
     );
@@ -66,7 +70,8 @@ class PowerButton extends StatefulWidget {
 }
 
 class _PowerButtonState extends State<PowerButton> {
-  bool _isOn = true;
+  bool _isOn = false;
+
   void changState() {
     setState(() {
       _isOn = !_isOn;
@@ -77,18 +82,22 @@ class _PowerButtonState extends State<PowerButton> {
   Widget build(BuildContext context) {
     return ClipOval(
       child: Material(
-        color: Colors.blue, // button color
+        color: Colors.white70,
+        shadowColor: Colors.black, // button color
         child: InkWell(
-          splashColor: Colors.red, // inkwell color
+          splashColor: _isOn ? pItemOffColor : pItemOnColor, // inkwell color
           child: SizedBox(
-            width: getProportionateScreenWidth(90),
-            height: getProportionateScreenHeight(90),
-            child: SvgPicture.asset(
-              "assets/icons/ic_light_on.svg",
-              color: _isOn ? pItemOnColor : pItemOffColor,
-              height: getProportionateScreenHeight(40),
-            ),
-          ),
+              width: getProportionateScreenWidth(80),
+              height: getProportionateScreenHeight(80),
+              child: Padding(
+                padding: EdgeInsets.all(10),
+                child: SvgPicture.asset(
+                  "assets/images/power_on.svg",
+                  color: _isOn ? pItemOnColor : pItemOffColor,
+                  alignment: Alignment.center,
+                  height: getProportionateScreenHeight(0),
+                ),
+              )),
           onTap: () {
             changState();
           },
