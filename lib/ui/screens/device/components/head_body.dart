@@ -17,7 +17,7 @@ class HomeHeader extends StatelessWidget {
         alignment: Alignment.center,
         children: [
           Image.asset(
-            "assets/images/pbackground.png",
+            "assets/images/pbackground2.png",
             fit: BoxFit.cover,
             width: double.infinity,
             height: getProportionateScreenHeight(370),

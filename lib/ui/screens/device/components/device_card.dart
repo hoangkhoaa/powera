@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:powera/constants.dart';
 import 'package:powera/size_config.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:powera/bloc/power_button_bloc.dart';
 
 class DeviceCard extends StatelessWidget {
   const DeviceCard({Key key}) : super(key: key);
@@ -100,6 +102,11 @@ class _PowerButtonState extends State<PowerButton> {
               )),
           onTap: () {
             changState();
+            _isOn
+                ? BlocProvider.of<PowerButtonBloc>(context)
+                    .add(PowerButtonEvents.PowerButtonOfEvent)
+                : BlocProvider.of<PowerButtonBloc>(context)
+                    .add(PowerButtonEvents.PowerButtonOnEvent);
           },
         ),
       ),
