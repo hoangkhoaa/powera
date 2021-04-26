@@ -1,102 +1,144 @@
 import 'package:flutter/material.dart';
 import 'package:powera/constants.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:powera/size_config.dart';
+////// Bottom nav bar ver 2.0
 
-class CustomBottomNavBar extends StatelessWidget {
-  const CustomBottomNavBar({
-    Key key,
-  }) : super(key: key);
+class AnimatedBottomBar extends StatefulWidget {
+  @override
+  _AnimatedBottomBarState createState() => _AnimatedBottomBarState();
+}
+
+class _AnimatedBottomBarState extends State<AnimatedBottomBar> {
+  int _currentPage;
+
+  @override
+  void initState() {
+    _currentPage = 0;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    SizeConfig().init(context);
+    return AnimatedBottomNav(
+      currentIndex: _currentPage,
+      onChange: (index) {
+        setState(() {
+          _currentPage = index;
+        });
+      },
+    );
+  }
+}
+
+class AnimatedBottomNav extends StatelessWidget {
+  final int currentIndex;
+  final Function(int) onChange;
+  const AnimatedBottomNav({Key key, this.currentIndex, this.onChange})
+      : super(key: key);
+  @override
+  Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
-      child: SafeArea(
-        child: Padding(
-          padding:
-              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(0)),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              NavItem(
-                isActive: true,
+      height: kToolbarHeight,
+      decoration: BoxDecoration(color: Colors.white),
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            child: InkWell(
+              onTap: () => onChange(0),
+              child: BottomNavItem(
                 icon: "assets/icons/ic_heat.svg",
                 title: "Heat",
-                press: () {
-                  // Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //       builder: (context) => EventsScreen(),
-                  //     ));
-                },
+                isActive: currentIndex == 0,
               ),
-              NavItem(
+            ),
+          ),
+          Expanded(
+            child: InkWell(
+              onTap: () => onChange(1),
+              child: BottomNavItem(
                 icon: "assets/icons/ic_light.svg",
                 title: "Light",
-                press: () {},
+                isActive: currentIndex == 1,
               ),
-              NavItem(
-                icon: "assets/icons/ic_temp.svg",
-                title: "Humidity",
-                press: () {},
-              ),
-              NavItem(
-                icon: "assets/icons/ic_settings.svg",
-                title: "settings",
-                press: () {},
-              ),
-            ],
+            ),
           ),
-        ),
+          Expanded(
+            child: InkWell(
+              onTap: () => onChange(2),
+              child: BottomNavItem(
+                icon: "assets/icons/ic_temp.svg",
+                title: "Moisture",
+                isActive: currentIndex == 2,
+              ),
+            ),
+          ),
+          Expanded(
+            child: InkWell(
+              onTap: () => onChange(3),
+              child: BottomNavItem(
+                icon: "assets/icons/ic_settings.svg",
+                title: "Settings",
+                isActive: currentIndex == 3,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
 }
 
-class NavItem extends StatelessWidget {
-  const NavItem({
-    Key key,
-    @required this.icon,
-    @required this.title,
-    @required this.press,
-    this.isActive = false,
-  }) : super(key: key);
-  final String icon, title;
-  final GestureTapCallback press;
+class BottomNavItem extends StatelessWidget {
   final bool isActive;
-
+  final String icon;
+  final String title;
+  const BottomNavItem({Key key, this.isActive = false, this.icon, this.title})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: press,
-      child: Container(
-        padding: EdgeInsets.all(5),
-        height: getProportionateScreenWidth(60),
-        width: getProportionateScreenWidth(60),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Column(
-          children: [
-            SvgPicture.asset(
-              icon,
-              color: isActive ? pItemColorChose : pItemColor,
-              height: 30,
-            ),
-            Spacer(),
-            Text(
-              title,
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
+    return AnimatedSwitcher(
+      transitionBuilder: (child, animation) {
+        return SlideTransition(
+          position: Tween<Offset>(
+            begin: const Offset(0.0, 1.0),
+            end: Offset.zero,
+          ).animate(animation),
+          child: child,
+        );
+      },
+      duration: Duration(milliseconds: 500),
+      reverseDuration: Duration(milliseconds: 200),
+      child: isActive
+          ? Container(
+              color: Colors.white,
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    title,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: pItemColorChose,
+                    ),
+                  ),
+                  const SizedBox(height: 5.0),
+                  Container(
+                    width: 5.0,
+                    height: 5.0,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: pItemColorChose,
+                    ),
+                  ),
+                ],
               ),
             )
-          ],
-        ),
-      ),
+          : SvgPicture.asset(
+              icon,
+              color: pItemColor,
+              height: 30,
+            ),
     );
   }
 }

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:powera/constants.dart';
+import 'package:powera/ui/components/app_bar.dart';
 import 'package:powera/ui/screens/device/components/head_body.dart';
 import 'package:powera/size_config.dart';
 import 'attribute_card.dart';
+import 'grahp.dart';
 
 class Body extends StatelessWidget {
   @override
