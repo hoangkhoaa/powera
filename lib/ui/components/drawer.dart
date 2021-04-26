@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:powera/size_config.dart';
 import 'package:powera/constants.dart';
+import 'package:powera/ui/components/dashboard_card.dart';
 
 class CustomDashboard extends StatelessWidget {
   CustomDashboard({Key key}) : super(key: key);
@@ -38,6 +39,7 @@ class CustomDashboard extends StatelessWidget {
                     height: 0.5),
               ),
             ),
+            DashboardCard(),
           ],
         ));
   }
