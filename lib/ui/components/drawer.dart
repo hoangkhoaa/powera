@@ -39,7 +39,13 @@ class CustomDashboard extends StatelessWidget {
                     height: 0.5),
               ),
             ),
-            DashboardCard(),
+            DashboardCard(
+                name: "Gay detector",
+                image: Image.asset("assets/images/light_sensor.jpg")),
+            DashboardCard(
+                isActive: true,
+                name: "Gay detector",
+                image: Image.asset("assets/images/light_sensor.jpg")),
           ],
         ));
   }
