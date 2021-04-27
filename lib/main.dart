@@ -1,7 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:powera/ui/screens/device/device_screen.dart';
+import 'package:bloc/bloc.dart';
+
+class ButtonObserver extends BlocObserver {
+  @override
+  void onChange(BlocBase bloc, Change change) {
+    super.onChange(bloc, change);
+    print('${bloc.runtimeType} $change');
+  }
+}
 
 void main() {
+  Bloc.observer = ButtonObserver();
   runApp(MyApp());
 }
 

@@ -14,8 +14,8 @@ class DeviceScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         extendBodyBehindAppBar: true,
-        body: BlocProvider<PowerButtonBloc>(
-          create: (context) => PowerButtonBloc(SomeGraph(
+        body: BlocProvider<PowerButtonBloc_Shape>(
+          create: (context) => PowerButtonBloc_Shape(SomeGraph(
             color: Colors.amber,
             borderRadius: BorderRadius.zero,
           )),

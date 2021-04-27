@@ -19,9 +19,14 @@ class Body extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             HomeHeader(),
-            AttributeCard(),
+            AttributeCard(
+              attribute: "Temperature",
+              value: 45,
+              maxValue: 100,
+              mintValue: 0,
+            ),
             Expanded(child: Center(
-              child: BlocBuilder<PowerButtonBloc, SomeGraph>(
+              child: BlocBuilder<PowerButtonBloc_Shape, SomeGraph>(
                 builder: (context, shape) {
                   return shape;
                 },

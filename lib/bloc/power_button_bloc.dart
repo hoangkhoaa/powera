@@ -5,8 +5,8 @@ import 'dart:math';
 
 enum PowerButtonEvents { PowerButtonOnEvent, PowerButtonOfEvent }
 
-class PowerButtonBloc extends Bloc<PowerButtonEvents, SomeGraph> {
-  PowerButtonBloc(SomeGraph initialState) : super(initialState);
+class PowerButtonBloc_Shape extends Bloc<PowerButtonEvents, SomeGraph> {
+  PowerButtonBloc_Shape(SomeGraph initialState) : super(initialState);
   @override
   Stream<SomeGraph> mapEventToState(PowerButtonEvents event) async* {
     switch (event) {
@@ -50,4 +50,15 @@ class PowerButtonBloc extends Bloc<PowerButtonEvents, SomeGraph> {
         break;
     }
   }
+}
+
+class ButtonCubit extends Cubit<bool> {
+  /// {@macro counter_cubit}
+  ButtonCubit() : super(false);
+
+  /// Add 1 to the current state.
+  void turnOn() => emit(true);
+
+  /// Subtract 1 from the current state.
+  void turnOff() => emit(false);
 }

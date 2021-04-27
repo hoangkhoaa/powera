@@ -4,6 +4,8 @@ import 'package:powera/constants.dart';
 import 'package:powera/size_config.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:powera/bloc/power_button_bloc.dart';
+import 'package:powera/ui/screens/device/components/graph.dart';
+import 'button.dart';
 
 class DeviceCard extends StatelessWidget {
   const DeviceCard({Key key}) : super(key: key);
@@ -23,9 +25,9 @@ class DeviceCard extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(20),
               child: Text(
-                "Device Name",
+                "LED light No.69",
                 style: TextStyle(
-                    fontSize: getProportionateScreenWidth(30),
+                    fontSize: getProportionateScreenWidth(25),
                     fontWeight: FontWeight.bold,
                     color: pTextColorGray2,
                     height: 0.5),
@@ -41,7 +43,7 @@ class DeviceCard extends StatelessWidget {
                     padding: EdgeInsets.fromLTRB(20.0, 0, 5.0, 5.0),
                     child: Container(
                       child: Text(
-                        "This is a short description about device",
+                        "This is a LED light for a secret club under dragon fruit garden",
                         style: TextStyle(
                             fontSize: getProportionateScreenWidth(17),
                             fontWeight: FontWeight.normal,
@@ -53,61 +55,21 @@ class DeviceCard extends StatelessWidget {
                 ),
                 Flexible(
                   flex: 3,
-                  child: PowerButton(),
-                )
+                  child: BlocProvider(
+                    create: (_) => ButtonCubit(),
+                    child: BlocBuilder<ButtonCubit, bool>(
+                      builder: (context, state) {
+                        print(state);
+                        return Test(
+                          isOn: state,
+                        );
+                      },
+                    ),
+                  ),
+                ),
               ],
             )
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class PowerButton extends StatefulWidget {
-  PowerButton({
-    Key key,
-  }) : super(key: key);
-  _PowerButtonState createState() => _PowerButtonState();
-}
-
-class _PowerButtonState extends State<PowerButton> {
-  bool _isOn = false;
-
-  void changState() {
-    setState(() {
-      _isOn = !_isOn;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return ClipOval(
-      child: Material(
-        color: Colors.white70,
-        shadowColor: Colors.black, // button color
-        child: InkWell(
-          splashColor: _isOn ? pItemOffColor : pItemOnColor, // inkwell color
-          child: SizedBox(
-              width: getProportionateScreenWidth(80),
-              height: getProportionateScreenHeight(80),
-              child: Padding(
-                padding: EdgeInsets.all(10),
-                child: SvgPicture.asset(
-                  "assets/images/power_on.svg",
-                  color: _isOn ? pItemOnColor : pItemOffColor,
-                  alignment: Alignment.center,
-                  height: getProportionateScreenHeight(0),
-                ),
-              )),
-          onTap: () {
-            changState();
-            _isOn
-                ? BlocProvider.of<PowerButtonBloc>(context)
-                    .add(PowerButtonEvents.PowerButtonOfEvent)
-                : BlocProvider.of<PowerButtonBloc>(context)
-                    .add(PowerButtonEvents.PowerButtonOnEvent);
-          },
         ),
       ),
     );
