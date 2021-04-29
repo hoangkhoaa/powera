@@ -59,16 +59,6 @@ class _PowerButtonState extends State<PowerButton> {
   }
 }
 
-class Test1 extends StatelessWidget {
-  final bool isOn;
-  Test1({this.isOn});
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    return Text("$isOn");
-  }
-}
-
 /// This class will use for animation template
 class Test extends StatefulWidget {
   final bool isOn;
@@ -89,17 +79,17 @@ class _TestState extends State<Test> with TickerProviderStateMixin {
           return Container(
             child: PowerButton(),
             decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(color: pItemOnColor, width: 2.5),
-                boxShadow: isOn
-                    ? []
-                    : [
-                        BoxShadow(
-                            offset: Offset.fromDirection(20),
-                            color: pItemOnColor,
-                            blurRadius: 15,
-                            spreadRadius: _resizableController.value * 7)
-                      ]),
+              shape: BoxShape.circle,
+              border: Border.all(
+                  color: isOn ? pItemOnColor : pItemOffColor, width: 2.5),
+              boxShadow: [
+                BoxShadow(
+                    offset: Offset.fromDirection(20),
+                    color: pItemOnColor,
+                    blurRadius: 15,
+                    spreadRadius: _resizableController.value * 7)
+              ],
+            ),
           );
         });
   }

@@ -25,6 +25,12 @@ class Body extends StatelessWidget {
               maxValue: 100,
               mintValue: 0,
             ),
+            AttributeCard(
+              attribute: "Auto",
+              value: 99,
+              maxValue: 100,
+              mintValue: 0,
+            ),
             Expanded(child: Center(
               child: BlocBuilder<PowerButtonBloc_Shape, SomeGraph>(
                 builder: (context, shape) {
