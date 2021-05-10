@@ -10,3 +10,5 @@
    docker ps
 5. You can also check logs
    docker logs mongodb
+6. Interact with mongo
+   docker exec -it mongodb bash
