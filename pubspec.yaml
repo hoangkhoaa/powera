@@ -69,14 +69,14 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: ComicKhazi
+    - family: Montserrat
       fonts:
         - asset: assets/fonts/Montserrat/Montserrat-Regular.ttf
         - asset: assets/fonts/Montserrat/Montserrat-Italic.ttf
           style: italic
         - asset: assets/fonts/Montserrat/Montserrat-Bold.ttf
           weight: 700
-    - family: Montserrat
+    - family: ComicKhazi
       fonts:
         - asset: assets/fonts/ComicKhazi.ttf
     

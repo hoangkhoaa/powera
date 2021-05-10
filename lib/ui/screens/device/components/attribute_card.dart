@@ -5,7 +5,13 @@ import 'package:powera/size_config.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class AttributeCard extends StatelessWidget {
-  const AttributeCard({Key key}) : super(key: key);
+  final String attribute;
+  final int value;
+  final int maxValue;
+  final int mintValue;
+  const AttributeCard(
+      {Key key, this.attribute, this.value, this.maxValue, this.mintValue})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -30,23 +36,23 @@ class AttributeCard extends StatelessWidget {
                     ),
                   ),
                   Flexible(
-                      flex: 4,
+                      flex: 5,
                       child: Center(
-                        child: Text("Attribute",
+                        child: Text("$attribute",
                             style: TextStyle(
                                 fontSize: getProportionateScreenWidth(17),
-                                fontWeight: FontWeight.normal,
+                                fontWeight: FontWeight.bold,
                                 color: pTextColorGray3,
                                 height: 1)),
                       )),
                   Flexible(
                     flex: 5,
                     child: Center(
-                      child: Text("value",
+                      child: Text("$value",
                           style: TextStyle(
                               fontSize: getProportionateScreenWidth(17),
-                              fontWeight: FontWeight.normal,
-                              color: pTextColorGray3,
+                              fontWeight: FontWeight.bold,
+                              color: getValueCorlor(value, maxValue, mintValue),
                               height: 1)),
                     ),
                   )
@@ -54,4 +60,13 @@ class AttributeCard extends StatelessWidget {
               ),
             )));
   }
+}
+
+Color getValueCorlor(int val, int maxVal, int minVal) {
+  if (val < (maxVal + minVal) / 3) {
+    return pAttributeLowColor;
+  } else if (val > (maxVal + minVal) / 3 * 2) {
+    return pAttributeHighColor;
+  } else
+    return pAttributeMediumColor;
 }
