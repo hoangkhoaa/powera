@@ -33,3 +33,4 @@ _Stand in root directory_
 
     source env/bin/activate
     pip install -r requirements.txt
+
