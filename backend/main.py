@@ -59,15 +59,32 @@ def remove_led_device():
         return str(e)
     
     return jsonify(message="Delete successfully")
-    
-    
+
+
+@application.route("/led/chart")
+def view_chart_led_device():
+    return jsonify(message="pass")
     
     
 # DHT11
-@application.route("/dht11")
-def process_dht11_device():
+@application.route("/dht11/get")
+def get_dht11_device():
     pass
 
+
+@application.route("/dht11/update")
+def update_dht11_device():
+    pass
+
+
+@application.route("/dht11/remove")
+def remove_dht11_device():
+    pass
+
+
+@application.route("/dht11/chart")
+def view_chart_dht11_device():
+    pass
 
 # Light sensor
 @application.route("/light-sensor")
@@ -75,21 +92,87 @@ def process_light_sensor_device():
     pass
 
 
+@application.route("/light-sensor/get")
+def get_light_sensor_device():
+    pass
+
+
+@application.route("/light-sensor/update")
+def update_light_sensor_device():
+    pass
+
+
+@application.route("/light-sensor/remove")
+def remove_light_sensor_device():
+    pass
+
+
+@application.route("/light-sensor/chart")
+def view_chart_light_sensor_device():
+    pass
+
+
 # Buzzer speaker
-@application.route("/buzzer-speaker")
-def process_buzzer_speaker_device():
+@application.route("/buzzer-speaker/get")
+def get_buzzer_speaker_device():
+    pass
+
+
+
+@application.route("/buzzer-speaker/update")
+def update_buzzer_speaker_device():
+    pass
+
+
+@application.route("/buzzer-speaker/remove")
+def remove_buzzer_speaker_device():
+    pass
+
+
+@application.route("/buzzer-speaker/chart")
+def view_chart_buzzer_speaker_device():
     pass
 
 
 # Pump mini
-@application.route("/pump-mini")
-def process_pump_mini_device():
+@application.route("/pump-mini/get")
+def get_pump_mini_device():
+    pass
+
+
+@application.route("/pump-mini/update")
+def update_pump_mini_device():
+    pass
+
+
+@application.route("/pump-mini/remove")
+def remove_pump_mini_device():
+    pass
+
+
+@application.route("/pump-mini/chart")
+def view_chart_pump_mini_device():
     pass
 
 
 # Relay circuit
-@application.route('/relay-circuit')
-def process_relay_circuit_device():
+@application.route('/relay-circuit/get')
+def get_relay_circuit_device():
+    pass
+
+
+@application.route('/relay-circuit/update')
+def update_relay_circuit_device():
+    pass
+
+
+@application.route('/relay-circuit/remove')
+def remove_relay_circuit_device():
+    pass
+
+
+@application.route('/relay-circuit/chart')
+def view_chart_relay_circuit_device():
     pass
 
 if __name__ == '__main__':
