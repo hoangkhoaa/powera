@@ -1,5 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_pymongo import PyMongo
+from pymongo import database
+from utils import get_device, update_device, remove_device, view_chart_device
 
 
 application = Flask(__name__)
@@ -18,13 +20,8 @@ def home():
 @application.route("/led/get")
 def get_led_device():
     _id = request.args.get('_id')
-    try:
-        db.led.find_one({"_id":_id})
-    except Exception as e:
-        print(e)
-        return e
-    
-    return jsonify(message="Query successfully")
+    data = get_device(db, "led", _id)
+    return data
 
 
 @application.route('/led/update')
@@ -33,39 +30,24 @@ def update_led_device():
     name = request.args.get('name')
     data = request.args.get('data')
     unit = request.args.get('unit')
-    print(_id, name, data, unit)
-    try:
-        db.led.update_one({'_id': _id}, {
-        "$set" : {
-            "_id": _id,
-            "name": name,
-            "data": data,
-            "unit": unit
-        }
-    }, upsert=True)
-    except Exception as e:
-        print(e)
-        return str(e)
+    data = update_device(db, "led", _id, name, data, unit)
 
     return jsonify(message="Update successfully")
 
 
 @application.route('/led/remove')
 def remove_led_device():
-    _id = request.args.get('body')
-    try :
-        db.led.delete_one({"body": _id})
-    except  Exception as e:
-        return str(e)
-    
-    return jsonify(message="Delete successfully")
+    _id = request.args.get('_id')
+    data = remove_device(db, "led", _id)
+
+    return data
 
 
 @application.route("/led/chart")
 def view_chart_led_device():
     return jsonify(message="pass")
-    
-    
+
+
 # DHT11
 @application.route("/dht11/get")
 def get_dht11_device():
@@ -116,7 +98,6 @@ def view_chart_light_sensor_device():
 @application.route("/buzzer-speaker/get")
 def get_buzzer_speaker_device():
     pass
-
 
 
 @application.route("/buzzer-speaker/update")
@@ -174,6 +155,7 @@ def remove_relay_circuit_device():
 @application.route('/relay-circuit/chart')
 def view_chart_relay_circuit_device():
     pass
+
 
 if __name__ == '__main__':
     application.run(debug=True)
