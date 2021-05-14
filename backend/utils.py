@@ -25,7 +25,7 @@ def update_device(database, device, _id, name, data, unit):
     return True
 
 
-def remove_divice(database, device, _id):
+def remove_device(database, device, _id):
     try:
         data = database[device].delete_one({"_id": _id})
     except Exception as e:
