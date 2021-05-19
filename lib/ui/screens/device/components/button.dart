@@ -43,6 +43,7 @@ class _PowerButtonState extends State<PowerButton> {
         isOn: true,
         function: () {
           tapFunction();
+          ///////////////////////////// Test function cho nay ne :D
         },
       ));
     } else {
@@ -51,6 +52,7 @@ class _PowerButtonState extends State<PowerButton> {
           isOn: false,
           function: () {
             tapFunction();
+            ///////////////////////////// Test function cho nay ne :D
           });
     }
   }
