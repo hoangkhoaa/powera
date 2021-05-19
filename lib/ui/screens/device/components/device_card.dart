@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:powera/constants.dart';
+import 'package:powera/model/screen_model.dart';
 import 'package:powera/size_config.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:powera/bloc/power_button_bloc.dart';
@@ -8,7 +9,8 @@ import 'package:powera/ui/screens/device/components/graph.dart';
 import 'button.dart';
 
 class DeviceCard extends StatelessWidget {
-  const DeviceCard({Key key}) : super(key: key);
+  final ScreenModel itemdata;
+  const DeviceCard({Key key, this.itemdata}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -25,7 +27,7 @@ class DeviceCard extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(20),
               child: Text(
-                "LED light No.69",
+                itemdata.deviceName,
                 style: TextStyle(
                     fontSize: getProportionateScreenWidth(25),
                     fontWeight: FontWeight.bold,
@@ -42,8 +44,9 @@ class DeviceCard extends StatelessWidget {
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(20.0, 0, 5.0, 5.0),
                     child: Container(
+                      width: getProportionateScreenWidth(300),
                       child: Text(
-                        "This is a LED light for a secret club under dragon fruit garden",
+                        itemdata.deviceDis,
                         style: TextStyle(
                             fontSize: getProportionateScreenWidth(17),
                             fontWeight: FontWeight.normal,
@@ -59,7 +62,6 @@ class DeviceCard extends StatelessWidget {
                     create: (_) => ButtonCubit(),
                     child: BlocBuilder<ButtonCubit, bool>(
                       builder: (context, state) {
-                        print(state);
                         return PowerButton();
                       },
                     ),

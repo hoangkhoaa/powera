@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:powera/bloc/navigation_bloc.dart';
 import 'package:powera/constants.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 ////// Bottom nav bar ver 2.0
@@ -19,13 +21,16 @@ class _AnimatedBottomBarState extends State<AnimatedBottomBar> {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBottomNav(
-      currentIndex: _currentPage,
-      onChange: (index) {
-        setState(() {
-          _currentPage = index;
-        });
-      },
+    return BlocProvider<NavBloc>(
+      create: (BuildContext context) => NavBloc(NavState(NavItem.heat_page)),
+      child: AnimatedBottomNav(
+        currentIndex: _currentPage,
+        onChange: (index) {
+          setState(() {
+            _currentPage = index;
+          });
+        },
+      ),
     );
   }
 }
@@ -35,6 +40,10 @@ class AnimatedBottomNav extends StatelessWidget {
   final Function(int) onChange;
   const AnimatedBottomNav({Key key, this.currentIndex, this.onChange})
       : super(key: key);
+  void handleItemClick(BuildContext context, NavItem item) {
+    BlocProvider.of<NavBloc>(context).add(NavigateTo(item));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -44,7 +53,10 @@ class AnimatedBottomNav extends StatelessWidget {
         children: <Widget>[
           Expanded(
             child: InkWell(
-              onTap: () => onChange(0),
+              onTap: () {
+                onChange(0);
+                handleItemClick(context, NavItem.heat_page);
+              },
               child: BottomNavItem(
                 icon: "assets/icons/ic_heat.svg",
                 title: "Heat",
@@ -54,7 +66,10 @@ class AnimatedBottomNav extends StatelessWidget {
           ),
           Expanded(
             child: InkWell(
-              onTap: () => onChange(1),
+              onTap: () {
+                onChange(1);
+                handleItemClick(context, NavItem.light_page);
+              },
               child: BottomNavItem(
                 icon: "assets/icons/ic_light.svg",
                 title: "Light",
@@ -64,7 +79,10 @@ class AnimatedBottomNav extends StatelessWidget {
           ),
           Expanded(
             child: InkWell(
-              onTap: () => onChange(2),
+              onTap: () {
+                onChange(2);
+                handleItemClick(context, NavItem.humid_page);
+              },
               child: BottomNavItem(
                 icon: "assets/icons/ic_temp.svg",
                 title: "Moisture",
@@ -74,7 +92,10 @@ class AnimatedBottomNav extends StatelessWidget {
           ),
           Expanded(
             child: InkWell(
-              onTap: () => onChange(3),
+              onTap: () {
+                onChange(3);
+                handleItemClick(context, NavItem.setting_page);
+              },
               child: BottomNavItem(
                 icon: "assets/icons/ic_settings.svg",
                 title: "Settings",

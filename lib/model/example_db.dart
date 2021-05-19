@@ -1,6 +1,6 @@
 import 'screen_model.dart';
 
-var data = {
+var dataDB = {
   'heat': [
     ScreenModel(
         "Buzzel Horn",

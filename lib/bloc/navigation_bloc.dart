@@ -17,8 +17,6 @@ class NavState {
 class NavBloc extends Bloc<NavEvent, NavState> {
   @override
   NavBloc(NavState initialState) : super(initialState);
-
-  NavState get initialState => NavState(NavItem.heat_page);
   @override
   Stream<NavState> mapEventToState(NavEvent event) async* {
     if (event is NavigateTo) {
