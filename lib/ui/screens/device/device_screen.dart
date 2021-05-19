@@ -19,7 +19,7 @@ class DeviceScreen extends StatelessWidget {
             color: Colors.amber,
             borderRadius: BorderRadius.zero,
           )),
-          child: Body(),
+          child: BodyBloc(),
         ),
         bottomNavigationBar: AnimatedBottomBar(),
         drawer: Drawer(

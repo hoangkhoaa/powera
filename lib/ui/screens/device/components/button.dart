@@ -7,15 +7,15 @@ import 'package:powera/bloc/power_button_bloc.dart';
 import 'package:powera/ui/screens/device/components/graph.dart';
 
 class PowerButton extends StatefulWidget {
-  PowerButton({
-    Key key,
-  }) : super(key: key);
-  _PowerButtonState createState() => _PowerButtonState();
+  final bool isOn;
+  PowerButton({Key key, this.isOn = false}) : super(key: key);
+  _PowerButtonState createState() => _PowerButtonState(isOn);
 }
 
 class _PowerButtonState extends State<PowerButton> {
-  bool _isOn = false;
+  bool _isOn;
 
+  _PowerButtonState(this._isOn);
   void changState() {
     setState(() {
       _isOn
@@ -25,34 +25,68 @@ class _PowerButtonState extends State<PowerButton> {
     });
   }
 
+  void tapFunction() {
+    changState();
+    _isOn
+        ? BlocProvider.of<PowerButtonBloc_Shape>(context)
+            .add(PowerButtonEvents.PowerButtonOfEvent)
+        : BlocProvider.of<PowerButtonBloc_Shape>(context)
+            .add(PowerButtonEvents.PowerButtonOnEvent);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return ClipOval(
+    if (_isOn) {
+      print("State button" + _isOn.toString());
+      return Test(
+          child: ButtonItem(
+        isOn: true,
+        function: () {
+          tapFunction();
+        },
+      ));
+    } else {
+      print("State button" + _isOn.toString());
+      return ButtonItem(
+          isOn: false,
+          function: () {
+            tapFunction();
+          });
+    }
+  }
+}
+
+class ButtonItem extends StatelessWidget {
+  final bool isOn;
+  final Function function;
+  ButtonItem({this.isOn, this.function});
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: getProportionateScreenHeight(70),
+      height: getProportionateScreenHeight(70),
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border:
+            Border.all(color: isOn ? pItemOnColor : pItemOffColor, width: 2.5),
+      ),
       child: Material(
+        borderRadius: BorderRadius.circular(100),
         color: Colors.white,
         shadowColor: Colors.black, // button color
         child: InkWell(
-          splashColor: _isOn ? pItemOffColor : pItemOnColor, // inkwell color
-          child: SizedBox(
-              width: getProportionateScreenWidth(80),
-              height: getProportionateScreenHeight(80),
+          child: Container(
+              width: getProportionateScreenHeight(70),
+              height: getProportionateScreenHeight(70),
               child: Padding(
                 padding: EdgeInsets.all(10),
                 child: SvgPicture.asset(
                   "assets/images/power_on.svg",
-                  color: _isOn ? pItemOnColor : pItemOffColor,
+                  color: isOn ? pItemOnColor : pItemOffColor,
                   alignment: Alignment.center,
-                  height: getProportionateScreenHeight(0),
                 ),
               )),
-          onTap: () {
-            changState();
-            _isOn
-                ? BlocProvider.of<PowerButtonBloc_Shape>(context)
-                    .add(PowerButtonEvents.PowerButtonOfEvent)
-                : BlocProvider.of<PowerButtonBloc_Shape>(context)
-                    .add(PowerButtonEvents.PowerButtonOnEvent);
-          },
+          onTap: function,
         ),
       ),
     );
@@ -61,15 +95,16 @@ class _PowerButtonState extends State<PowerButton> {
 
 /// This class will use for animation template
 class Test extends StatefulWidget {
-  final bool isOn;
-  Test({Key key, this.isOn}) : super(key: key);
+  final Widget child;
+  Test({Key key, this.child}) : super(key: key);
   @override
-  _TestState createState() => _TestState(isOn: isOn);
+  _TestState createState() => _TestState(button: child);
 }
 
 class _TestState extends State<Test> with TickerProviderStateMixin {
-  final bool isOn;
-  _TestState({this.isOn});
+  Widget button;
+  _TestState({this.button});
+
   AnimationController _resizableController;
 
   AnimatedBuilder getContainer() {
@@ -77,19 +112,14 @@ class _TestState extends State<Test> with TickerProviderStateMixin {
         animation: _resizableController,
         builder: (context, child) {
           return Container(
-            child: PowerButton(),
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(
-                  color: isOn ? pItemOnColor : pItemOffColor, width: 2.5),
-              boxShadow: [
-                BoxShadow(
-                    offset: Offset.fromDirection(20),
-                    color: pItemOnColor,
-                    blurRadius: 15,
-                    spreadRadius: _resizableController.value * 7)
-              ],
-            ),
+            child: button,
+            decoration: BoxDecoration(shape: BoxShape.circle, boxShadow: [
+              BoxShadow(
+                  offset: Offset.fromDirection(20),
+                  color: pItemOnColor,
+                  blurRadius: 15,
+                  spreadRadius: _resizableController.value * 7)
+            ]),
           );
         });
   }

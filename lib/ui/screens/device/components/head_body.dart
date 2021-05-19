@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:powera/constants.dart';
+import 'package:powera/model/screen_model.dart';
 import 'package:powera/size_config.dart';
 import 'device_card.dart';
 
 class HomeHeader extends StatelessWidget {
+  //final ScreenModel itemData;
+
   const HomeHeader({
     Key key,
+    //this.itemData,
   }) : super(key: key);
 
   @override
@@ -53,7 +57,7 @@ class HomeHeader extends StatelessWidget {
                   children: [
                     SizedBox(width: getProportionateScreenWidth(30)),
                     Text(
-                      "Hoang Khoa",
+                      "User",
                       style: TextStyle(
                           fontSize: getProportionateScreenWidth(50),
                           fontWeight: FontWeight.bold,

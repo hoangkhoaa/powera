@@ -4,10 +4,23 @@ import 'package:powera/ui/screens/device/components/head_body.dart';
 import 'package:powera/size_config.dart';
 import 'attribute_card.dart';
 import 'package:powera/bloc/power_button_bloc.dart';
+import 'package:powera/bloc/navigation_bloc.dart';
 
 import 'graph.dart';
 
+class BodyBloc extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) => BlocProvider<NavBloc>(
+        create: (BuildContext context) => NavBloc(NavState(NavItem.heat_page)),
+        child: BlocBuilder<NavBloc, NavState>(
+          builder: (BuildContext context, NavState state) => Body(state),
+        ),
+      );
+}
+
 class Body extends StatelessWidget {
+  final NavState state;
+  Body(this.state);
   @override
   Widget build(BuildContext context) {
     // You have to call SizeConfig on your starting page
@@ -25,6 +38,7 @@ class Body extends StatelessWidget {
               maxValue: 100,
               mintValue: 0,
             ),
+            VerticalSpacing(of: 10),
             AttributeCard(
               attribute: "Auto",
               value: 99,
