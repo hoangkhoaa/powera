@@ -22,6 +22,20 @@ class _PowerButtonState extends State<PowerButton> {
   bool _isOn;
   ScreenModel itemdata;
   _PowerButtonState(this._isOn, this.itemdata);
+
+  @override
+  initState() {
+    super.initState();
+  }
+
+  @override
+  void didUpdateWidget(PowerButton oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.itemdata.deviceName != widget.itemdata.deviceName) {
+      print("Chang button" + widget.itemdata.deviceName);
+    }
+  }
+
   void changState() {
     setState(() {
       _isOn = !_isOn;
