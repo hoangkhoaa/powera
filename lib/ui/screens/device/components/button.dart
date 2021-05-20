@@ -8,10 +8,10 @@ import 'package:powera/bloc/power_button_bloc.dart';
 import 'package:powera/ui/screens/device/components/graph.dart';
 
 class PowerButton extends StatefulWidget {
-  ScreenModel itemdata;
-  final bool isOn;
-  PowerButton({Key key, this.isOn = false, this.itemdata}) : super(key: key);
-  _PowerButtonState createState() => _PowerButtonState(isOn, itemdata);
+  final ScreenModel itemdata;
+  PowerButton({Key key, this.itemdata}) : super(key: key);
+  _PowerButtonState createState() =>
+      _PowerButtonState(this.itemdata.isOn, itemdata);
 }
 
 class _PowerButtonState extends State<PowerButton> {
