@@ -55,6 +55,7 @@ class DeviceCard extends StatelessWidget {
                 Flexible(
                     flex: 3,
                     child: PowerButton(
+                      key: UniqueKey(),
                       itemdata: itemdata,
                     )),
               ],
