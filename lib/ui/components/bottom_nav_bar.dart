@@ -21,16 +21,13 @@ class _AnimatedBottomBarState extends State<AnimatedBottomBar> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<NavBloc>(
-      create: (BuildContext context) => NavBloc(NavState(NavItem.heat_page)),
-      child: AnimatedBottomNav(
-        currentIndex: _currentPage,
-        onChange: (index) {
-          setState(() {
-            _currentPage = index;
-          });
-        },
-      ),
+    return AnimatedBottomNav(
+      currentIndex: _currentPage,
+      onChange: (index) {
+        setState(() {
+          _currentPage = index;
+        });
+      },
     );
   }
 }

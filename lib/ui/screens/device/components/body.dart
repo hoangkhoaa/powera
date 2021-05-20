@@ -53,6 +53,7 @@ class Body extends StatelessWidget {
     // You have to call SizeConfig on your starting page
     SizeConfig().init(context);
     return BlocBuilder<NavBloc, NavState>(builder: (context, state) {
+      print("rebuild BODY");
       return SafeArea(
           top: false,
           child: Column(
