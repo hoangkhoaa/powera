@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:powera/constants.dart';
 import 'package:powera/model/screen_model.dart';
 import 'package:powera/size_config.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:powera/bloc/power_button_bloc.dart';
-import 'package:powera/ui/screens/device/components/graph.dart';
 import 'button.dart';
 
 class DeviceCard extends StatelessWidget {

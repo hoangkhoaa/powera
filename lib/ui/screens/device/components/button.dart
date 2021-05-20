@@ -37,7 +37,15 @@ class _PowerButtonState extends State<PowerButton> {
         isOn: true,
         function: () {
           tapFunction();
-          ///////////////////////////// Test function cho nay ne :D
+          APICaller apicaller = APICaller();
+          switch (itemdata.deviceName) {
+            case 'LED light':
+              {
+                apicaller.update_led_device('1', 'Led 1', '1', '');
+              }
+              break;
+          }
+          // print(apicaller.get_led_device('1'));
           print("HAHAHAHAAHAHAHAHAHA" + itemdata.deviceName);
         },
       ));
@@ -47,7 +55,14 @@ class _PowerButtonState extends State<PowerButton> {
           isOn: false,
           function: () {
             tapFunction();
-            ///////////////////////////// Test function cho nay ne :D
+            APICaller apicaller = APICaller();
+            switch (itemdata.deviceName) {
+              case 'LED light':
+                {
+                  apicaller.update_led_device('1', 'Led 1', '1', '');
+                }
+                break;
+            }
           });
     }
   }

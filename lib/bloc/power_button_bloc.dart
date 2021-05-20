@@ -51,14 +51,3 @@ class PowerButtonBloc_Shape extends Bloc<PowerButtonEvents, SomeGraph> {
     }
   }
 }
-
-class ButtonCubit extends Cubit<bool> {
-  /// {@macro counter_cubit}
-  ButtonCubit() : super(false);
-
-  /// Add 1 to the current state.
-  void turnOn() => emit(true);
-
-  /// Subtract 1 from the current state.
-  void turnOff() => emit(false);
-}
