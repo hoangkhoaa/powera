@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:powera/constants.dart';
+import 'package:powera/model/Led.dart';
 import 'package:powera/model/screen_model.dart';
 import 'package:powera/size_config.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:powera/bloc/power_button_bloc.dart';
 import 'package:powera/ui/screens/device/components/graph.dart';
 import 'package:powera/api/APICaller.dart';
+import 'package:powera/model/Led.dart';
 
 class PowerButton extends StatefulWidget {
   final ScreenModel itemdata;
@@ -16,6 +18,7 @@ class PowerButton extends StatefulWidget {
 }
 
 class _PowerButtonState extends State<PowerButton> {
+  APICaller apicaller = APICaller();
   bool _isOn;
   ScreenModel itemdata;
   _PowerButtonState(this._isOn, this.itemdata);
@@ -26,39 +29,51 @@ class _PowerButtonState extends State<PowerButton> {
   }
 
   void tapFunction() {
+    print("called");
     changState();
+  }
+
+  void initState() {
+    super.initState();
+    getLedStatus();
+  }
+
+  void getLedStatus() async {
+      Led led1 = await apicaller.get_led_device('1');
+      await print("LED 1 status: "+ led1.data);
+      _isOn = led1.data == '1' ? true: false;
+      await setState(() {
+        print("Init status: " + _isOn.toString());
+      });
   }
 
   @override
   Widget build(BuildContext context) {
     if (_isOn) {
-      print("State button" + _isOn.toString());
+      print("State button  " + _isOn.toString());
       return Test(
           child: ButtonItem(
         isOn: true,
-        function: () {
+        function: () async {
           tapFunction();
-          APICaller apicaller = APICaller();
           switch (itemdata.deviceName) {
-            case 'LED light':
+            case 'Buzzel Horn':
               {
-                apicaller.update_led_device('1', 'Led 1', '1', '');
+                await apicaller.update_led_device('1', 'Led 1', '0', '');
               }
               break;
           }
-          // print(apicaller.get_led_device('1'));
-          print("HAHAHAHAAHAHAHAHAHA" + itemdata.deviceName);
         },
       ));
     } else {
-      print("State button" + _isOn.toString());
+      print("State button " + _isOn.toString());
       return ButtonItem(
           isOn: false,
-          function: () {
+          function: () async {
             tapFunction();
             APICaller apicaller = APICaller();
             switch (itemdata.deviceName) {
-              case 'LED light':
+              case 'Buzzel Horn':
                 {
                   apicaller.update_led_device('1', 'Led 1', '1', '');
                 }
