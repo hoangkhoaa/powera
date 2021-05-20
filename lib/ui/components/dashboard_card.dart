@@ -7,24 +7,34 @@ class DashboardCard extends StatelessWidget {
   final bool isActive;
   final String name;
   final Image image;
+  Function tapFunction;
   DashboardCard(
-      {Key key, this.isActive = false, this.name = "null", this.image})
+      {Key key,
+      this.isActive = false,
+      this.name = "null",
+      this.image,
+      this.tapFunction})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
       height: getProportionateScreenHeight(100),
-      child: Center(
-          child: isActive
-              ? OnlineCard(
-                  name: name,
-                  image: image,
-                )
-              : OfflineCard(
-                  name: name,
-                  image: image,
-                )),
+      child: GestureDetector(
+        child: Center(
+            child: isActive
+                ? OnlineCard(
+                    name: name,
+                    image: image,
+                  )
+                : OfflineCard(
+                    name: name,
+                    image: image,
+                  )),
+        onTap: () {
+          tapFunction();
+        },
+      ),
     );
   }
 }

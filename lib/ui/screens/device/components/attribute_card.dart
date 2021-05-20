@@ -6,9 +6,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class AttributeCard extends StatelessWidget {
   final String attribute;
-  final int value;
-  final int maxValue;
-  final int mintValue;
+  final String value;
+  final String maxValue;
+  final String mintValue;
   const AttributeCard(
       {Key key, this.attribute, this.value, this.maxValue, this.mintValue})
       : super(key: key);
@@ -62,11 +62,20 @@ class AttributeCard extends StatelessWidget {
   }
 }
 
-Color getValueCorlor(int val, int maxVal, int minVal) {
-  if (val < (maxVal + minVal) / 3) {
+Color getValueCorlor(String val, String maxVal, String minVal) {
+  if (val == "On") {
     return pAttributeLowColor;
-  } else if (val > (maxVal + minVal) / 3 * 2) {
+  } else if (val == "Off") {
     return pAttributeHighColor;
-  } else
-    return pAttributeMediumColor;
+  } else {
+    var intVal = int.parse(val);
+    var intMaxVal = int.parse(maxVal);
+    var intMinVal = int.parse(minVal);
+    if (intVal < (intMaxVal + intMinVal) / 3) {
+      return pAttributeLowColor;
+    } else if (intVal > (intMaxVal + intMaxVal) / 3 * 2) {
+      return pAttributeHighColor;
+    } else
+      return pAttributeMediumColor;
+  }
 }

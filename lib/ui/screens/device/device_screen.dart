@@ -57,9 +57,100 @@ ScreenModel getScreenModleFollowState(NavState state) {
         return dataDB['humid'][0];
       }
       break;
+    case NavItem.heat_page1:
+      {
+        return dataDB['heat'][1];
+      }
+      break;
+    case NavItem.light_page1:
+      {
+        return dataDB['light'][1];
+      }
+      break;
+    case NavItem.humid_page1:
+      {
+        return dataDB['humid'][1];
+      }
+      break;
     default:
       {
         return dataDB['humid'][0];
+      }
+      break;
+  }
+}
+
+List<ScreenModel> getListScreenModelFollowState(NavState state) {
+  switch (state.selectedItem) {
+    case NavItem.heat_page:
+      {
+        return dataDB['heat'];
+      }
+      break;
+    case NavItem.light_page:
+      {
+        return dataDB['light'];
+      }
+      break;
+    case NavItem.humid_page:
+      {
+        return dataDB['humid'];
+      }
+      break;
+    case NavItem.setting_page:
+      {
+        return dataDB['humid'];
+      }
+      break;
+    case NavItem.heat_page1:
+      {
+        return dataDB['heat'];
+      }
+      break;
+    case NavItem.light_page1:
+      {
+        return dataDB['light'];
+      }
+      break;
+    case NavItem.humid_page1:
+      {
+        return dataDB['humid'];
+      }
+      break;
+  }
+  return [];
+}
+
+NavItem getNavItemBaseOnItemData(ScreenModel itemdata) {
+  switch (itemdata.deviceName) {
+    case "Buzzel Horn":
+      {
+        return NavItem.heat_page;
+      }
+      break;
+    case "Heat sensor":
+      {
+        return NavItem.heat_page1;
+      }
+      break;
+    case "LED light":
+      {
+        return NavItem.light_page;
+      }
+      break;
+    case "Light sensor":
+      {
+        return NavItem.light_page1;
+      }
+      break;
+    case "Water pumps":
+      {
+        return NavItem.humid_page;
+      }
+      break;
+    case "Land Humid sensor":
+      {
+        return NavItem.humid_page1;
       }
       break;
   }

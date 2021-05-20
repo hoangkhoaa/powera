@@ -29,4 +29,12 @@ class NavBloc extends Bloc<NavEvent, NavState> {
   }
 }
 
-enum NavItem { light_page, heat_page, humid_page, setting_page }
+enum NavItem {
+  light_page,
+  heat_page,
+  humid_page,
+  setting_page,
+  light_page1,
+  heat_page1,
+  humid_page1,
+}

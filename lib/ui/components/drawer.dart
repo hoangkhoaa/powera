@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:powera/bloc/navigation_bloc.dart';
+import 'package:powera/model/screen_model.dart';
 import 'package:powera/size_config.dart';
 import 'package:powera/constants.dart';
 import 'package:powera/ui/components/dashboard_card.dart';
+import 'package:powera/ui/screens/device/device_screen.dart';
 
 class CustomDashboard extends StatelessWidget {
   CustomDashboard({Key key}) : super(key: key);
@@ -39,15 +43,42 @@ class CustomDashboard extends StatelessWidget {
                     height: 0.5),
               ),
             ),
-            DashboardCard(
-                isActive: true,
-                name: "Den",
-                image: Image.asset("assets/images/light_sensor.jpg")),
-            DashboardCard(
-                isActive: true,
-                name: "Cam bien anh sang",
-                image: Image.asset("assets/images/light_sensor.jpg")),
+            BlocBuilder<NavBloc, NavState>(builder: (context, state) {
+              return DashBoardCardList(
+                  listItem: getListScreenModelFollowState(state));
+            })
           ],
         ));
+  }
+}
+
+class DashBoardCardList extends StatelessWidget {
+  final List<ScreenModel> listItem;
+  DashBoardCardList({this.listItem});
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: getProportionateScreenHeight(500),
+      width: getProportionateScreenWidth(200),
+      child: MediaQuery.removePadding(
+        context: context,
+        removeTop: true,
+        child: ListView.builder(
+            physics: NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            scrollDirection: Axis.vertical,
+            itemCount: listItem.length,
+            itemBuilder: (context, index) {
+              return DashboardCard(
+                  isActive: listItem[index].isOn,
+                  name: listItem[index].deviceName,
+                  image: Image.asset("assets/images/light_sensor.jpg"),
+                  tapFunction: () {
+                    BlocProvider.of<NavBloc>(context).add(
+                        NavigateTo(getNavItemBaseOnItemData(listItem[index])));
+                  });
+            }),
+      ),
+    );
   }
 }

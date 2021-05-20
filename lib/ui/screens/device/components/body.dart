@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:powera/model/example_db.dart';
@@ -63,19 +65,9 @@ class Body extends StatelessWidget {
               HomeHeader(
                 itemData: getScreenModleFollowState(state),
               ),
-              AttributeCard(
-                attribute: "Temperature",
-                value: 45,
-                maxValue: 100,
-                mintValue: 0,
-              ),
-              VerticalSpacing(of: 10),
-              AttributeCard(
-                attribute: "Auto",
-                value: 99,
-                maxValue: 100,
-                mintValue: 0,
-              ),
+              ListAttributeCard(
+                  attributeList:
+                      getScreenModleFollowState(state).attributeList),
               Expanded(child: Center(
                 child: BlocBuilder<PowerButtonBloc_Shape, SomeGraph>(
                   builder: (context, shape) {
@@ -87,5 +79,33 @@ class Body extends StatelessWidget {
             ],
           ));
     });
+  }
+}
+
+class ListAttributeCard extends StatelessWidget {
+  final List<AttributeModel> attributeList;
+  ListAttributeCard({this.attributeList});
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        height: getProportionateScreenHeight(180),
+        width: getProportionateScreenWidth(320),
+        child: MediaQuery.removePadding(
+          context: context,
+          removeTop: true,
+          child: ListView.builder(
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              scrollDirection: Axis.vertical,
+              itemCount: attributeList.length,
+              itemBuilder: (context, index) {
+                return AttributeCard(
+                  attribute: attributeList[index].attribute,
+                  value: attributeList[index].value,
+                  maxValue: attributeList[index].value,
+                  mintValue: attributeList[index].value,
+                );
+              }),
+        ));
   }
 }
