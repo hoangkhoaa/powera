@@ -23,9 +23,9 @@ class _PowerButtonState extends State<PowerButton> {
   ScreenModel itemdata;
   _PowerButtonState(this._isOn, this.itemdata);
 
-  @override
-  initState() {
+  void initState() {
     super.initState();
+    getLedStatus();
   }
 
   @override
@@ -43,13 +43,7 @@ class _PowerButtonState extends State<PowerButton> {
   }
 
   void tapFunction() {
-    print("called");
     changState();
-  }
-
-  void initState() {
-    super.initState();
-    getLedStatus();
   }
 
   void getLedStatus() async {
@@ -71,7 +65,7 @@ class _PowerButtonState extends State<PowerButton> {
         function: () async {
           tapFunction();
           switch (itemdata.deviceName) {
-            case 'Buzzel Horn':
+            case 'LED light':
               {
                 await apicaller.update_led_device('1', 'Led 1', '0', '');
               }
@@ -86,8 +80,9 @@ class _PowerButtonState extends State<PowerButton> {
           function: () async {
             tapFunction();
             APICaller apicaller = APICaller();
+            print(itemdata.deviceName);
             switch (itemdata.deviceName) {
-              case 'Buzzel Horn':
+              case 'LED light':
                 {
                   apicaller.update_led_device('1', 'Led 1', '1', '');
                 }
