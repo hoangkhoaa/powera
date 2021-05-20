@@ -2,6 +2,7 @@
     package="com.example.powera">
    <application
         android:label="powera"
+        android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

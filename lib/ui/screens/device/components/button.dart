@@ -6,6 +6,7 @@ import 'package:powera/size_config.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:powera/bloc/power_button_bloc.dart';
 import 'package:powera/ui/screens/device/components/graph.dart';
+import 'package:powera/api/APICaller.dart';
 
 class PowerButton extends StatefulWidget {
   final ScreenModel itemdata;
