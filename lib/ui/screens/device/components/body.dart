@@ -4,6 +4,7 @@ import 'package:powera/model/example_db.dart';
 import 'package:powera/model/screen_model.dart';
 import 'package:powera/ui/screens/device/components/head_body.dart';
 import 'package:powera/size_config.dart';
+import 'package:powera/ui/screens/device/device_screen.dart';
 import 'attribute_card.dart';
 import 'package:powera/bloc/power_button_bloc.dart';
 import 'package:powera/bloc/navigation_bloc.dart';
@@ -47,43 +48,43 @@ import 'graph.dart';
 // }
 
 class Body extends StatelessWidget {
-  final ScreenModel screen;
-  Body(this.screen);
   @override
   Widget build(BuildContext context) {
     // You have to call SizeConfig on your starting page
     SizeConfig().init(context);
-    return SafeArea(
-        top: false,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            HomeHeader(
-              itemData: screen,
-            ),
-            AttributeCard(
-              attribute: "Temperature",
-              value: 45,
-              maxValue: 100,
-              mintValue: 0,
-            ),
-            VerticalSpacing(of: 10),
-            AttributeCard(
-              attribute: "Auto",
-              value: 99,
-              maxValue: 100,
-              mintValue: 0,
-            ),
-            Expanded(child: Center(
-              child: BlocBuilder<PowerButtonBloc_Shape, SomeGraph>(
-                builder: (context, shape) {
-                  print("rebuild shape");
-                  return shape;
-                },
+    return BlocBuilder<NavBloc, NavState>(builder: (context, state) {
+      return SafeArea(
+          top: false,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              HomeHeader(
+                itemData: getScreenModleFollowState(state),
               ),
-            ))
-          ],
-        ));
+              AttributeCard(
+                attribute: "Temperature",
+                value: 45,
+                maxValue: 100,
+                mintValue: 0,
+              ),
+              VerticalSpacing(of: 10),
+              AttributeCard(
+                attribute: "Auto",
+                value: 99,
+                maxValue: 100,
+                mintValue: 0,
+              ),
+              Expanded(child: Center(
+                child: BlocBuilder<PowerButtonBloc_Shape, SomeGraph>(
+                  builder: (context, shape) {
+                    print("rebuild shape");
+                    return shape;
+                  },
+                ),
+              ))
+            ],
+          ));
+    });
   }
 }

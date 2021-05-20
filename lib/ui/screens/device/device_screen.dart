@@ -16,24 +16,22 @@ class DeviceScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<NavBloc>(
-        create: (BuildContext context) => NavBloc(NavState(NavItem.heat_page)),
-        child: BlocBuilder<NavBloc, NavState>(
-            builder: (BuildContext context, state) {
-          return Scaffold(
-              extendBodyBehindAppBar: true,
-              body: BlocProvider<PowerButtonBloc_Shape>(
-                create: (context) => PowerButtonBloc_Shape(SomeGraph(
-                  color: Colors.amber,
-                  borderRadius: BorderRadius.zero,
-                )),
-                child: Body(getScreenModleFollowState(state)),
-              ),
-              bottomNavigationBar: AnimatedBottomBar(),
-              drawer: Drawer(
-                child: CustomDashboard(),
-              ),
-              appBar: buildAppBar(context));
-        }));
+      create: (context) => NavBloc(NavState(NavItem.heat_page)),
+      child: Scaffold(
+          extendBodyBehindAppBar: true,
+          body: BlocProvider<PowerButtonBloc_Shape>(
+            create: (context) => PowerButtonBloc_Shape(SomeGraph(
+              color: Colors.amber,
+              borderRadius: BorderRadius.zero,
+            )),
+            child: Body(),
+          ),
+          bottomNavigationBar: AnimatedBottomBar(),
+          drawer: Drawer(
+            child: CustomDashboard(),
+          ),
+          appBar: buildAppBar(context)),
+    );
   }
 }
 

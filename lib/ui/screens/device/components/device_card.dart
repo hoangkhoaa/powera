@@ -62,7 +62,10 @@ class DeviceCard extends StatelessWidget {
                     create: (_) => ButtonCubit(),
                     child: BlocBuilder<ButtonCubit, bool>(
                       builder: (context, state) {
-                        return PowerButton();
+                        print("rebuid ButtonCubit");
+                        return PowerButton(
+                          itemdata: itemdata,
+                        );
                       },
                     ),
                   ),

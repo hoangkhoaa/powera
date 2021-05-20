@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:powera/constants.dart';
+import 'package:powera/model/screen_model.dart';
 import 'package:powera/size_config.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:powera/bloc/power_button_bloc.dart';
 import 'package:powera/ui/screens/device/components/graph.dart';
 
 class PowerButton extends StatefulWidget {
+  ScreenModel itemdata;
   final bool isOn;
-  PowerButton({Key key, this.isOn = false}) : super(key: key);
-  _PowerButtonState createState() => _PowerButtonState(isOn);
+  PowerButton({Key key, this.isOn = false, this.itemdata}) : super(key: key);
+  _PowerButtonState createState() => _PowerButtonState(isOn, itemdata);
 }
 
 class _PowerButtonState extends State<PowerButton> {
   bool _isOn;
-
-  _PowerButtonState(this._isOn);
+  ScreenModel itemdata;
+  _PowerButtonState(this._isOn, this.itemdata);
   void changState() {
     setState(() {
       _isOn
@@ -44,6 +46,7 @@ class _PowerButtonState extends State<PowerButton> {
         function: () {
           tapFunction();
           ///////////////////////////// Test function cho nay ne :D
+          print("HAHAHAHAAHAHAHAHAHA" + itemdata.deviceName);
         },
       ));
     } else {
