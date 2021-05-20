@@ -68,14 +68,14 @@ class Body extends StatelessWidget {
               ListAttributeCard(
                   attributeList:
                       getScreenModleFollowState(state).attributeList),
-              Expanded(child: Center(
-                child: BlocBuilder<PowerButtonBloc_Shape, SomeGraph>(
-                  builder: (context, shape) {
-                    print("rebuild shape");
-                    return shape;
-                  },
-                ),
-              ))
+              // Expanded(child: Center(
+              //   child: BlocBuilder<PowerButtonBloc_Shape, SomeGraph>(
+              //     builder: (context, shape) {
+              //       print("rebuild shape");
+              //       return shape;
+              //     },
+              //   ),
+              // ))
             ],
           ));
     });

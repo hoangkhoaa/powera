@@ -20,20 +20,12 @@ class _PowerButtonState extends State<PowerButton> {
   _PowerButtonState(this._isOn, this.itemdata);
   void changState() {
     setState(() {
-      _isOn
-          ? context.read<ButtonCubit>().turnOff()
-          : context.read<ButtonCubit>().turnOn();
       _isOn = !_isOn;
     });
   }
 
   void tapFunction() {
     changState();
-    _isOn
-        ? BlocProvider.of<PowerButtonBloc_Shape>(context)
-            .add(PowerButtonEvents.PowerButtonOfEvent)
-        : BlocProvider.of<PowerButtonBloc_Shape>(context)
-            .add(PowerButtonEvents.PowerButtonOnEvent);
   }
 
   @override

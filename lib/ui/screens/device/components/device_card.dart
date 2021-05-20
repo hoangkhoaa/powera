@@ -57,18 +57,10 @@ class DeviceCard extends StatelessWidget {
                   ),
                 ),
                 Flexible(
-                  flex: 3,
-                  child: BlocProvider(
-                    create: (_) => ButtonCubit(),
-                    child: BlocBuilder<ButtonCubit, bool>(
-                      builder: (context, state) {
-                        return PowerButton(
-                          itemdata: itemdata,
-                        );
-                      },
-                    ),
-                  ),
-                ),
+                    flex: 3,
+                    child: PowerButton(
+                      itemdata: itemdata,
+                    )),
               ],
             )
           ],
