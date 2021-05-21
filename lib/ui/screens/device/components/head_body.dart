@@ -3,13 +3,14 @@ import 'package:powera/constants.dart';
 import 'package:powera/model/screen_model.dart';
 import 'package:powera/size_config.dart';
 import 'device_card.dart';
+import 'package:powera/model/Device.dart';
 
 class HomeHeader extends StatelessWidget {
-  final ScreenModel itemData;
+  final Device sender_device;
 
   const HomeHeader({
     Key key,
-    this.itemData,
+    this.sender_device,
   }) : super(key: key);
 
   @override
@@ -72,7 +73,7 @@ class HomeHeader extends StatelessWidget {
           Positioned(
               bottom: getProportionateScreenHeight(20),
               child: DeviceCard(
-                itemdata: itemData,
+                sender_device: sender_device,
               ))
         ],
       ),

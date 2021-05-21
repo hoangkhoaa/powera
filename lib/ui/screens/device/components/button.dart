@@ -2,38 +2,47 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:powera/bloc/navigation_bloc.dart';
 import 'package:powera/constants.dart';
-import 'package:powera/model/Led.dart';
+import 'package:powera/model/Device.dart';
+import 'package:powera/model/example_db.dart';
 import 'package:powera/model/screen_model.dart';
 import 'package:powera/size_config.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:powera/bloc/power_button_bloc.dart';
-import 'package:powera/ui/screens/device/components/graph.dart';
-import 'package:powera/api/APICaller.dart';
-import 'package:powera/model/Led.dart';
-import 'package:powera/ui/screens/device/device_screen.dart';
 
 class PowerButton extends StatefulWidget {
-  final ScreenModel itemdata;
-  PowerButton({Key key, this.itemdata}) : super(key: key);
-  _PowerButtonState createState() =>
-      _PowerButtonState(this.itemdata.isOn, itemdata);
+  final Device sender_device;
+  PowerButton({Key key, this.sender_device}) : super(key: key);
+  _PowerButtonState createState() => _PowerButtonState(false, sender_device);
 }
 
 class _PowerButtonState extends State<PowerButton> {
-  APICaller apicaller = APICaller();
-  bool _isOn;
-  ScreenModel itemdata;
-  _PowerButtonState(this._isOn, this.itemdata);
-
+  Device sender_device;
+  bool _isOn = false;
+  _PowerButtonState(this._isOn, this.sender_device);
   void initState() {
     super.initState();
-    getLedStatus();
+    setupDevice();
+  }
+
+  void setupDevice() async {
+    // deviceKey = deviceKeyMap[itemdata.deviceName];
+    // device = Device(deviceKey);
+    // print("Device: " + deviceKey);
+    await sender_device.getDevice();
+    if (this.mounted) {
+      _isOn = sender_device.data == 'ON' ? true : false;
+      await setState(() {
+        print("Init status: " + _isOn.toString());
+      });
+    }
+    print(sender_device.data);
   }
 
   @override
   void didUpdateWidget(PowerButton oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.itemdata.deviceName != widget.itemdata.deviceName) {}
+    if (oldWidget.sender_device.name != widget.sender_device.name) {
+      print("Chang button" + widget.sender_device.name);
+    }
   }
 
   void changState() {
@@ -44,18 +53,6 @@ class _PowerButtonState extends State<PowerButton> {
 
   void tapFunction() {
     changState();
-    itemdata.isOn = !itemdata.isOn;
-    BlocProvider.of<NavBloc>(context)
-        .add(NavigateTo(getNavItemBaseOnItemData(itemdata)));
-  }
-
-  void getLedStatus() async {
-    Led led1 = await apicaller.get_led_device('1');
-    await print("LED 1 status: " + led1.data);
-    _isOn = led1.data == '1' ? true : false;
-    await setState(() {
-      print("Init status: " + _isOn.toString());
-    });
   }
 
   @override
@@ -67,13 +64,7 @@ class _PowerButtonState extends State<PowerButton> {
         isOn: true,
         function: () async {
           tapFunction();
-          switch (itemdata.deviceName) {
-            case 'LED light':
-              {
-                await apicaller.update_led_device('1', 'Led 1', '0', '');
-              }
-              break;
-          }
+          await sender_device.updateDevice(sender_device.name, 'OFF', '');
         },
       ));
     } else {
@@ -82,15 +73,7 @@ class _PowerButtonState extends State<PowerButton> {
           isOn: false,
           function: () async {
             tapFunction();
-            APICaller apicaller = APICaller();
-            print(itemdata.deviceName);
-            switch (itemdata.deviceName) {
-              case 'LED light':
-                {
-                  apicaller.update_led_device('1', 'Led 1', '1', '');
-                }
-                break;
-            }
+            await sender_device.updateDevice(sender_device.name, 'ON', '');
           });
     }
   }

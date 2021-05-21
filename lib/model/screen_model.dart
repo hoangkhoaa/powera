@@ -1,7 +1,7 @@
 class ScreenModel {
   String deviceName;
   String deviceDis;
-  bool isOn;
+  bool isOn = false;
   List<AttributeModel> attributeList;
   ScreenModel(this.deviceName, this.deviceDis, this.attributeList, this.isOn);
 }

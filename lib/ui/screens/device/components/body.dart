@@ -61,7 +61,8 @@ class Body extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               HomeHeader(
-                itemData: getScreenModleFollowState(state),
+                // itemData: getScreenModleFollowState(state)
+                sender_device: getDevices(state)[0],
               ),
               ListAttributeCard(
                   attributeList:

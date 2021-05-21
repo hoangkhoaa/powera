@@ -3,10 +3,11 @@ import 'package:powera/constants.dart';
 import 'package:powera/model/screen_model.dart';
 import 'package:powera/size_config.dart';
 import 'button.dart';
+import 'package:powera/model/Device.dart';
 
 class DeviceCard extends StatelessWidget {
-  final ScreenModel itemdata;
-  const DeviceCard({Key key, this.itemdata}) : super(key: key);
+  final Device sender_device;
+  const DeviceCard({Key key, this.sender_device}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -23,7 +24,7 @@ class DeviceCard extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(20),
               child: Text(
-                itemdata.deviceName,
+                sender_device.name,
                 style: TextStyle(
                     fontSize: getProportionateScreenWidth(25),
                     fontWeight: FontWeight.bold,
@@ -42,7 +43,7 @@ class DeviceCard extends StatelessWidget {
                     child: Container(
                       width: getProportionateScreenWidth(300),
                       child: Text(
-                        itemdata.deviceDis,
+                        sender_device.description,
                         style: TextStyle(
                             fontSize: getProportionateScreenWidth(17),
                             fontWeight: FontWeight.normal,
@@ -56,7 +57,7 @@ class DeviceCard extends StatelessWidget {
                     flex: 3,
                     child: PowerButton(
                       key: UniqueKey(),
-                      itemdata: itemdata,
+                      sender_device: sender_device,
                     )),
               ],
             )
