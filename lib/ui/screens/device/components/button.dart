@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:powera/bloc/navigation_bloc.dart';
 import 'package:powera/constants.dart';
 import 'package:powera/model/Led.dart';
 import 'package:powera/model/screen_model.dart';
@@ -9,6 +10,7 @@ import 'package:powera/bloc/power_button_bloc.dart';
 import 'package:powera/ui/screens/device/components/graph.dart';
 import 'package:powera/api/APICaller.dart';
 import 'package:powera/model/Led.dart';
+import 'package:powera/ui/screens/device/device_screen.dart';
 
 class PowerButton extends StatefulWidget {
   final ScreenModel itemdata;
@@ -31,9 +33,7 @@ class _PowerButtonState extends State<PowerButton> {
   @override
   void didUpdateWidget(PowerButton oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.itemdata.deviceName != widget.itemdata.deviceName) {
-      print("Chang button" + widget.itemdata.deviceName);
-    }
+    if (oldWidget.itemdata.deviceName != widget.itemdata.deviceName) {}
   }
 
   void changState() {
@@ -44,15 +44,18 @@ class _PowerButtonState extends State<PowerButton> {
 
   void tapFunction() {
     changState();
+    itemdata.isOn = !itemdata.isOn;
+    BlocProvider.of<NavBloc>(context)
+        .add(NavigateTo(getNavItemBaseOnItemData(itemdata)));
   }
 
   void getLedStatus() async {
-      Led led1 = await apicaller.get_led_device('1');
-      await print("LED 1 status: "+ led1.data);
-      _isOn = led1.data == '1' ? true: false;
-      await setState(() {
-        print("Init status: " + _isOn.toString());
-      });
+    Led led1 = await apicaller.get_led_device('1');
+    await print("LED 1 status: " + led1.data);
+    _isOn = led1.data == '1' ? true : false;
+    await setState(() {
+      print("Init status: " + _isOn.toString());
+    });
   }
 
   @override
