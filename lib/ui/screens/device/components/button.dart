@@ -8,36 +8,32 @@ import 'package:powera/size_config.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class PowerButton extends StatefulWidget {
-  final ScreenModel itemdata;
-  PowerButton({Key key, this.itemdata}) : super(key: key);
+  final Device sender_device;
+  PowerButton({Key key, this.sender_device}) : super(key: key);
   _PowerButtonState createState() =>
-      _PowerButtonState(this.itemdata.isOn, itemdata);
+      _PowerButtonState(false, sender_device);
 }
 
 class _PowerButtonState extends State<PowerButton> {
-  Device device;
+  Device sender_device;
   bool _isOn = false;
-  ScreenModel itemdata;
-  _PowerButtonState(this._isOn, this.itemdata);
+  _PowerButtonState(this._isOn, this.sender_device);
   void initState() {
     super.initState();
     setupDevice();
   }
   void setupDevice() async {
-
-    String deviceKey;
-
-    deviceKey = deviceKeyMap[itemdata.deviceName];
-    device = Device(deviceKey);
-    print("Device: " + deviceKey);
-    await device.getDevice();
+    // deviceKey = deviceKeyMap[itemdata.deviceName];
+    // device = Device(deviceKey);
+    // print("Device: " + deviceKey);
+    await sender_device.getDevice();
     if (this.mounted){
-      _isOn = device.data == 'ON' ? true: false;
+      _isOn = sender_device.data == 'ON' ? true: false;
       await setState(() {
         print("Init status: " + _isOn.toString());
       });
     }
-    print(device.data);
+    print(sender_device.data);
   }
 
 
@@ -45,8 +41,8 @@ class _PowerButtonState extends State<PowerButton> {
   @override
   void didUpdateWidget(PowerButton oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.itemdata.deviceName != widget.itemdata.deviceName) {
-      print("Chang button" + widget.itemdata.deviceName);
+    if (oldWidget.sender_device.name != widget.sender_device.name) {
+      print("Chang button" + widget.sender_device.name);
     }
   }
 
@@ -69,7 +65,7 @@ class _PowerButtonState extends State<PowerButton> {
         isOn: true,
         function: () async {
           tapFunction();
-          await device.updateDevice(itemdata.deviceName, 'OFF', '');
+          await sender_device.updateDevice(sender_device.name, 'OFF', '');
         },
       ));
     } else {
@@ -78,7 +74,7 @@ class _PowerButtonState extends State<PowerButton> {
           isOn: false,
           function: () async {
             tapFunction();
-            await device.updateDevice(itemdata.deviceName, 'ON', '');
+            await sender_device.updateDevice(sender_device.name, 'ON', '');
           });
     }
   }

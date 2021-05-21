@@ -61,19 +61,12 @@ class Body extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               HomeHeader(
-                itemData: getScreenModleFollowState(state),
+                // itemData: getScreenModleFollowState(state)
+                sender_device: getDevices(state)[0],
               ),
               ListAttributeCard(
                   attributeList:
                       getScreenModleFollowState(state).attributeList),
-              // Expanded(child: Center(
-              //   child: BlocBuilder<PowerButtonBloc_Shape, SomeGraph>(
-              //     builder: (context, shape) {
-              //       print("rebuild shape");
-              //       return shape;
-              //     },
-              //   ),
-              // ))
             ],
           ));
     });

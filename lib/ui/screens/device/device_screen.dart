@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:powera/bloc/navigation_bloc.dart';
+import 'package:powera/model/Device.dart';
 import 'package:powera/model/example_db.dart';
 import 'package:powera/model/screen_model.dart';
 import 'package:powera/ui/components/app_bar.dart';
@@ -33,6 +34,13 @@ class DeviceScreen extends StatelessWidget {
           appBar: buildAppBar(context)),
     );
   }
+}
+
+List<Device> getDevices(NavState state){
+  var lstDevice = deviceKeyMapByNavState[state.selectedItem];
+  Device sender_device = Device(lstDevice["SenderDevice"]);
+  Device receiver_device = Device(lstDevice["ReceiverDevice"]);
+  return [sender_device, receiver_device];
 }
 
 ScreenModel getScreenModleFollowState(NavState state) {
