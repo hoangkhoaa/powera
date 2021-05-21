@@ -123,12 +123,12 @@ List<ScreenModel> getListScreenModelFollowState(NavState state) {
 
 NavItem getNavItemBaseOnItemData(ScreenModel itemdata) {
   switch (itemdata.deviceName) {
-    case "Buzzel Horn":
+    case "Speaker buzzer":
       {
         return NavItem.heat_page;
       }
       break;
-    case "Heat sensor":
+    case "Temperature sensor":
       {
         return NavItem.heat_page1;
       }
@@ -143,12 +143,12 @@ NavItem getNavItemBaseOnItemData(ScreenModel itemdata) {
         return NavItem.light_page1;
       }
       break;
-    case "Water pumps":
+    case "Water pump":
       {
         return NavItem.humid_page;
       }
       break;
-    case "Land Humid sensor":
+    case "Humidity sensor":
       {
         return NavItem.humid_page1;
       }

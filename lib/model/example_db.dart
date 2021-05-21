@@ -1,25 +1,33 @@
 import 'screen_model.dart';
 
+var deviceKeyMap = {
+  "LED light" : "light.led",
+  "Light sensor": "light.light-sensor",
+  "Speaker buzzer": "heat.speaker-buzzer",
+  "Temperature sensor": "heat.temperature-sensor",
+  "Humidity sensor": "water.humidity-sensor",
+  "Water pump": "water.relay-circuit"
+};
 var dataDB = {
   'heat': [
     ScreenModel(
-        "Buzzel Horn",
+        "Speaker buzzer",
         "A horn to alert fire",
         [
           AttributeModel(attribute: "Status", value: "On"),
           AttributeModel(attribute: "Data", value: "99"),
           AttributeModel(attribute: "Auto", value: "On")
         ],
-        true),
+        false),
     ScreenModel(
-        "Heat sensor",
-        "Heat sensor for detecting fire",
+        "Temperature sensor",
+        "Temperature sensor for detecting fire",
         [
           AttributeModel(attribute: "Status", value: "On"),
           AttributeModel(attribute: "Temperature", value: "50"),
           AttributeModel(attribute: "Auto", value: "On"),
         ],
-        true)
+        false)
   ],
   'light': [
     ScreenModel(
@@ -29,7 +37,7 @@ var dataDB = {
           AttributeModel(attribute: "Status", value: "On"),
           AttributeModel(attribute: "Auto", value: "On")
         ],
-        true),
+        false),
     ScreenModel(
         "Light sensor",
         "Light sensor for mesuring light",
@@ -38,25 +46,25 @@ var dataDB = {
           AttributeModel(attribute: "Data", value: "50"),
           AttributeModel(attribute: "Auto", value: "On"),
         ],
-        true)
+        false)
   ],
   'humid': [
     ScreenModel(
-        "Water pumps",
-        "Water pumps for Dragon fruit garden",
+        "Water pump",
+        "Water pump for Dragon fruit garden",
         [
           AttributeModel(attribute: "Status", value: "On"),
           AttributeModel(attribute: "Auto", value: "On")
         ],
-        true),
+        false),
     ScreenModel(
-        "Land Humid sensor",
-        "Land humid sensor for mesuring humitdity",
+        "Humidity sensor",
+        "Humidity sensor for mesuring humitdity",
         [
           AttributeModel(attribute: "Status", value: "On"),
           AttributeModel(attribute: "Data", value: "50"),
           AttributeModel(attribute: "Auto", value: "On"),
         ],
-        true)
+        false)
   ],
 };
