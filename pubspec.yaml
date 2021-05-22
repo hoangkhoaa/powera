@@ -29,6 +29,7 @@ dependencies:
   equatable: ^2.0.0
   http: ^0.13.3
   flutter_easyloading: ^3.0.0
+  simple_animations: ^3.1.1
 
 
   # The following adds the Cupertino Icons font to your application.

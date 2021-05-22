@@ -1,12 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:powera/constants.dart';
-import 'package:powera/ui/screens/device/device_screen.dart';
 import 'package:powera/ui/screens/login/components/button_widget.dart';
 import 'package:powera/ui/screens/login/components/textfield_widget.dart';
 import 'package:powera/ui/screens/login/components/wave_widget.dart';
-
-import 'package:provider/provider.dart';
 
 class LoginScreen extends StatelessWidget {
   @override
@@ -38,7 +35,7 @@ class LoginScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  'Welcome to Powera',
+                  'Powera',
                   style: TextStyle(
                     color: Global.white,
                     fontSize: 40.0,

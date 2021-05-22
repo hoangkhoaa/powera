@@ -37,7 +37,7 @@ class CustomDashboard extends StatelessWidget {
               child: Text(
                 "Orther Devices",
                 style: TextStyle(
-                    fontSize: getProportionateScreenWidth(30),
+                    fontSize: getProportionateScreenWidth(25),
                     fontWeight: FontWeight.bold,
                     color: pTextColorGray2,
                     height: 0.5),
