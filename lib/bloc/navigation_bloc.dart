@@ -22,9 +22,7 @@ class NavBloc extends Bloc<NavEvent, NavState> {
   @override
   Stream<NavState> mapEventToState(NavEvent event) async* {
     if (event is NavigateTo) {
-      if (event.destination != state.selectedItem) {
-        yield NavState(event.destination);
-      }
+      yield NavState(event.destination);
     }
   }
 }

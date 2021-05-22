@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:powera/bloc/navigation_bloc.dart';
 import 'package:powera/constants.dart';
 import 'package:powera/model/Device.dart';
 import 'package:powera/model/example_db.dart';
@@ -22,21 +23,20 @@ class _PowerButtonState extends State<PowerButton> {
     super.initState();
     // setupDevice();
   }
+
   void setupDevice() async {
     // deviceKey = deviceKeyMap[itemdata.deviceName];
     // device = Device(deviceKey);
     // print("Device: " + deviceKey);
     await sender_device.getDevice();
-    if (this.mounted){
-      _isOn = sender_device.data == 'ON' ? true: false;
+    if (this.mounted) {
+      _isOn = sender_device.data == 'ON' ? true : false;
       await setState(() {
         print("Init status: " + _isOn.toString());
       });
     }
     print(sender_device.data);
   }
-
-
 
   @override
   void didUpdateWidget(PowerButton oldWidget) {
