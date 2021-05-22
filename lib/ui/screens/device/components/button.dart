@@ -11,16 +11,16 @@ class PowerButton extends StatefulWidget {
   final Device sender_device;
   PowerButton({Key key, this.sender_device}) : super(key: key);
   _PowerButtonState createState() =>
-      _PowerButtonState(false, sender_device);
+      _PowerButtonState(sender_device.data == "ON" ? true : false, sender_device);
 }
 
 class _PowerButtonState extends State<PowerButton> {
   Device sender_device;
-  bool _isOn = false;
+  bool _isOn;
   _PowerButtonState(this._isOn, this.sender_device);
   void initState() {
     super.initState();
-    setupDevice();
+    // setupDevice();
   }
   void setupDevice() async {
     // deviceKey = deviceKeyMap[itemdata.deviceName];
