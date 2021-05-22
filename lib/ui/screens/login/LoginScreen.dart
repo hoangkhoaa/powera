@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:powera/constants.dart';
-import 'package:powera/ui/screens/device/device_screen.dart';
 import 'package:powera/ui/screens/login/components/button_widget.dart';
 import 'package:powera/ui/screens/login/components/textfield_widget.dart';
 import 'package:powera/ui/screens/login/components/wave_widget.dart';

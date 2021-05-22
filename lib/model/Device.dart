@@ -6,6 +6,7 @@ import 'package:powera/model/screen_model.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class Device {
+
   String _api_address = api_url;
   String deviceKey;
   String _id;
@@ -17,7 +18,6 @@ class Device {
 
   Device(String deviceKey){
     this.deviceKey = deviceKey;
-    // Default valuse
     this.name = deviceKeyMap.keys.firstWhere(
             (k) => deviceKeyMap[k] == this.deviceKey, orElse: () => null);
     this.description = deviceDescriptionMap[this.deviceKey];
@@ -26,17 +26,14 @@ class Device {
   Future<void> getDevice() async {
     final client = RetryClient(http.Client());
     try {
+
       var url = Uri.parse(this._api_address + '/get_device');
       String private_key = await storage.read(key: 'private_key');
-      // String private_key = "x";
-      print("Private key: " + private_key);
       var response = await http.post(url, body: {'private_key': private_key ,'device': deviceKey});
       Map resData = jsonDecode(response.body);
-      // print(response.body.toString());
       this._id = resData['_id'];
-      this.name = resData['name'] == null? this.name : resData['name'];
+      this.name = resData['name'] == null ? this.name : resData['name'];
       this.data = resData['data'];
-      // this.unit = resData['unit'];
     } finally {
       client.close();
     }

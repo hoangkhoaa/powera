@@ -71,7 +71,7 @@ class OfflineCard extends StatelessWidget {
                         Center(
                           child: Text("$name",
                               style: TextStyle(
-                                  fontSize: getProportionateScreenWidth(17),
+                                  fontSize: getProportionateScreenWidth(12),
                                   fontWeight: FontWeight.bold,
                                   color: pItemOffColor,
                                   height: 1)),
@@ -79,7 +79,7 @@ class OfflineCard extends StatelessWidget {
                         Center(
                           child: Text("Status:  Off",
                               style: TextStyle(
-                                  fontSize: getProportionateScreenWidth(17),
+                                  fontSize: getProportionateScreenWidth(12),
                                   fontWeight: FontWeight.normal,
                                   color: pTextColorGray3,
                                   height: 1)),
@@ -137,7 +137,7 @@ class _OnlineCardState extends State<OnlineCard> with TickerProviderStateMixin {
                                 child: Text("$name",
                                     style: TextStyle(
                                         fontSize:
-                                            getProportionateScreenWidth(17),
+                                            getProportionateScreenWidth(12),
                                         fontWeight: FontWeight.bold,
                                         color: pItemOnColor,
                                         height: 1)),
@@ -146,7 +146,7 @@ class _OnlineCardState extends State<OnlineCard> with TickerProviderStateMixin {
                                 child: Text("Status:  On",
                                     style: TextStyle(
                                         fontSize:
-                                            getProportionateScreenWidth(17),
+                                            getProportionateScreenWidth(12),
                                         fontWeight: FontWeight.normal,
                                         color: pTextColorGray3,
                                         height: 1)),

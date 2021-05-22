@@ -100,14 +100,39 @@ class _SettingCardState extends State<SettingCard> {
                   ),
                 ],
               ),
-              ButtonItem(
-                isOn: isActive,
-                function: () {
-                  setState(() {
-                    requestFunction();
-                    isActive = !isActive;
-                  });
-                },
+              // ButtonItem(
+              //   isOn: isActive,
+              //   function: () {
+              //     setState(() {
+              //       requestFunction();
+              //       isActive = !isActive;
+              //     });
+              //   },
+              // )
+              VerticalSpacing(of: 15),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    "Auto",
+                    style: TextStyle(
+                        fontSize: getProportionateScreenWidth(15),
+                        fontWeight: FontWeight.bold,
+                        color: isActive ? pItemOnColor : pItemOffColor,
+                        height: 0.5),
+                  ),
+                  Switch(
+                      activeColor: Colors.white,
+                      activeTrackColor: pItemOnColor,
+                      inactiveTrackColor: pItemOffColor,
+                      value: isActive,
+                      onChanged: (bool temp) {
+                        setState(() {
+                          isActive = !isActive;
+                        });
+                      })
+                ],
               )
             ],
           ),

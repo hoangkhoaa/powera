@@ -37,7 +37,6 @@ class DeviceScreen extends StatelessWidget {
 }
 
 Future<List<Device>> getDevices(NavState state) async {
-  print("Calleddddddddddddd");
   var lstDevice = deviceKeyMapByNavState[state.selectedItem];
   SenderDevice sender_device = SenderDevice(lstDevice["SenderDevice"]);
   ReceiverDevice receiver_device = ReceiverDevice(lstDevice["ReceiverDevice"]);
