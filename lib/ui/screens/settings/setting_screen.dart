@@ -6,13 +6,13 @@ import 'setting_card.dart';
 
 import '../../../constants.dart';
 
-class TestSettingScafold extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    SizeConfig().init(context);
-    return Scaffold(extendBodyBehindAppBar: true, body: SettingScreen());
-  }
-}
+// class TestSettingScafold extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     SizeConfig().init(context);
+//     return Scaffold(extendBodyBehindAppBar: true, body: SettingScreen());
+//   }
+// }
 
 class SettingScreen extends StatelessWidget {
   @override
@@ -40,6 +40,9 @@ class SettingScreen extends StatelessWidget {
                   minVal: 0,
                   curVal: 10,
                   isActive: true,
+                  requestFunction: () {
+                    print("Request to turn on/of goes here");
+                  },
                 ),
                 const Divider(
                   color: pItemColorChose,
@@ -63,6 +66,9 @@ class SettingScreen extends StatelessWidget {
                   minVal: 0,
                   curVal: 10,
                   isActive: true,
+                  requestFunction: () {
+                    print("Request to turn on/of goes here");
+                  },
                 ),
               ],
             ),

@@ -10,6 +10,7 @@ class SettingCard extends StatefulWidget {
   final double maxVal;
   final double minVal;
   final double curVal;
+  final Function requestFunction;
   bool isActive;
   SettingCard(
       {Key key,
@@ -17,11 +18,12 @@ class SettingCard extends StatefulWidget {
       this.minVal,
       this.curVal,
       this.maxVal,
-      this.isActive});
+      this.isActive,
+      this.requestFunction});
 
   @override
-  _SettingCardState createState() => _SettingCardState(
-      this.lable, this.minVal, this.curVal, this.maxVal, this.isActive = false);
+  _SettingCardState createState() => _SettingCardState(this.lable, this.minVal,
+      this.curVal, this.maxVal, this.isActive = false, requestFunction);
 }
 
 class _SettingCardState extends State<SettingCard> {
@@ -29,9 +31,10 @@ class _SettingCardState extends State<SettingCard> {
   final double maxVal;
   final double minVal;
   final double curVal;
+  final Function requestFunction;
   bool isActive;
-  _SettingCardState(
-      this.lable, this.minVal, this.curVal, this.maxVal, this.isActive);
+  _SettingCardState(this.lable, this.minVal, this.curVal, this.maxVal,
+      this.isActive, this.requestFunction);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -101,6 +104,7 @@ class _SettingCardState extends State<SettingCard> {
                 isOn: isActive,
                 function: () {
                   setState(() {
+                    requestFunction();
                     isActive = !isActive;
                   });
                 },
