@@ -58,6 +58,11 @@ class _PowerButtonState extends State<PowerButton> {
 
   @override
   Widget build(BuildContext context) {
+    if (sender_device.data == "") {
+      return CircularProgressIndicator(
+        // valueColor: AlwaysStoppedAnimation(Colors.green),
+      );
+    }
     if (_isOn) {
       print("State button  " + _isOn.toString());
       return Test(

@@ -18,10 +18,12 @@ var deviceDescriptionMap = {
   "water.relay-circuit": "Water pump for Dragon fruit garden"
 };
 
+
+
 var deviceKeyMapByNavState = {
   NavItem.light_page : {"SenderDevice": "light.led", "ReceiverDevice": "light.light-sensor"},
   NavItem.heat_page : {"SenderDevice": "heat.speaker-buzzer", "ReceiverDevice": "heat.temperature-sensor"},
-  NavItem.humid_page : {"SenderDevice": "water.humidity-sensor", "ReceiverDevice": "water.relay-circuit"},
+  NavItem.humid_page : {"SenderDevice": "water.relay-circuit", "ReceiverDevice": "water.humidity-sensor"},
 };
 var dataDB = {
   'heat': [

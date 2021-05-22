@@ -38,7 +38,7 @@ class LoginScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  'Welcome to Powera',
+                  'Powera',
                   style: TextStyle(
                     color: Global.white,
                     fontSize: 40.0,
