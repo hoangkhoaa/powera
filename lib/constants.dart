@@ -15,3 +15,9 @@ const pAttributeLowColor = Color(0xFF219653);
 const pAttributeMediumColor = Color(0xFFF2C94C);
 
 const kDefaultPaddin = 20.0;
+
+class Global {
+  static const Color white = const Color(0xffffffff);
+  static const Color mediumBlue = const Color(0xFF4DA7D6);
+  static const List validEmail = ['test@gmail.com'];
+}

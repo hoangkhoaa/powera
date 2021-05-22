@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:powera/ui/screens/device/device_screen.dart';
 import 'package:bloc/bloc.dart';
+import 'package:powera/ui/screens/device/device_screen.dart';
+import 'package:powera/ui/screens/login/LoginScreen.dart';
 
 class ButtonObserver extends BlocObserver {
   @override
@@ -28,7 +29,11 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: DeviceScreen(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => LoginScreen(),
+        '/DeviceScreen': (context) => DeviceScreen(),
+      },
     );
   }
 }
