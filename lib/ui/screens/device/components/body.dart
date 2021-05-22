@@ -64,16 +64,24 @@ class Body extends StatelessWidget {
             if (state.selectedItem == NavItem.setting_page) {
               return SettingScreen();
             }
-            if (snapshot.data != null &&
-                snapshot.data[0].deviceKey ==
-                    deviceKeyMapByNavState[state.selectedItem]
-                        ["SenderDevice"]) {
+            if (snapshot.data != null) {
               print(state.selectedItem);
               print("Snapshot data: " + snapshot.data.toString());
               print("Current device: " + snapshot.data[0].deviceKey);
-              List<Device> lstDevices = snapshot.data;
-              Device sender_device = lstDevices[0];
-              Device receiver_device = lstDevices[1];
+              List<Device> lstDevices;
+              SenderDevice sender_device;
+              ReceiverDevice receiver_device;
+              if (snapshot.data[0].deviceKey ==
+                  deviceKeyMapByNavState[state.selectedItem]
+                  ["SenderDevice"]){
+                List<Device> lstDevices = snapshot.data;
+                sender_device = lstDevices[0];
+                receiver_device = lstDevices[1];
+              }
+              else {
+                sender_device = SenderDevice(deviceKeyMapByNavState[state.selectedItem]["SenderDevice"]);
+                receiver_device = ReceiverDevice(deviceKeyMapByNavState[state.selectedItem]["ReceiverDevice"]);
+              }
               return SafeArea(
                   top: false,
                   child: Column(
@@ -85,8 +93,9 @@ class Body extends StatelessWidget {
                         sender_device: sender_device,
                       ),
                       ListAttributeCard(
-                          attributeList:
-                              getScreenModleFollowState(state).attributeList),
+                        sender_device: sender_device,
+                        receiver_device: receiver_device,
+                      )
                     ],
                   ));
             } else {
@@ -102,8 +111,17 @@ class Body extends StatelessWidget {
 }
 
 class ListAttributeCard extends StatelessWidget {
-  final List<AttributeModel> attributeList;
-  ListAttributeCard({this.attributeList});
+  List<AttributeModel> attributeList;
+  final SenderDevice sender_device;
+  final ReceiverDevice receiver_device;
+  ListAttributeCard({this.sender_device, this.receiver_device}) {
+    this.attributeList = [
+      AttributeModel(attribute: 'Status', value: sender_device.data == 'ON' ? 'On' : 'Off'),
+      // receiver_device.attribute,
+      AttributeModel(attribute: receiver_device.dataLabel, value: receiver_device.data, minValue: receiver_device.minValue, maxValue: receiver_device.maxValue, unit: receiver_device.unit),
+      AttributeModel(attribute: 'Auto', value: sender_device.auto == true ? 'On' : 'Off')
+    ];
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -121,8 +139,9 @@ class ListAttributeCard extends StatelessWidget {
                 return AttributeCard(
                   attribute: attributeList[index].attribute,
                   value: attributeList[index].value,
-                  maxValue: attributeList[index].value,
-                  mintValue: attributeList[index].value,
+                  unit: attributeList[index].unit,
+                  maxValue: attributeList[index].maxValue,
+                  mintValue: attributeList[index].minValue,
                 );
               }),
         ));

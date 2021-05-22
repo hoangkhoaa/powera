@@ -9,8 +9,9 @@ class AttributeCard extends StatelessWidget {
   final String value;
   final String maxValue;
   final String mintValue;
+  final String unit;
   const AttributeCard(
-      {Key key, this.attribute, this.value, this.maxValue, this.mintValue})
+      {Key key, this.attribute, this.value, this.maxValue, this.mintValue, this.unit})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -48,7 +49,7 @@ class AttributeCard extends StatelessWidget {
                   Flexible(
                     flex: 5,
                     child: Center(
-                      child: Text("$value",
+                      child: Text("$value $unit",
                           style: TextStyle(
                               fontSize: getProportionateScreenWidth(17),
                               fontWeight: FontWeight.bold,
@@ -67,7 +68,11 @@ Color getValueCorlor(String val, String maxVal, String minVal) {
     return pAttributeLowColor;
   } else if (val == "Off") {
     return pAttributeHighColor;
-  } else {
+  } else if (val == "" || val == null) {
+    return pAttributeLowColor;
+  }
+  else {
+    print(val);
     var intVal = int.parse(val);
     var intMaxVal = int.parse(maxVal);
     var intMinVal = int.parse(minVal);

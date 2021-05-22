@@ -35,7 +35,7 @@ class CustomDashboard extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(20),
               child: Text(
-                "Orther Devices",
+                "Other Devices",
                 style: TextStyle(
                     fontSize: getProportionateScreenWidth(25),
                     fontWeight: FontWeight.bold,

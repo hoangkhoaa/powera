@@ -6,7 +6,7 @@ import 'device_card.dart';
 import 'package:powera/model/Device.dart';
 
 class HomeHeader extends StatelessWidget {
-  final Device sender_device;
+  final SenderDevice sender_device;
 
   const HomeHeader({
     Key key,
