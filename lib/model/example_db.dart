@@ -1,5 +1,10 @@
 import 'screen_model.dart';
 import 'package:powera/bloc/navigation_bloc.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+final storage = new FlutterSecureStorage();
+String api_url = 'http://192.168.1.2:5000';
+
 var deviceKeyMap = {
   "LED light" : "light.led",
   "Light sensor": "light.light-sensor",

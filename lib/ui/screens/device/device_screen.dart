@@ -17,7 +17,7 @@ class DeviceScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<NavBloc>(
-      create: (context) => NavBloc(NavState(NavItem.heat_page)),
+      create: (context) => NavBloc(NavState(NavItem.light_page)),
       child: Scaffold(
           extendBodyBehindAppBar: true,
           body: BlocProvider<PowerButtonBloc_Shape>(
@@ -37,6 +37,7 @@ class DeviceScreen extends StatelessWidget {
 }
 
 Future<List<Device>> getDevices(NavState state) async {
+  print("Calleddddddddddddd");
   var lstDevice = deviceKeyMapByNavState[state.selectedItem];
   SenderDevice sender_device = SenderDevice(lstDevice["SenderDevice"]);
   ReceiverDevice receiver_device = ReceiverDevice(lstDevice["ReceiverDevice"]);

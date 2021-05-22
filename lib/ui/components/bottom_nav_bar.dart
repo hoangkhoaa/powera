@@ -52,11 +52,11 @@ class AnimatedBottomNav extends StatelessWidget {
             child: InkWell(
               onTap: () {
                 onChange(0);
-                handleItemClick(context, NavItem.heat_page);
+                handleItemClick(context, NavItem.light_page);
               },
               child: BottomNavItem(
-                icon: "assets/icons/ic_heat.svg",
-                title: "Heat",
+                icon: "assets/icons/ic_light.svg",
+                title: "Light",
                 isActive: currentIndex == 0,
               ),
             ),
@@ -65,11 +65,11 @@ class AnimatedBottomNav extends StatelessWidget {
             child: InkWell(
               onTap: () {
                 onChange(1);
-                handleItemClick(context, NavItem.light_page);
+                handleItemClick(context, NavItem.heat_page);
               },
               child: BottomNavItem(
-                icon: "assets/icons/ic_light.svg",
-                title: "Light",
+                icon: "assets/icons/ic_heat.svg",
+                title: "Heat",
                 isActive: currentIndex == 1,
               ),
             ),

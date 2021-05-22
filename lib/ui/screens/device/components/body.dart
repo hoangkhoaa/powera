@@ -116,7 +116,7 @@ class ListAttributeCard extends StatelessWidget {
   final ReceiverDevice receiver_device;
   ListAttributeCard({this.sender_device, this.receiver_device}) {
     this.attributeList = [
-      AttributeModel(attribute: 'Status', value: sender_device.data == 'ON' ? 'On' : 'Off'),
+      // AttributeModel(attribute: 'Status', value: sender_device.data == 'ON' ? 'On' : 'Off'),
       // receiver_device.attribute,
       AttributeModel(attribute: receiver_device.dataLabel, value: receiver_device.data, minValue: receiver_device.minValue, maxValue: receiver_device.maxValue, unit: receiver_device.unit),
       AttributeModel(attribute: 'Auto', value: sender_device.auto == true ? 'On' : 'Off')

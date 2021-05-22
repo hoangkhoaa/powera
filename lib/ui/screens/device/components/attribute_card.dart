@@ -15,6 +15,7 @@ class AttributeCard extends StatelessWidget {
       : super(key: key);
   @override
   Widget build(BuildContext context) {
+    String data = value != "" ? "$value $unit" : "";
     return Card(
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5),
@@ -49,7 +50,7 @@ class AttributeCard extends StatelessWidget {
                   Flexible(
                     flex: 5,
                     child: Center(
-                      child: Text("$value $unit",
+                      child: Text(data,
                           style: TextStyle(
                               fontSize: getProportionateScreenWidth(17),
                               fontWeight: FontWeight.bold,

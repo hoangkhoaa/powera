@@ -5,15 +5,25 @@ import 'package:powera/ui/screens/device/device_screen.dart';
 import 'package:powera/ui/screens/login/components/button_widget.dart';
 import 'package:powera/ui/screens/login/components/textfield_widget.dart';
 import 'package:powera/ui/screens/login/components/wave_widget.dart';
-
+import 'package:powera/model/User.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-class LoginScreen extends StatelessWidget {
+
+
+class LoginScreen extends StatefulWidget {
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  String username = "";
+  String password = "";
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final bool keyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
-
+    final storage = new FlutterSecureStorage();
     return Scaffold(
       backgroundColor: Global.white,
       body: Stack(
@@ -54,11 +64,11 @@ class LoginScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 TextFieldWidget(
-                  hintText: 'Email',
+                  hintText: 'Username',
                   obscureText: false,
-                  prefixIconData: Icons.mail_outline,
+                  prefixIconData: Icons.verified_user,
                   suffixIconData: Icons.check,
-                  onChanged: (value) {},
+                  onChanged: (value) {username = value;},
                 ),
                 SizedBox(
                   height: 10.0,
@@ -69,6 +79,7 @@ class LoginScreen extends StatelessWidget {
                     TextFieldWidget(
                       hintText: 'Password',
                       obscureText: true,
+                      onChanged: (value) {password = value;},
                     ),
                     SizedBox(
                       height: 10.0,
@@ -87,8 +98,23 @@ class LoginScreen extends StatelessWidget {
                 ButtonWidget(
                   title: 'Login',
                   hasBorder: false,
-                  function: () {
-                    Navigator.popAndPushNamed(context, '/DeviceScreen');
+                  function: () async {
+                    User user = await login(username, password);
+                    if (user == null) {
+                      showDialog(
+                          context: context,
+                          builder: (_) => AlertDialog(
+                            title: Center(child: Text("Authentication failed.", textAlign: TextAlign.center,)),
+                          ),
+                      );
+                    } else {
+                      await storage.write(key: 'private_key', value: user.private_key);
+                      await storage.write(key: 'username', value: user.username);
+                      await storage.write(key: 'name', value: user.name);
+                      await storage.write(key: 'private_key', value: user.private_key);
+                      await storage.write(key: 'role', value: user.role);
+                      Navigator.popAndPushNamed(context, '/DeviceScreen');
+                    }
                   },
                 ),
                 SizedBox(
