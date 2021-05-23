@@ -8,7 +8,8 @@ const pItemColorChose = Color(0xFF4DA7D6);
 const pItemOnColor = Color(0xFF6FCF97);
 const pItemOffColor = Color(0xFFEB5757);
 
-const pBackGroundColor = Color(0xFFE3FDFD);
+const pBackGroundColor = Color(0xFFa4ebf3);
+const pBackGourndColor1 = Color(0xFFE3FDFD);
 
 const pAttributeHighColor = Color(0xFFEB5757);
 const pAttributeLowColor = Color(0xFF219653);
