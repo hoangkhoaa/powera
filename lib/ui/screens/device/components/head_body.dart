@@ -4,6 +4,7 @@ import 'package:powera/model/screen_model.dart';
 import 'package:powera/size_config.dart';
 import 'package:powera/ui/screens/login/components/wave_widget.dart';
 import 'device_card.dart';
+import 'package:delayed_display/delayed_display.dart';
 import 'package:powera/model/Device.dart';
 
 class HomeHeader extends StatelessWidget {
@@ -90,6 +91,7 @@ class HomeHeader extends StatelessWidget {
                 width: 999,
                 height: 999,
               )),
+
           Positioned(
             bottom: getProportionateScreenHeight(140),
             child: AnimatedContainer(
@@ -97,7 +99,7 @@ class HomeHeader extends StatelessWidget {
               curve: Curves.easeOutQuad,
               child: WaveWidget(
                 size: Size(size.width, getProportionateScreenHeight(350)),
-                yOffset: size.height / 3.1,
+                yOffset: size.height / 3.3,
                 color: pBackGourndColor1,
               ),
             ),
@@ -105,7 +107,7 @@ class HomeHeader extends StatelessWidget {
           Positioned(
             bottom: getProportionateScreenHeight(140),
             child: AnimatedContainer(
-              duration: Duration(milliseconds: 500),
+              duration: Duration(milliseconds: 600),
               curve: Curves.easeOutQuad,
               child: WaveWidget(
                 size: Size(size.width, getProportionateScreenHeight(350)),
