@@ -5,7 +5,7 @@ import 'package:powera/model/example_db.dart';
 import 'package:powera/model/screen_model.dart';
 
 class Device {
-  String _api_address = 'http://172.18.0.3:5000';
+  String _api_address = api_url;
   String deviceKey;
   String id;
   String name;
