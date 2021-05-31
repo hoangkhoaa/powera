@@ -3,32 +3,32 @@ import 'package:powera/bloc/navigation_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 final storage = new FlutterSecureStorage();
-String api_url = 'http://192.168.1.2:5000';
+String api_url = 'http://192.168.1.7:5000';
 
 var deviceKeyMap = {
-  "LED light" : "light.led",
-  "Light sensor": "light.light-sensor",
-  "Speaker buzzer": "heat.speaker-buzzer",
-  "Temperature sensor": "heat.temperature-sensor",
-  "Humidity sensor": "water.humidity-sensor",
-  "Water pump": "water.relay-circuit"
+  "LED light" : "bk-iot-led",
+  "Light sensor": "bk-iot-light",
+  "Speaker buzzer": "bk-iot-speaker",
+  "Temperature sensor": "bk-iot-temp",
+  "Humidity sensor": "bk-iot-humid",
+  "Water pump": "bk-iot-relay"
 };
 
 var deviceDescriptionMap = {
-  "light.led" : "LED light to enlight Dragon fruit garden",
-  "light.light-sensor": "Light sensor for mesuring light",
-  "heat.speaker-buzzer": "A speaker to alert fire",
-  "heat.temperature-sensor": "Temperature sensor for detecting fire",
-  "water.humidity-sensor": "Humidity sensor for mesuring humitdity",
-  "water.relay-circuit": "Water pump for Dragon fruit garden"
+  "bk-iot-led" : "LED light to enlight Dragon fruit garden",
+  "bk-iot-light": "Light sensor for mesuring light",
+  "bk-iot-speaker": "A speaker to alert fire",
+  "bk-iot-temp": "Temperature sensor for detecting fire",
+  "bk-iot-humid": "Humidity sensor for mesuring humitdity",
+  "bk-iot-relay": "Water pump for Dragon fruit garden"
 };
 
 
 
 var deviceKeyMapByNavState = {
-  NavItem.light_page : {"SenderDevice": "light.led", "ReceiverDevice": "light.light-sensor"},
-  NavItem.heat_page : {"SenderDevice": "heat.speaker-buzzer", "ReceiverDevice": "heat.temperature-sensor"},
-  NavItem.humid_page : {"SenderDevice": "water.relay-circuit", "ReceiverDevice": "water.humidity-sensor"},
+  NavItem.light_page : {"SenderDevice": "bk-iot-led", "ReceiverDevice": "bk-iot-light"},
+  NavItem.heat_page : {"SenderDevice": "bk-iot-speaker", "ReceiverDevice": "bk-iot-temp"},
+  NavItem.humid_page : {"SenderDevice": "bk-iot-relay", "ReceiverDevice": "bk-iot-humid"},
 };
 var dataDB = {
   'heat': [

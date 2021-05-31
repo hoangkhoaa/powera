@@ -9,10 +9,10 @@ class Device {
 
   String _api_address = api_url;
   String deviceKey;
-  String _id;
+  String id;
   String name;
   String description;
-  String data = "";
+  String data = "0";
   String unit = "";
   bool auto = false;
 
@@ -30,8 +30,9 @@ class Device {
       var url = Uri.parse(this._api_address + '/get_device');
       String private_key = await storage.read(key: 'private_key');
       var response = await http.post(url, body: {'private_key': private_key ,'device': deviceKey});
+      print(response.body);
       Map resData = jsonDecode(response.body);
-      this._id = resData['_id'];
+      this.id = resData['id'];
       this.name = resData['name'] == null ? this.name : resData['name'];
       this.data = resData['data'];
     } finally {
@@ -46,7 +47,7 @@ class Device {
       var url = Uri.parse(this._api_address + '/update_device');
       String private_key = await storage.read(key: 'private_key');
       var response = await http.post(url,
-          body: {'private_key': private_key,'device': this.deviceKey, '_id': this._id, 'name': name, 'data': data, 'unit': unit});
+          body: {'private_key': private_key,'device': this.deviceKey, 'id': this.id, 'name': name, 'data': data, 'unit': unit});
       // print('Response status: ${response.statusCode}');
       print('Response body: ${response.body}');
       await getDevice();
@@ -68,21 +69,21 @@ class ReceiverDevice extends Device {
   String maxValue;
   ReceiverDevice (String deviceKey): super(deviceKey) {
   switch (deviceKey) {
-    case 'light.light-sensor':
+    case 'bk-iot-light':
       {
         this.minValue = "0";
         this.maxValue = "1023";
         this.dataLabel = "Brightness";
       }
       break;
-    case 'heat.temperature-sensor': {
+    case 'bk-iot-temp': {
         this.minValue = "0";
         this.maxValue = "100";
         this.dataLabel = "Temperature";
         this.unit = "°C";
       }
     break;
-    case 'water.humidity-sensor':
+    case 'bk-iot-humid':
       {
         this.minValue = "0";
         this.maxValue = "100";

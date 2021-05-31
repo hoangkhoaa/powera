@@ -12,7 +12,7 @@ class PowerButton extends StatefulWidget {
   final Device sender_device;
   PowerButton({Key key, this.sender_device}) : super(key: key);
   _PowerButtonState createState() =>
-      _PowerButtonState(sender_device.data == "ON" ? true : false, sender_device);
+      _PowerButtonState(int.parse(sender_device.data) > 0 ? true : false, sender_device);
 }
 
 class _PowerButtonState extends State<PowerButton> {
@@ -30,7 +30,7 @@ class _PowerButtonState extends State<PowerButton> {
     // print("Device: " + deviceKey);
     await sender_device.getDevice();
     if (this.mounted) {
-      _isOn = sender_device.data == 'ON' ? true : false;
+      _isOn = int.parse(sender_device.data) > 0 ? true : false;
       await setState(() {
         print("Init status: " + _isOn.toString());
       });
@@ -70,7 +70,7 @@ class _PowerButtonState extends State<PowerButton> {
         isOn: true,
         function: () async {
           tapFunction();
-          await sender_device.updateDevice(sender_device.name, 'OFF', '');
+          await sender_device.updateDevice(sender_device.name, '0', '');
         },
       ));
     } else {
@@ -79,7 +79,7 @@ class _PowerButtonState extends State<PowerButton> {
           isOn: false,
           function: () async {
             tapFunction();
-            await sender_device.updateDevice(sender_device.name, 'ON', '');
+            await sender_device.updateDevice(sender_device.name, '1023', '');
           });
     }
   }
