@@ -7,21 +7,20 @@ class WaveWidget extends StatefulWidget {
   final Size size;
   final double yOffset;
   final Color color;
+  final double waveSpeedTimes;
 
-  WaveWidget({
-    this.size,
-    this.yOffset,
-    this.color,
-  });
+  WaveWidget({this.size, this.yOffset, this.color, this.waveSpeedTimes = 1});
 
   @override
-  _WaveWidgetState createState() => _WaveWidgetState();
+  _WaveWidgetState createState() =>
+      _WaveWidgetState(waveSpeedTimes: this.waveSpeedTimes);
 }
 
 class _WaveWidgetState extends State<WaveWidget> with TickerProviderStateMixin {
   AnimationController animationController;
   List<Offset> wavePoints = [];
-
+  final double waveSpeedTimes;
+  _WaveWidgetState({this.waveSpeedTimes = 1});
   @override
   void initState() {
     super.initState();

@@ -8,8 +8,6 @@ import 'package:powera/model/User.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-
-
 class LoginScreen extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -67,7 +65,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   obscureText: false,
                   prefixIconData: Icons.verified_user,
                   suffixIconData: Icons.check,
-                  onChanged: (value) {username = value;},
+                  onChanged: (value) {
+                    username = value;
+                  },
                 ),
                 SizedBox(
                   height: 10.0,
@@ -78,7 +78,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     TextFieldWidget(
                       hintText: 'Password',
                       obscureText: true,
-                      onChanged: (value) {password = value;},
+                      onChanged: (value) {
+                        password = value;
+                      },
                     ),
                     SizedBox(
                       height: 10.0,
@@ -101,16 +103,23 @@ class _LoginScreenState extends State<LoginScreen> {
                     User user = await login(username, password);
                     if (user == null) {
                       showDialog(
-                          context: context,
-                          builder: (_) => AlertDialog(
-                            title: Center(child: Text("Authentication failed.", textAlign: TextAlign.center,)),
-                          ),
+                        context: context,
+                        builder: (_) => AlertDialog(
+                          title: Center(
+                              child: Text(
+                            "Authentication failed.",
+                            textAlign: TextAlign.center,
+                          )),
+                        ),
                       );
                     } else {
-                      await storage.write(key: 'private_key', value: user.private_key);
-                      await storage.write(key: 'username', value: user.username);
+                      await storage.write(
+                          key: 'private_key', value: user.private_key);
+                      await storage.write(
+                          key: 'username', value: user.username);
                       await storage.write(key: 'name', value: user.name);
-                      await storage.write(key: 'private_key', value: user.private_key);
+                      await storage.write(
+                          key: 'private_key', value: user.private_key);
                       await storage.write(key: 'role', value: user.role);
                       Navigator.popAndPushNamed(context, '/DeviceScreen');
                     }
@@ -122,6 +131,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 ButtonWidget(
                   title: 'Sign Up',
                   hasBorder: true,
+                  function: () {
+                    Navigator.popAndPushNamed(context, '/DeviceScreen');
+                  },
                 ),
               ],
             ),
