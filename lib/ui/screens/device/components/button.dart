@@ -79,7 +79,7 @@ class _PowerButtonState extends State<PowerButton> {
           isOn: false,
           function: () async {
             tapFunction();
-            await sender_device.updateDevice(sender_device.name, '1023', '');
+            await sender_device.updateDevice(sender_device.name, '1', '');
           });
     }
   }
