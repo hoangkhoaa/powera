@@ -72,15 +72,16 @@ class Body extends StatelessWidget {
               SenderDevice sender_device;
               ReceiverDevice receiver_device;
               if (snapshot.data[0].deviceKey ==
-                  deviceKeyMapByNavState[state.selectedItem]
-                  ["SenderDevice"]){
+                  deviceKeyMapByNavState[state.selectedItem]["SenderDevice"]) {
                 List<Device> lstDevices = snapshot.data;
                 sender_device = lstDevices[0];
                 receiver_device = lstDevices[1];
-              }
-              else {
-                sender_device = SenderDevice(deviceKeyMapByNavState[state.selectedItem]["SenderDevice"]);
-                receiver_device = ReceiverDevice(deviceKeyMapByNavState[state.selectedItem]["ReceiverDevice"]);
+              } else {
+                sender_device = SenderDevice(
+                    deviceKeyMapByNavState[state.selectedItem]["SenderDevice"]);
+                receiver_device = ReceiverDevice(
+                    deviceKeyMapByNavState[state.selectedItem]
+                        ["ReceiverDevice"]);
               }
               return SafeArea(
                   top: false,
@@ -118,8 +119,14 @@ class ListAttributeCard extends StatelessWidget {
     this.attributeList = [
       // AttributeModel(attribute: 'Status', value: sender_device.data == 'ON' ? 'On' : 'Off'),
       // receiver_device.attribute,
-      AttributeModel(attribute: receiver_device.dataLabel, value: receiver_device.data, minValue: receiver_device.minValue, maxValue: receiver_device.maxValue, unit: receiver_device.unit),
-      AttributeModel(attribute: 'Auto', value: sender_device.auto == true ? 'On' : 'Off')
+      AttributeModel(
+          attribute: receiver_device.dataLabel,
+          value: receiver_device.data,
+          minValue: receiver_device.minValue,
+          maxValue: receiver_device.maxValue,
+          unit: receiver_device.unit),
+      AttributeModel(
+          attribute: 'Auto', value: sender_device.auto == true ? 'On' : 'Off')
     ];
   }
   @override
@@ -136,12 +143,21 @@ class ListAttributeCard extends StatelessWidget {
               scrollDirection: Axis.vertical,
               itemCount: attributeList.length,
               itemBuilder: (context, index) {
-                return AttributeCard(
-                  attribute: attributeList[index].attribute,
-                  value: attributeList[index].value,
-                  unit: attributeList[index].unit,
-                  maxValue: attributeList[index].maxValue,
-                  mintValue: attributeList[index].minValue,
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    AttributeCard(
+                      attribute: attributeList[index].attribute,
+                      value: attributeList[index].value,
+                      unit: attributeList[index].unit,
+                      maxValue: attributeList[index].maxValue,
+                      mintValue: attributeList[index].minValue,
+                    ),
+                    VerticalSpacing(
+                      of: 10,
+                    ),
+                  ],
                 );
               }),
         ));

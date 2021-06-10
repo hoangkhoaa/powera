@@ -3,6 +3,26 @@ import 'package:powera/constants.dart';
 
 AppBar buildAppBar(BuildContext context,
     {bool isTransparent = true, String title}) {
+  Future<void> _showMyDialog() async {
+    return showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text('AlertDialog Title'),
+        content: const Text('AlertDialog description'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'Cancel'),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'OK'),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
   return AppBar(
     backgroundColor: isTransparent ? Colors.transparent : Colors.white,
     elevation: 0,
@@ -33,7 +53,9 @@ AppBar buildAppBar(BuildContext context,
             child: Image.asset(
           "assets/images/profile.jpg",
         )),
-        onPressed: () {},
+        onPressed: () {
+          _showMyDialog();
+        },
       )
     ],
   );

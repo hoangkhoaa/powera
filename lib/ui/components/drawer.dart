@@ -4,6 +4,7 @@ import 'package:powera/bloc/navigation_bloc.dart';
 import 'package:powera/model/screen_model.dart';
 import 'package:powera/size_config.dart';
 import 'package:powera/constants.dart';
+import 'package:powera/ui/components/dasbboard_card_info.dart';
 import 'package:powera/ui/components/dashboard_card.dart';
 import 'package:powera/ui/screens/device/device_screen.dart';
 
@@ -35,7 +36,7 @@ class CustomDashboard extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(20),
               child: Text(
-                "Other Devices",
+                "System info",
                 style: TextStyle(
                     fontSize: getProportionateScreenWidth(25),
                     fontWeight: FontWeight.bold,
@@ -63,21 +64,61 @@ class DashBoardCardList extends StatelessWidget {
       child: MediaQuery.removePadding(
         context: context,
         removeTop: true,
-        child: ListView.builder(
-            physics: NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            scrollDirection: Axis.vertical,
-            itemCount: listItem.length,
-            itemBuilder: (context, index) {
-              return DashboardCard(
-                  isActive: listItem[index].isOn,
-                  name: listItem[index].deviceName,
-                  image: Image.asset("assets/images/light_sensor.jpg"),
-                  tapFunction: () {
-                    BlocProvider.of<NavBloc>(context).add(
-                        NavigateTo(getNavItemBaseOnItemData(listItem[index])));
-                  });
-            }),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            DashboardCardInfor(
+              name: listItem[0].deviceName,
+              img: listItem[0].image,
+              disc: listItem[0].deviceDis,
+            ),
+            VerticalSpacing(
+              of: 10,
+            ),
+            Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.arrow_downward_rounded,
+                    color: pItemOnColor,
+                    size: getProportionateScreenHeight(50),
+                  ),
+                  Icon(
+                    Icons.arrow_upward_rounded,
+                    color: pItemOnColor,
+                    size: getProportionateScreenHeight(50),
+                  ),
+                ],
+              ),
+            ),
+            VerticalSpacing(
+              of: 10,
+            ),
+            DashboardCardInfor(
+              name: listItem[1].deviceName,
+              img: listItem[1].image,
+              disc: listItem[1].deviceDis,
+            ),
+          ],
+        ),
+        // child: ListView.builder(
+        //     physics: NeverScrollableScrollPhysics(),
+        //     shrinkWrap: true,
+        //     scrollDirection: Axis.vertical,
+        //     itemCount: listItem.length,
+        //     itemBuilder: (context, index) {
+        //       return DashboardCard(
+        //           isActive: listItem[index].isOn,
+        //           name: listItem[index].deviceName,
+        //           image: Image.asset(listItem[index].image),
+        //           tapFunction: () {
+        //             BlocProvider.of<NavBloc>(context).add(
+        //                 NavigateTo(getNavItemBaseOnItemData(listItem[index])));
+        //           });
+        //     }),
       ),
     );
   }
