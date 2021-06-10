@@ -25,6 +25,9 @@ class DeviceScreen extends StatelessWidget {
               color: Colors.amber,
               borderRadius: BorderRadius.zero,
             )),
+            // child: SingleChildScrollView(
+            //   child: Body(),
+            // ),
             child: Body(),
           ),
           bottomNavigationBar: AnimatedBottomBar(),

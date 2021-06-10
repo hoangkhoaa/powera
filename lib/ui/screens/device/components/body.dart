@@ -5,6 +5,7 @@ import 'package:powera/model/example_db.dart';
 import 'package:powera/model/screen_model.dart';
 import 'package:powera/ui/screens/device/components/head_body.dart';
 import 'package:powera/size_config.dart';
+import 'package:powera/ui/screens/device/components/select_chart.dart';
 import 'package:powera/ui/screens/device/device_screen.dart';
 import 'package:powera/ui/screens/settings/setting_screen.dart';
 import 'attribute_card.dart';
@@ -96,7 +97,8 @@ class Body extends StatelessWidget {
                       ListAttributeCard(
                         sender_device: sender_device,
                         receiver_device: receiver_device,
-                      )
+                      ),
+                      SelectChart()
                     ],
                   ));
             } else {
@@ -132,7 +134,6 @@ class ListAttributeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: getProportionateScreenHeight(180),
         width: getProportionateScreenWidth(320),
         child: MediaQuery.removePadding(
           context: context,
