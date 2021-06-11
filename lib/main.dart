@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:bloc/bloc.dart';
 import 'package:powera/ui/screens/device/device_screen.dart';
 import 'package:powera/ui/screens/login/LoginScreen.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 
 class ButtonObserver extends BlocObserver {
   @override
@@ -13,7 +14,7 @@ class ButtonObserver extends BlocObserver {
 
 void main() {
   Bloc.observer = ButtonObserver();
-  runApp(MyApp());
+  runApp(Phoenix(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
