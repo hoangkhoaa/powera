@@ -86,7 +86,7 @@ class _SelectChartState extends State<SelectChart> {
               ? DailyChart(
                   key: UniqueKey(),
                 )
-              : BarChartSample3(key: UniqueKey())
+              : WeeklyChart(key: UniqueKey())
         ],
       ),
     );

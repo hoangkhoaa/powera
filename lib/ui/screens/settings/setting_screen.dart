@@ -76,7 +76,7 @@ class SettingScreen extends StatelessWidget {
                 ),
                 VerticalSpacing(of: 10),
                 SettingCard(
-                  lable: "Water Pumper turn on when ",
+                  lable: "Water Pumper turn on when: ",
                   maxVal: 100,
                   minVal: 0,
                   curVal: 10,

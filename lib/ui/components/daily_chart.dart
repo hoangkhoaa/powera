@@ -1,5 +1,9 @@
+import 'dart:math';
+
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+
+var rng = new Random();
 
 class DailyChart extends StatefulWidget {
   DailyChart({Key key}) : super(key: key);
@@ -85,6 +89,8 @@ class _DailyChartState extends State<DailyChart> {
               color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
           getTitles: (value) {
             switch (value.toInt()) {
+              case 0:
+                return '00:00';
               case 6:
                 return '6:00';
               case 12:
@@ -128,34 +134,34 @@ class _DailyChartState extends State<DailyChart> {
       lineBarsData: [
         LineChartBarData(
           spots: [
-            FlSpot(0, 10),
-            FlSpot(1, 46),
-            FlSpot(2, 26),
-            FlSpot(3, 26),
-            FlSpot(4, 64),
-            FlSpot(5, 82),
-            FlSpot(6, 11),
-            FlSpot(7, 27),
-            FlSpot(8, 72),
-            FlSpot(9, 44),
-            FlSpot(10, 55),
-            FlSpot(11, 88),
-            FlSpot(12, 12),
-            FlSpot(13, 23),
-            FlSpot(14, 43),
-            FlSpot(15, 56),
-            FlSpot(16, 32),
-            FlSpot(17, 12),
-            FlSpot(18, 88),
-            FlSpot(19, 10),
-            FlSpot(20, 10),
-            FlSpot(21, 15),
-            FlSpot(22, 88),
-            FlSpot(23, 44),
+            FlSpot(0, rng.nextInt(100).toDouble() + 5),
+            FlSpot(1, rng.nextInt(100).toDouble() + 5),
+            FlSpot(2, rng.nextInt(100).toDouble() + 5),
+            FlSpot(3, rng.nextInt(100).toDouble() + 5),
+            FlSpot(4, rng.nextInt(100).toDouble() + 5),
+            FlSpot(5, rng.nextInt(100).toDouble() + 5),
+            FlSpot(6, rng.nextInt(100).toDouble() + 5),
+            FlSpot(7, rng.nextInt(100).toDouble() + 5),
+            FlSpot(8, rng.nextInt(100).toDouble() + 5),
+            FlSpot(9, rng.nextInt(100).toDouble() + 5),
+            FlSpot(10, rng.nextInt(100).toDouble() + 5),
+            FlSpot(11, rng.nextInt(100).toDouble() + 5),
+            FlSpot(12, rng.nextInt(100).toDouble() + 5),
+            FlSpot(13, rng.nextInt(100).toDouble() + 5),
+            FlSpot(14, rng.nextInt(100).toDouble() + 5),
+            FlSpot(15, rng.nextInt(100).toDouble() + 5),
+            FlSpot(16, rng.nextInt(100).toDouble() + 5),
+            FlSpot(17, rng.nextInt(100).toDouble() + 5),
+            FlSpot(18, rng.nextInt(100).toDouble() + 5),
+            FlSpot(19, rng.nextInt(100).toDouble() + 5),
+            FlSpot(20, rng.nextInt(100).toDouble() + 5),
+            FlSpot(21, rng.nextInt(100).toDouble() + 5),
+            FlSpot(22, rng.nextInt(100).toDouble() + 5),
+            FlSpot(23, rng.nextInt(100).toDouble() + 5),
           ],
           isCurved: true,
           colors: gradientColors,
-          barWidth: 5,
+          barWidth: 2,
           isStrokeCapRound: true,
           dotData: FlDotData(
             show: false,
@@ -233,7 +239,7 @@ class _DailyChartState extends State<DailyChart> {
       ),
       borderData: FlBorderData(
           show: true,
-          border: Border.all(color: const Color(0xff37434d), width: 1)),
+          border: Border.all(color: const Color(0xff37434d), width: 0.5)),
       minX: 0,
       maxX: 24,
       minY: 0,

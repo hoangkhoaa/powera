@@ -1,13 +1,13 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
-class BarChartSample3 extends StatefulWidget {
-  BarChartSample3({Key key}) : super(key: key);
+class WeeklyChart extends StatefulWidget {
+  WeeklyChart({Key key}) : super(key: key);
   @override
-  State<StatefulWidget> createState() => BarChartSample3State();
+  State<StatefulWidget> createState() => WeeklyChartState();
 }
 
-class BarChartSample3State extends State<BarChartSample3> {
+class WeeklyChartState extends State<WeeklyChart> {
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
@@ -115,7 +115,7 @@ class BarChartSample3State extends State<BarChartSample3> {
                 showingTooltipIndicators: [0],
               ),
               BarChartGroupData(
-                x: 3,
+                x: 4,
                 barRods: [
                   BarChartRodData(
                       y: 13,
@@ -124,7 +124,7 @@ class BarChartSample3State extends State<BarChartSample3> {
                 showingTooltipIndicators: [0],
               ),
               BarChartGroupData(
-                x: 3,
+                x: 5,
                 barRods: [
                   BarChartRodData(
                       y: 10,
@@ -132,6 +132,15 @@ class BarChartSample3State extends State<BarChartSample3> {
                 ],
                 showingTooltipIndicators: [0],
               ),
+              BarChartGroupData(
+                x: 6,
+                barRods: [
+                  BarChartRodData(
+                      y: 5,
+                      colors: [Colors.lightBlueAccent, Colors.greenAccent])
+                ],
+                showingTooltipIndicators: [0],
+              )
             ],
           ),
         ),

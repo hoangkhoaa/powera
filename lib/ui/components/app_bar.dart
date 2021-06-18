@@ -126,7 +126,7 @@ AppBar buildAppBar(BuildContext context,
               child: Container(
                 decoration: BoxDecoration(color: Colors.white),
                 child: Text(
-                  "9",
+                  "0",
                   style: TextStyle(
                       color: Colors.red,
                       fontSize: 13,
