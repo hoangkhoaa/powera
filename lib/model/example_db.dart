@@ -3,8 +3,8 @@ import 'package:powera/bloc/navigation_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 final storage = new FlutterSecureStorage();
-String api_url = 'http://172.18.0.3:5000';
-
+String api_url = 'http://10.0.2.2:5000';
+//http://127.0.0.1:5000
 var deviceKeyMap = {
   "LED light": "bk-iot-led",
   "Light sensor": "bk-iot-light",

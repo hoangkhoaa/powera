@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:powera/setting_saves.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
@@ -30,6 +32,8 @@ class _WaterTimerState extends State<WaterTimer> {
                 ? "0" + picked.minute.toString()
                 : picked.minute.toString());
       });
+      SharedPreferences prefsTemp = await prefs;
+      prefsTemp.setString('startTime', startTime);
     }
   }
 
@@ -44,6 +48,8 @@ class _WaterTimerState extends State<WaterTimer> {
                 ? "0" + picked.minute.toString()
                 : picked.minute.toString());
       });
+      SharedPreferences prefsTemp = await prefs;
+      prefsTemp.setString('endTime', endTime);
     }
   }
 
@@ -136,14 +142,19 @@ class _WaterTimerState extends State<WaterTimer> {
                 color: pItemColorChose,
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: Center(
-                child: Text(
-                  "Save new time",
-                  style: TextStyle(
-                      fontSize: getProportionateScreenWidth(15),
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                      height: 0.5),
+              child: InkWell(
+                onTap: () {
+                  updateWatterSetting();
+                },
+                child: Center(
+                  child: Text(
+                    "Save new time",
+                    style: TextStyle(
+                        fontSize: getProportionateScreenWidth(15),
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        height: 0.5),
+                  ),
                 ),
               ),
             ),
@@ -165,10 +176,13 @@ class _WaterTimerState extends State<WaterTimer> {
                   activeTrackColor: pItemOnColor,
                   inactiveTrackColor: pItemOffColor,
                   value: isOn,
-                  onChanged: (bool temp) {
+                  onChanged: (bool temp) async {
+                    SharedPreferences prefsTemp = await prefs;
+                    prefsTemp.setBool('pummerAuto', !isOn);
                     setState(() {
                       isOn = !isOn;
                     });
+                    updateWatterSetting();
                   })
             ],
           )

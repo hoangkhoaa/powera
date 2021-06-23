@@ -1,0 +1,23 @@
+{
+    "dbName": "localSetting",
+    "settings": [
+        {
+            "settingName": "lightSetting",
+            "value":"100",
+            "isAuto": true
+        },
+        {
+            "settingName": "fireSetting",
+            "valueSensor":"30",
+            "valueSpeaker":"500",
+            "isAuto": true
+        },
+        {
+            "settingName": "waterSetting",
+            "startTime":"2021-06-23-07-00-00",
+            "endTime":"2021-06-23-09-00-00",
+            "isAuto": true
+        }
+
+    ]
+}

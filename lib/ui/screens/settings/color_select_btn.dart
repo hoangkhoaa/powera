@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:powera/constants.dart';
+import 'package:powera/setting_saves.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ColorToggleButton extends StatefulWidget {
   final bool isRed;
@@ -43,7 +45,9 @@ class _ColorToggleButtonState extends State<ColorToggleButton> {
                 ),
               )),
           InkResponse(
-              onTap: () {
+              onTap: () async {
+                SharedPreferences prefsTemp = await prefs;
+                prefsTemp.setInt('lightColorVale', isRed ? 2 : 1);
                 setState(() {
                   isRed = !isRed;
                 });

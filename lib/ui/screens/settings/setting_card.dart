@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:powera/setting_saves.dart';
 import 'package:powera/ui/screens/device/components/button.dart';
 import 'package:powera/ui/screens/settings/slider.dart';
 import 'package:powera/ui/screens/settings/water_timer.dart';
@@ -14,7 +15,8 @@ class SettingCard extends StatefulWidget {
   final double curVal;
   final int devision;
   final bool hasAuto;
-  final Function requestFunction;
+  final Function(double value) requestFunction;
+  final Function(bool isAuto) setAutoFunction;
   bool isActive;
   SettingCard(
       {Key key,
@@ -26,6 +28,7 @@ class SettingCard extends StatefulWidget {
       this.devision = 10,
       this.isActive = false,
       this.requestFunction,
+      this.setAutoFunction,
       this.hasAuto = true});
 
   @override
@@ -37,6 +40,7 @@ class SettingCard extends StatefulWidget {
       this.maxVal,
       this.isActive,
       requestFunction,
+      setAutoFunction,
       this.hasAuto,
       this.devision);
 }
@@ -48,7 +52,8 @@ class _SettingCardState extends State<SettingCard> {
   final int devision;
   final double minVal;
   final double curVal;
-  final Function requestFunction;
+  final Function(double value) requestFunction;
+  final Function(bool isAuto) setAutoFunction;
   final bool hasAuto;
   bool isActive;
   _SettingCardState(
@@ -59,6 +64,7 @@ class _SettingCardState extends State<SettingCard> {
       this.maxVal,
       this.isActive,
       this.requestFunction,
+      this.setAutoFunction,
       this.hasAuto,
       this.devision);
   @override
@@ -106,6 +112,7 @@ class _SettingCardState extends State<SettingCard> {
                   Flexible(
                     flex: 8,
                     child: SliderCustom(
+                      name: this.cardName,
                       curVal: curVal,
                       maxVal: maxVal,
                       minVal: minVal,
@@ -155,6 +162,7 @@ class _SettingCardState extends State<SettingCard> {
                             onChanged: (bool temp) {
                               setState(() {
                                 isActive = !isActive;
+                                setAutoFunction(isActive);
                               });
                             })
                       ],
