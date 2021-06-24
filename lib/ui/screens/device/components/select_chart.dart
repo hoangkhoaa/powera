@@ -6,12 +6,15 @@ import 'package:powera/ui/components/daily_chart.dart';
 import 'package:powera/ui/components/weekly_chart.dart';
 
 class SelectChart extends StatefulWidget {
-  SelectChart({Key key}) : super(key: key);
+  String deviceKey;
+  SelectChart({Key key, this.deviceKey}) : super(key: key);
   @override
-  _SelectChartState createState() => _SelectChartState();
+  _SelectChartState createState() => _SelectChartState(deviceKey);
 }
 
 class _SelectChartState extends State<SelectChart> {
+  String deviceKey;
+  _SelectChartState(this.deviceKey);
   bool seletedDateChart = true;
   @override
   Widget build(BuildContext context) {
@@ -85,8 +88,12 @@ class _SelectChartState extends State<SelectChart> {
           seletedDateChart
               ? DailyChart(
                   key: UniqueKey(),
+                  deviceKey: deviceKey,
                 )
-              : WeeklyChart(key: UniqueKey())
+              : WeeklyChart(
+                  key: UniqueKey(),
+                  deviceKey: deviceKey,
+                )
         ],
       ),
     );

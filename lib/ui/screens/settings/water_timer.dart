@@ -25,6 +25,11 @@ class _WaterTimerState extends State<WaterTimer> {
     final TimeOfDay picked = await showTimePicker(
         context: context, initialTime: TimeOfDay(hour: 00, minute: 00));
     if (picked != null) {
+      String startTimeTemp = picked.hour.toString() +
+          ":" +
+          (picked.minute < 10
+              ? "0" + picked.minute.toString()
+              : picked.minute.toString());
       setState(() {
         startTime = picked.hour.toString() +
             " : " +
@@ -33,7 +38,7 @@ class _WaterTimerState extends State<WaterTimer> {
                 : picked.minute.toString());
       });
       SharedPreferences prefsTemp = await prefs;
-      prefsTemp.setString('startTime', startTime);
+      prefsTemp.setString('startTime', startTimeTemp);
     }
   }
 
@@ -41,6 +46,11 @@ class _WaterTimerState extends State<WaterTimer> {
     final TimeOfDay picked = await showTimePicker(
         context: context, initialTime: TimeOfDay(hour: 00, minute: 00));
     if (picked != null) {
+      var endTimeTemp = endTime = picked.hour.toString() +
+          ":" +
+          (picked.minute < 10
+              ? "0" + picked.minute.toString()
+              : picked.minute.toString());
       setState(() {
         endTime = picked.hour.toString() +
             " : " +
@@ -49,7 +59,7 @@ class _WaterTimerState extends State<WaterTimer> {
                 : picked.minute.toString());
       });
       SharedPreferences prefsTemp = await prefs;
-      prefsTemp.setString('endTime', endTime);
+      prefsTemp.setString('endTime', endTimeTemp);
     }
   }
 

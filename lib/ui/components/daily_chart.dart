@@ -3,24 +3,26 @@ import 'dart:math';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
-var rng = new Random();
+import '../../chart_data.dart';
 
 class DailyChart extends StatefulWidget {
-  DailyChart({Key key}) : super(key: key);
+  String deviceKey;
+  DailyChart({Key key, this.deviceKey}) : super(key: key);
   @override
-  _DailyChartState createState() => _DailyChartState();
+  _DailyChartState createState() => _DailyChartState(deviceKey);
 }
 
 class _DailyChartState extends State<DailyChart> {
+  String deviceKey;
+  _DailyChartState(this.deviceKey);
   List<Color> gradientColors = [
     const Color(0xff23b6e6),
     const Color(0xff02d39a),
   ];
-
   bool showAvg = false;
-
   @override
   Widget build(BuildContext context) {
+    var data = getChartDataDay(deviceKey);
     return Stack(
       children: <Widget>[
         AspectRatio(
@@ -32,12 +34,26 @@ class _DailyChartState extends State<DailyChart> {
                 ),
                 color: Color(0xff2c4260)),
             child: Padding(
-              padding: const EdgeInsets.only(
-                  top: 20, left: 10, bottom: 10, right: 10),
-              child: LineChart(
-                showAvg ? avgData() : mainData(),
-              ),
-            ),
+                padding: const EdgeInsets.only(
+                    top: 20, left: 10, bottom: 10, right: 10),
+                child: FutureBuilder<dynamic>(
+                    future: data,
+                    builder: (BuildContext context,
+                        AsyncSnapshot<dynamic> snapshot) {
+                      switch (snapshot.connectionState) {
+                        case ConnectionState.waiting:
+                          return const CircularProgressIndicator();
+                        default:
+                          if (snapshot.hasError) {
+                            return Text('error: ${snapshot.error}');
+                          } else
+                            return LineChart(
+                              showAvg
+                                  ? avgData(snapshot.data)
+                                  : mainData(snapshot.data),
+                            );
+                      }
+                    })),
           ),
         ),
         SizedBox(
@@ -62,7 +78,7 @@ class _DailyChartState extends State<DailyChart> {
     );
   }
 
-  LineChartData mainData() {
+  LineChartData mainData(var data) {
     return LineChartData(
       gridData: FlGridData(
         show: true,
@@ -91,12 +107,12 @@ class _DailyChartState extends State<DailyChart> {
             switch (value.toInt()) {
               case 0:
                 return '00:00';
-              case 6:
-                return '6:00';
-              case 12:
-                return '12:00';
-              case 18:
-                return '18:00';
+              case 8:
+                return '8:00';
+              case 16:
+                return '16:00';
+              case 23:
+                return '23:00';
             }
             return '';
           },
@@ -111,12 +127,10 @@ class _DailyChartState extends State<DailyChart> {
           ),
           getTitles: (value) {
             switch (value.toInt()) {
-              case 10:
-                return '10';
-              case 40:
-                return '40';
-              case 80:
-                return '80';
+              case 30:
+                return '30';
+              case 60:
+                return '60';
             }
             return '';
           },
@@ -128,36 +142,36 @@ class _DailyChartState extends State<DailyChart> {
           show: true,
           border: Border.all(color: const Color(0xff37434d), width: 1)),
       minX: 0,
-      maxX: 24,
+      maxX: 25,
       minY: 0,
-      maxY: 100,
+      maxY: 70,
       lineBarsData: [
         LineChartBarData(
           spots: [
-            FlSpot(0, rng.nextInt(100).toDouble() + 5),
-            FlSpot(1, rng.nextInt(100).toDouble() + 5),
-            FlSpot(2, rng.nextInt(100).toDouble() + 5),
-            FlSpot(3, rng.nextInt(100).toDouble() + 5),
-            FlSpot(4, rng.nextInt(100).toDouble() + 5),
-            FlSpot(5, rng.nextInt(100).toDouble() + 5),
-            FlSpot(6, rng.nextInt(100).toDouble() + 5),
-            FlSpot(7, rng.nextInt(100).toDouble() + 5),
-            FlSpot(8, rng.nextInt(100).toDouble() + 5),
-            FlSpot(9, rng.nextInt(100).toDouble() + 5),
-            FlSpot(10, rng.nextInt(100).toDouble() + 5),
-            FlSpot(11, rng.nextInt(100).toDouble() + 5),
-            FlSpot(12, rng.nextInt(100).toDouble() + 5),
-            FlSpot(13, rng.nextInt(100).toDouble() + 5),
-            FlSpot(14, rng.nextInt(100).toDouble() + 5),
-            FlSpot(15, rng.nextInt(100).toDouble() + 5),
-            FlSpot(16, rng.nextInt(100).toDouble() + 5),
-            FlSpot(17, rng.nextInt(100).toDouble() + 5),
-            FlSpot(18, rng.nextInt(100).toDouble() + 5),
-            FlSpot(19, rng.nextInt(100).toDouble() + 5),
-            FlSpot(20, rng.nextInt(100).toDouble() + 5),
-            FlSpot(21, rng.nextInt(100).toDouble() + 5),
-            FlSpot(22, rng.nextInt(100).toDouble() + 5),
-            FlSpot(23, rng.nextInt(100).toDouble() + 5),
+            FlSpot(0, double.parse(data['1'])),
+            FlSpot(1, double.parse(data['2'])),
+            FlSpot(2, double.parse(data['3'])),
+            FlSpot(3, double.parse(data['4'])),
+            FlSpot(4, double.parse(data['5'])),
+            FlSpot(5, double.parse(data['6'])),
+            FlSpot(6, double.parse(data['7'])),
+            FlSpot(7, double.parse(data['8'])),
+            FlSpot(8, double.parse(data['9'])),
+            FlSpot(9, double.parse(data['10'])),
+            FlSpot(10, double.parse(data['11'])),
+            FlSpot(11, double.parse(data['12'])),
+            FlSpot(12, double.parse(data['13'])),
+            FlSpot(13, double.parse(data['14'])),
+            FlSpot(14, double.parse(data['15'])),
+            FlSpot(15, double.parse(data['16'])),
+            FlSpot(16, double.parse(data['17'])),
+            FlSpot(17, double.parse(data['18'])),
+            FlSpot(18, double.parse(data['19'])),
+            FlSpot(19, double.parse(data['20'])),
+            FlSpot(20, double.parse(data['21'])),
+            FlSpot(21, double.parse(data['22'])),
+            FlSpot(22, double.parse(data['23'])),
+            FlSpot(23, double.parse(data['24'])),
           ],
           isCurved: true,
           colors: gradientColors,
@@ -176,7 +190,12 @@ class _DailyChartState extends State<DailyChart> {
     );
   }
 
-  LineChartData avgData() {
+  LineChartData avgData(var data) {
+    double result = 0;
+    for (var i = 1; i <= 24; i++) {
+      result += double.parse(data['$i']);
+    }
+    result = result / 24;
     return LineChartData(
       lineTouchData: LineTouchData(enabled: false),
       gridData: FlGridData(
@@ -204,12 +223,14 @@ class _DailyChartState extends State<DailyChart> {
               color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
           getTitles: (value) {
             switch (value.toInt()) {
-              case 6:
-                return '6:00';
-              case 12:
-                return '12:00';
-              case 18:
-                return '18:00';
+              case 0:
+                return '00:00';
+              case 8:
+                return '8:00';
+              case 16:
+                return '16:00';
+              case 23:
+                return '23:00';
             }
             return '';
           },
@@ -224,12 +245,10 @@ class _DailyChartState extends State<DailyChart> {
           ),
           getTitles: (value) {
             switch (value.toInt()) {
-              case 10:
-                return '10';
-              case 40:
-                return '40';
-              case 80:
-                return '80';
+              case 30:
+                return '30';
+              case 60:
+                return '60';
             }
             return '';
           },
@@ -243,34 +262,34 @@ class _DailyChartState extends State<DailyChart> {
       minX: 0,
       maxX: 24,
       minY: 0,
-      maxY: 100,
+      maxY: 70,
       lineBarsData: [
         LineChartBarData(
           spots: [
-            FlSpot(0, 50),
-            FlSpot(1, 50),
-            FlSpot(2, 50),
-            FlSpot(3, 50),
-            FlSpot(4, 50),
-            FlSpot(5, 50),
-            FlSpot(6, 50),
-            FlSpot(7, 50),
-            FlSpot(8, 50),
-            FlSpot(9, 50),
-            FlSpot(10, 50),
-            FlSpot(11, 50),
-            FlSpot(12, 50),
-            FlSpot(13, 50),
-            FlSpot(14, 50),
-            FlSpot(15, 50),
-            FlSpot(16, 50),
-            FlSpot(17, 50),
-            FlSpot(18, 50),
-            FlSpot(19, 50),
-            FlSpot(20, 50),
-            FlSpot(21, 50),
-            FlSpot(22, 50),
-            FlSpot(23, 50),
+            FlSpot(0, result),
+            FlSpot(1, result),
+            FlSpot(2, result),
+            FlSpot(3, result),
+            FlSpot(4, result),
+            FlSpot(5, result),
+            FlSpot(6, result),
+            FlSpot(7, result),
+            FlSpot(8, result),
+            FlSpot(9, result),
+            FlSpot(10, result),
+            FlSpot(11, result),
+            FlSpot(12, result),
+            FlSpot(13, result),
+            FlSpot(14, result),
+            FlSpot(15, result),
+            FlSpot(16, result),
+            FlSpot(17, result),
+            FlSpot(18, result),
+            FlSpot(19, result),
+            FlSpot(20, result),
+            FlSpot(21, result),
+            FlSpot(22, result),
+            FlSpot(23, result),
           ],
           isCurved: true,
           colors: [

@@ -1,14 +1,14 @@
 import 'package:http/retry.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-
+import 'chart_data.dart';
 import 'model/example_db.dart';
 
 Future<SharedPreferences> prefs = SharedPreferences.getInstance();
 Future<Map<String, dynamic>> checkSettingSave() async {
   SharedPreferences prefsTemp = await prefs;
   var data = Map<String, dynamic>();
-  if (prefsTemp == null) {
+  if (prefsTemp.getInt('lightColorVale') == null) {
     prefsTemp
         .setInt("lightSensorValue", 100)
         .then((bool success) => data['lightSensorValue'] = 100);
@@ -47,7 +47,11 @@ Future<Map<String, dynamic>> checkSettingSave() async {
     data['endTime'] = prefsTemp.getString("endTime");
     data['pummerAuto'] = prefsTemp.getBool("pummerAuto");
   }
+  // print(data);
   updateSetting(data);
+  //getChartData();
+  //getChartDataDay('bk-iot-light');
+  //getChartDataWeek("bk-iot-light");
   return data;
 }
 
@@ -58,6 +62,7 @@ Future<void> updateSetting(Map<String, dynamic> data) async {
     var responseLight = await http.post(urlLight, body: {
       'device': 'bk-iot-led',
       'auto': data['lightAuto'].toString(),
+      'led_color': data['lightColorVale'].toString(),
       'value': data['lightSensorValue'].toString()
     });
     //print('Response Light status: ${responseLight.statusCode}');
@@ -66,6 +71,7 @@ Future<void> updateSetting(Map<String, dynamic> data) async {
     var responseTem = await http.post(urlTem, body: {
       'device': 'bk-iot-speaker',
       'auto': data['heatAuto'].toString(),
+      'speaker_value': data['heatSpeakerValue'].toString(),
       'value': data['heatSensorValue'].toString()
     });
     //print('Response Temp status: ${responseTem.statusCode}');
@@ -91,6 +97,7 @@ Future<void> updateLightSetting() async {
     var responseLight = await http.post(urlLight, body: {
       'device': 'bk-iot-led',
       'auto': prefsTemp.getBool('lightAuto').toString(),
+      'led_color': prefsTemp.getInt("lightColorVale").toString(),
       'value': prefsTemp.getInt('lightSensorValue').toString()
     });
     print('Response Light status: ${responseLight.statusCode}');
@@ -108,6 +115,7 @@ Future<void> updateHeatSetting() async {
     var responseTem = await http.post(urlTem, body: {
       'device': 'bk-iot-speaker',
       'auto': prefsTemp.getBool('heatAuto').toString(),
+      'speaker_value': prefsTemp.getInt("heatSpeakerValue").toString(),
       'value': prefsTemp.getInt('heatSensorValue').toString()
     });
     print('Response Temp status: ${responseTem.statusCode}');

@@ -21,10 +21,13 @@ class _ColorToggleButtonState extends State<ColorToggleButton> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           InkResponse(
-              onTap: () {
+              onTap: () async {
+                SharedPreferences prefsTemp = await prefs;
                 setState(() {
                   isRed = !isRed;
                 });
+                prefsTemp.setInt('lightColorVale', isRed ? 1 : 2);
+                updateLightSetting();
               },
               child: Container(
                 width: 40,
@@ -47,10 +50,11 @@ class _ColorToggleButtonState extends State<ColorToggleButton> {
           InkResponse(
               onTap: () async {
                 SharedPreferences prefsTemp = await prefs;
-                prefsTemp.setInt('lightColorVale', isRed ? 2 : 1);
                 setState(() {
                   isRed = !isRed;
                 });
+                prefsTemp.setInt('lightColorVale', isRed ? 1 : 2);
+                updateLightSetting();
               },
               child: Container(
                 width: 40,

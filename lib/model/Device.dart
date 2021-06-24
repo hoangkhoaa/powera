@@ -28,12 +28,13 @@ class Device {
     try {
       var url = Uri.parse(this._api_address + '/get_device');
       String private_key = await storage.read(key: 'private_key');
-      var response = await http.post(url, body: {'private_key': private_key ,'device': deviceKey});
+      var response = await http
+          .post(url, body: {'private_key': private_key, 'device': deviceKey});
       print(response.body);
       Map resData = jsonDecode(response.body);
       this.id = resData['id'];
       this.name = resData['name'] == null ? this.name : resData['name'];
-      this.data = resData['data'];
+      this.data = resData['data'].toString();
       // this.unit = resData['unit'];
     } finally {
       client.close();
@@ -46,8 +47,14 @@ class Device {
       await getDevice();
       var url = Uri.parse(this._api_address + '/update_device');
       String private_key = await storage.read(key: 'private_key');
-      var response = await http.post(url,
-          body: {'private_key': private_key,'device': this.deviceKey, 'id': this.id, 'name': name, 'data': data, 'unit': unit});
+      var response = await http.post(url, body: {
+        'private_key': private_key,
+        'device': this.deviceKey,
+        'id': this.id,
+        'name': name,
+        'data': data,
+        'unit': unit
+      });
       // print('Response status: ${response.statusCode}');
       // print('Response body: ${response.body}');
       await getDevice();
@@ -67,30 +74,31 @@ class ReceiverDevice extends Device {
   String dataLabel;
   String minValue;
   String maxValue;
-  ReceiverDevice (String deviceKey): super(deviceKey) {
-  switch (deviceKey) {
-    case 'bk-iot-light':
-      {
-        this.minValue = "0";
-        this.maxValue = "1023";
-        this.dataLabel = "Brightness";
-      }
-      break;
-    case 'bk-iot-temp': {
-        this.minValue = "0";
-        this.maxValue = "100";
-        this.dataLabel = "Temperature";
-        this.unit = "°C";
-      }
-    break;
-    case 'bk-iot-humid':
-      {
-        this.minValue = "0";
-        this.maxValue = "100";
-        this.dataLabel = "Humidity";
-        this.unit = "%";
-      }
-      break;
+  ReceiverDevice(String deviceKey) : super(deviceKey) {
+    switch (deviceKey) {
+      case 'bk-iot-light':
+        {
+          this.minValue = "0";
+          this.maxValue = "1023";
+          this.dataLabel = "Brightness";
+        }
+        break;
+      case 'bk-iot-temp':
+        {
+          this.minValue = "0";
+          this.maxValue = "100";
+          this.dataLabel = "Temperature";
+          this.unit = "°C";
+        }
+        break;
+      case 'bk-iot-humid':
+        {
+          this.minValue = "0";
+          this.maxValue = "100";
+          this.dataLabel = "Humidity";
+          this.unit = "%";
+        }
+        break;
     }
   }
 }

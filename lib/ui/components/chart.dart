@@ -1,6 +1,8 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
+import '../../chart_data.dart';
+
 class LineChartSample2 extends StatefulWidget {
   @override
   _LineChartSample2State createState() => _LineChartSample2State();
@@ -39,7 +41,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
           width: 60,
           height: 34,
           child: FlatButton(
-            onPressed: () {
+            onPressed: () async {
               setState(() {
                 showAvg = !showAvg;
               });

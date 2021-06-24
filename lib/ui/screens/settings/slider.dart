@@ -69,6 +69,7 @@ class _SliderCustomState extends State<SliderCustom> {
             break;
           case "speaker":
             prefsTemp.setInt('heatSpeakerValue', value.toInt());
+            updateHeatSetting();
             break;
         }
       },

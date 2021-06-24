@@ -3,11 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:powera/model/Device.dart';
 import 'package:powera/model/example_db.dart';
 import 'package:powera/model/screen_model.dart';
+import 'package:powera/setting_saves.dart';
 import 'package:powera/ui/screens/device/components/head_body.dart';
 import 'package:powera/size_config.dart';
 import 'package:powera/ui/screens/device/components/select_chart.dart';
 import 'package:powera/ui/screens/device/device_screen.dart';
 import 'package:powera/ui/screens/settings/setting_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'attribute_card.dart';
 import 'package:powera/bloc/power_button_bloc.dart';
 import 'package:powera/bloc/navigation_bloc.dart';
@@ -98,7 +100,9 @@ class Body extends StatelessWidget {
                         sender_device: sender_device,
                         receiver_device: receiver_device,
                       ),
-                      SelectChart()
+                      SelectChart(
+                        deviceKey: receiver_device.deviceKey,
+                      )
                     ],
                   ));
             } else {
@@ -117,6 +121,7 @@ class ListAttributeCard extends StatelessWidget {
   List<AttributeModel> attributeList;
   final SenderDevice sender_device;
   final ReceiverDevice receiver_device;
+
   ListAttributeCard({this.sender_device, this.receiver_device}) {
     this.attributeList = [
       // AttributeModel(attribute: 'Status', value: sender_device.data == 'ON' ? 'On' : 'Off'),
@@ -133,34 +138,54 @@ class ListAttributeCard extends StatelessWidget {
   }
   @override
   Widget build(BuildContext context) {
-    return Container(
-        width: getProportionateScreenWidth(320),
-        child: MediaQuery.removePadding(
-          context: context,
-          removeTop: true,
-          child: ListView.builder(
-              physics: NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              scrollDirection: Axis.vertical,
-              itemCount: attributeList.length,
-              itemBuilder: (context, index) {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    AttributeCard(
-                      attribute: attributeList[index].attribute,
-                      value: attributeList[index].value,
-                      unit: attributeList[index].unit,
-                      maxValue: attributeList[index].maxValue,
-                      mintValue: attributeList[index].minValue,
-                    ),
-                    VerticalSpacing(
-                      of: 10,
-                    ),
-                  ],
-                );
-              }),
-        ));
+    Future<SharedPreferences> prefsTemp = prefs;
+    return FutureBuilder<SharedPreferences>(
+        future: prefsTemp,
+        builder:
+            (BuildContext context, AsyncSnapshot<SharedPreferences> snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              return const CircularProgressIndicator();
+            default:
+              if (snapshot.hasError) {
+                return Text('error: ${snapshot.error}');
+              } else {
+                bool isAuto = false;
+                if (receiver_device.deviceKey == "bk-iot-light") {
+                  isAuto = snapshot.data.getBool('lightAuto');
+                } else if (receiver_device.deviceKey == "bk-iot-temp") {
+                  isAuto = snapshot.data.getBool('heatAuto');
+                } else {
+                  isAuto = snapshot.data.getBool('pummerAuto');
+                }
+                return Container(
+                    width: getProportionateScreenWidth(320),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        AttributeCard(
+                          attribute: attributeList[0].attribute,
+                          value: attributeList[0].value,
+                          unit: attributeList[0].unit,
+                          maxValue: attributeList[0].maxValue,
+                          mintValue: attributeList[0].minValue,
+                        ),
+                        VerticalSpacing(
+                          of: 10,
+                        ),
+                        AttributeCard(
+                          attribute: "Auto",
+                          value: isAuto ? "On" : "Off",
+                          unit: "",
+                        ),
+                        VerticalSpacing(
+                          of: 10,
+                        ),
+                      ],
+                    ));
+              }
+          }
+        });
   }
 }
