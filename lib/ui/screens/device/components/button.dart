@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:powera/bloc/auto_cubit.dart';
 import 'package:powera/bloc/navigation_bloc.dart';
 import 'package:powera/constants.dart';
 import 'package:powera/model/Device.dart';
@@ -71,8 +72,24 @@ class _PowerButtonState extends State<PowerButton> {
           child: ButtonItem(
         isOn: true,
         function: () async {
+          SharedPreferences prefsTemp = await prefs;
           tapFunction();
           await sender_device.updateDevice(sender_device.name, '0', '');
+          if (sender_device.deviceKey == "bk-iot-led" &&
+              prefsTemp.getBool("lightAuto")) {
+            prefsTemp.setBool("lightAuto", false);
+            updateLightSetting();
+            BlocProvider.of<AutoCubit>(context).setAutoOff();
+          } else if (sender_device.deviceKey == "bk-iot-speaker" &&
+              prefsTemp.getBool("heatAuto")) {
+            prefsTemp.setBool("heatAuto", false);
+            updateHeatSetting();
+            BlocProvider.of<AutoCubit>(context).setAutoOff();
+          } else if (prefsTemp.getBool("pummerAuto")) {
+            prefsTemp.setBool("pummerAuto", false);
+            updateWatterSetting();
+            BlocProvider.of<AutoCubit>(context).setAutoOff();
+          }
         },
       ));
     } else {
@@ -80,17 +97,33 @@ class _PowerButtonState extends State<PowerButton> {
       return ButtonItem(
           isOn: false,
           function: () async {
-            tapFunction();
             SharedPreferences prefsTemp = await prefs;
+            tapFunction();
             if (sender_device.deviceKey == "bk-iot-led") {
               await sender_device.updateDevice(sender_device.name,
                   prefsTemp.getInt('lightColorVale').toString(), '');
-              //print("ditocnmetm");
+              if (prefsTemp.getBool('lightAuto')) {
+                prefsTemp.setBool("lightAuto", false);
+                updateLightSetting();
+                BlocProvider.of<AutoCubit>(context).setAutoOff();
+              }
             } else if (sender_device.deviceKey == "bk-iot-speaker") {
               await sender_device.updateDevice(sender_device.name,
                   prefsTemp.getInt('heatSpeakerValue').toString(), '');
+              if (prefsTemp.getBool("heatAuto")) {
+                prefsTemp.setBool("heatAuto", false);
+                updateHeatSetting();
+                BlocProvider.of<AutoCubit>(context).setAutoOff();
+              }
+              prefsTemp.setBool("heatAuto", false);
+              updateHeatSetting();
             } else {
               await sender_device.updateDevice(sender_device.name, '1', '');
+              if (prefsTemp.getBool("pummerAuto")) {
+                prefsTemp.setBool("pummerAuto", false);
+                updateWatterSetting();
+                BlocProvider.of<AutoCubit>(context).setAutoOff();
+              }
               //print(sender_device.name);
             }
           });

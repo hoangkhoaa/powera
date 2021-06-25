@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:powera/bloc/auto_cubit.dart';
 import 'package:powera/model/Device.dart';
 import 'package:powera/model/example_db.dart';
 import 'package:powera/model/screen_model.dart';
@@ -86,26 +87,77 @@ class Body extends StatelessWidget {
                     deviceKeyMapByNavState[state.selectedItem]
                         ["ReceiverDevice"]);
               }
-              return SafeArea(
-                  top: false,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      HomeHeader(
-                        // itemData: getScreenModleFollowState(state)
-                        sender_device: sender_device,
-                      ),
-                      ListAttributeCard(
-                        sender_device: sender_device,
-                        receiver_device: receiver_device,
-                      ),
-                      SelectChart(
-                        key: UniqueKey(),
-                        deviceKey: receiver_device.deviceKey,
-                      )
-                    ],
-                  ));
+
+              return FutureBuilder(
+                  future: getAutoByDeviceKey(receiver_device.deviceKey),
+                  builder: (context, AsyncSnapshot<bool> snapshot) {
+                    return BlocProvider<AutoCubit>(
+                        create: (context) {
+                          print("Snapshot : " + snapshot.data.toString());
+                          return AutoCubit(snapshot.data);
+                        },
+                        child: SafeArea(
+                            top: false,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                HomeHeader(
+                                  // itemData: getScreenModleFollowState(state)
+                                  sender_device: sender_device,
+                                ),
+                                BlocBuilder<AutoCubit, bool>(
+                                    builder: (context, isAuto) {
+                                  return ListAttributeCard(
+                                    sender_device: sender_device,
+                                    receiver_device: receiver_device,
+                                  );
+                                }),
+                                SelectChart(
+                                  key: UniqueKey(),
+                                  deviceKey: receiver_device.deviceKey,
+                                )
+                              ],
+                            )));
+                    // switch (snapshot.connectionState) {
+                    //   case ConnectionState.waiting:
+                    //     return const CircularProgressIndicator();
+                    //   default:
+                    //     if (snapshot.hasError) {
+                    //       return Text("error + ${snapshot.error}");
+                    //     } else {
+                    //       return BlocProvider<AutoCubit>(
+                    //           create: (context) {
+                    //             //print("Snapshot : " + snapshot.data.toString());
+                    //             return AutoCubit(snapshot.data);
+                    //           },
+                    //           child: SafeArea(
+                    //               top: false,
+                    //               child: Column(
+                    //                 mainAxisAlignment: MainAxisAlignment.start,
+                    //                 crossAxisAlignment:
+                    //                     CrossAxisAlignment.center,
+                    //                 children: [
+                    //                   HomeHeader(
+                    //                     // itemData: getScreenModleFollowState(state)
+                    //                     sender_device: sender_device,
+                    //                   ),
+                    //                   BlocBuilder<AutoCubit, bool>(
+                    //                       builder: (context, isAuto) {
+                    //                     return ListAttributeCard(
+                    //                       sender_device: sender_device,
+                    //                       receiver_device: receiver_device,
+                    //                     );
+                    //                   }),
+                    //                   SelectChart(
+                    //                     key: UniqueKey(),
+                    //                     deviceKey: receiver_device.deviceKey,
+                    //                   )
+                    //                 ],
+                    //               )));
+                    //     }
+                    // }
+                  });
             } else {
               return Center(child: CircularProgressIndicator());
             }
@@ -122,6 +174,7 @@ class ListAttributeCard extends StatelessWidget {
   List<AttributeModel> attributeList;
   final SenderDevice sender_device;
   final ReceiverDevice receiver_device;
+  //final bool isAutoAttribute;
 
   ListAttributeCard({this.sender_device, this.receiver_device}) {
     this.attributeList = [
@@ -133,12 +186,36 @@ class ListAttributeCard extends StatelessWidget {
           minValue: receiver_device.minValue,
           maxValue: receiver_device.maxValue,
           unit: receiver_device.unit),
-      AttributeModel(
-          attribute: 'Auto', value: sender_device.auto == true ? 'On' : 'Off')
     ];
   }
   @override
   Widget build(BuildContext context) {
+    // return Container(
+    //     width: getProportionateScreenWidth(320),
+    //     child: Column(
+    //       mainAxisAlignment: MainAxisAlignment.start,
+    //       crossAxisAlignment: CrossAxisAlignment.center,
+    //       children: [
+    //         AttributeCard(
+    //           attribute: attributeList[0].attribute,
+    //           value: attributeList[0].value,
+    //           unit: attributeList[0].unit,
+    //           maxValue: attributeList[0].maxValue,
+    //           mintValue: attributeList[0].minValue,
+    //         ),
+    //         VerticalSpacing(
+    //           of: 10,
+    //         ),
+    //         AttributeCard(
+    //           attribute: "Auto",
+    //           value: isAutoAttribute ? "On" : "Off",
+    //           unit: "",
+    //         ),
+    //         VerticalSpacing(
+    //           of: 10,
+    //         ),
+    //       ],
+    //     ));
     Future<SharedPreferences> prefsTemp = prefs;
     return FutureBuilder<SharedPreferences>(
         future: prefsTemp,
@@ -188,5 +265,17 @@ class ListAttributeCard extends StatelessWidget {
               }
           }
         });
+  }
+}
+
+Future<bool> getAutoByDeviceKey(String receiveDeviceKey) async {
+  SharedPreferences prefsTemp = await prefs;
+  if (receiveDeviceKey == 'bk-iot-light') {
+    return true;
+    return prefsTemp.getBool("lightAuto");
+  } else if (receiveDeviceKey == 'bk-iot-temp') {
+    return prefsTemp.getBool("heatAuto");
+  } else {
+    return prefsTemp.getBool("pummerAuto");
   }
 }
