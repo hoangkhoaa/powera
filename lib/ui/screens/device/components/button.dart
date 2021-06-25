@@ -72,24 +72,36 @@ class _PowerButtonState extends State<PowerButton> {
           child: ButtonItem(
         isOn: true,
         function: () async {
+          print(DateTime.now());
           SharedPreferences prefsTemp = await prefs;
           tapFunction();
-          await sender_device.updateDevice(sender_device.name, '0', '');
+          print(DateTime.now());
           if (sender_device.deviceKey == "bk-iot-led" &&
               prefsTemp.getBool("lightAuto")) {
+            BlocProvider.of<AutoCubit>(context).setAutoOff();
             prefsTemp.setBool("lightAuto", false);
             updateLightSetting();
-            BlocProvider.of<AutoCubit>(context).setAutoOff();
+
+            // showDialog(
+            //     barrierDismissible: false,
+            //     context: context,
+            //     builder: (_) => new DialogSetAutoOff()).then((value) {
+            //   prefsTemp.setBool("lightAuto", false);
+            //   updateLightSetting();
+            //   BlocProvider.of<AutoCubit>(context).setAutoOff();
+            //   Navigator.pop(context);});
+
           } else if (sender_device.deviceKey == "bk-iot-speaker" &&
               prefsTemp.getBool("heatAuto")) {
+            BlocProvider.of<AutoCubit>(context).setAutoOff();
             prefsTemp.setBool("heatAuto", false);
             updateHeatSetting();
-            BlocProvider.of<AutoCubit>(context).setAutoOff();
           } else if (prefsTemp.getBool("pummerAuto")) {
+            BlocProvider.of<AutoCubit>(context).setAutoOff();
             prefsTemp.setBool("pummerAuto", false);
             updateWatterSetting();
-            BlocProvider.of<AutoCubit>(context).setAutoOff();
           }
+          sender_device.updateDevice(sender_device.name, '0', '');
         },
       ));
     } else {
@@ -100,30 +112,30 @@ class _PowerButtonState extends State<PowerButton> {
             SharedPreferences prefsTemp = await prefs;
             tapFunction();
             if (sender_device.deviceKey == "bk-iot-led") {
-              await sender_device.updateDevice(sender_device.name,
-                  prefsTemp.getInt('lightColorVale').toString(), '');
               if (prefsTemp.getBool('lightAuto')) {
+                BlocProvider.of<AutoCubit>(context).setAutoOff();
                 prefsTemp.setBool("lightAuto", false);
                 updateLightSetting();
-                BlocProvider.of<AutoCubit>(context).setAutoOff();
               }
+              sender_device.updateDevice(sender_device.name,
+                  prefsTemp.getInt('lightColorVale').toString(), '');
             } else if (sender_device.deviceKey == "bk-iot-speaker") {
-              await sender_device.updateDevice(sender_device.name,
-                  prefsTemp.getInt('heatSpeakerValue').toString(), '');
               if (prefsTemp.getBool("heatAuto")) {
+                BlocProvider.of<AutoCubit>(context).setAutoOff();
                 prefsTemp.setBool("heatAuto", false);
                 updateHeatSetting();
-                BlocProvider.of<AutoCubit>(context).setAutoOff();
               }
               prefsTemp.setBool("heatAuto", false);
               updateHeatSetting();
+              sender_device.updateDevice(sender_device.name,
+                  prefsTemp.getInt('heatSpeakerValue').toString(), '');
             } else {
-              await sender_device.updateDevice(sender_device.name, '1', '');
               if (prefsTemp.getBool("pummerAuto")) {
+                BlocProvider.of<AutoCubit>(context).setAutoOff();
                 prefsTemp.setBool("pummerAuto", false);
                 updateWatterSetting();
-                BlocProvider.of<AutoCubit>(context).setAutoOff();
               }
+              sender_device.updateDevice(sender_device.name, '1', '');
               //print(sender_device.name);
             }
           });
@@ -234,5 +246,28 @@ class _TestState extends State<Test> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return getContainer();
+  }
+}
+
+class DialogSetAutoOff extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      child: new Container(
+        alignment: FractionalOffset.center,
+        height: 80.0,
+        padding: const EdgeInsets.all(20.0),
+        child: new Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            new CircularProgressIndicator(),
+            new Padding(
+              padding: new EdgeInsets.only(left: 10.0),
+              child: new Text("Turning off Auto"),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

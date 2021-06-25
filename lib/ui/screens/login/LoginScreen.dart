@@ -8,6 +8,8 @@ import 'package:powera/model/User.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+import '../../../setting_saves.dart';
+
 class LoginScreen extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -21,6 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final size = MediaQuery.of(context).size;
     final bool keyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
     final storage = new FlutterSecureStorage();
+    Future<Map<String, dynamic>> initLocalData = checkSettingSave();
     return Scaffold(
       backgroundColor: Global.white,
       body: Stack(
