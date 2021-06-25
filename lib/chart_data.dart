@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:http/retry.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -23,6 +24,7 @@ Future<Map> getChartDataDay(String deviceName) async {
     });
     Map resData = jsonDecode(response.body);
     print('Response  status: ${response.statusCode}');
+    print("get chart day of $device ");
     print(resData['data']);
     return resData['data'];
     //print('chart data request');
@@ -48,9 +50,10 @@ Future<Map> getChartDataWeek(String deviceName) async {
     });
     Map resData = jsonDecode(response.body);
     print('Response  status: ${response.statusCode}');
+    print("get chart week of $device ");
     print(resData['data']);
     return resData['data'];
-    ;
+
     //print('chart data request');
   } finally {
     client.close();

@@ -5,14 +5,16 @@ import 'package:powera/constants.dart';
 import 'package:powera/model/Device.dart';
 import 'package:powera/model/example_db.dart';
 import 'package:powera/model/screen_model.dart';
+import 'package:powera/setting_saves.dart';
 import 'package:powera/size_config.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PowerButton extends StatefulWidget {
   final Device sender_device;
   PowerButton({Key key, this.sender_device}) : super(key: key);
-  _PowerButtonState createState() =>
-      _PowerButtonState(int.parse(sender_device.data) > 0 ? true : false, sender_device);
+  _PowerButtonState createState() => _PowerButtonState(
+      int.parse(sender_device.data) > 0 ? true : false, sender_device);
 }
 
 class _PowerButtonState extends State<PowerButton> {
@@ -60,8 +62,8 @@ class _PowerButtonState extends State<PowerButton> {
   Widget build(BuildContext context) {
     if (sender_device.data == "") {
       return CircularProgressIndicator(
-        // valueColor: AlwaysStoppedAnimation(Colors.green),
-      );
+          // valueColor: AlwaysStoppedAnimation(Colors.green),
+          );
     }
     if (_isOn) {
       print("State button  " + _isOn.toString());
@@ -79,7 +81,18 @@ class _PowerButtonState extends State<PowerButton> {
           isOn: false,
           function: () async {
             tapFunction();
-            await sender_device.updateDevice(sender_device.name, '1', '');
+            SharedPreferences prefsTemp = await prefs;
+            if (sender_device.deviceKey == "bk-iot-led") {
+              await sender_device.updateDevice(sender_device.name,
+                  prefsTemp.getInt('lightColorVale').toString(), '');
+              //print("ditocnmetm");
+            } else if (sender_device.deviceKey == "bk-iot-speaker") {
+              await sender_device.updateDevice(sender_device.name,
+                  prefsTemp.getInt('heatSpeakerValue').toString(), '');
+            } else {
+              await sender_device.updateDevice(sender_device.name, '1', '');
+              //print(sender_device.name);
+            }
           });
     }
   }

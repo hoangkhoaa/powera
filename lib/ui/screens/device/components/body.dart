@@ -101,6 +101,7 @@ class Body extends StatelessWidget {
                         receiver_device: receiver_device,
                       ),
                       SelectChart(
+                        key: UniqueKey(),
                         deviceKey: receiver_device.deviceKey,
                       )
                     ],
