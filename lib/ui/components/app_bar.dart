@@ -1,7 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:powera/constants.dart';
+import 'package:powera/notification_data.dart';
 import 'package:powera/size_config.dart';
+import 'package:powera/notification_data.dart';
+import 'notification_dialog.dart';
 
 AppBar buildAppBar(BuildContext context,
     {bool isTransparent = true, String title}) {
@@ -96,46 +101,8 @@ AppBar buildAppBar(BuildContext context,
         : null,
     centerTitle: true,
     actions: [
-      Container(
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            IconButton(
-              onPressed: () {
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) => AlertDialog(
-                            title: Text(
-                          "Notification",
-                          style: TextStyle(
-                              fontSize: getProportionateScreenWidth(17),
-                              fontWeight: FontWeight.bold,
-                              color: pTextColorGray3,
-                              height: 1),
-                        )));
-              },
-              icon: Icon(
-                Icons.notifications_outlined,
-                color: pItemColorChose,
-                size: 30,
-              ),
-            ),
-            Positioned(
-              left: 27.0,
-              bottom: 27,
-              child: Container(
-                decoration: BoxDecoration(color: Colors.white),
-                child: Text(
-                  "0",
-                  style: TextStyle(
-                      color: Colors.red,
-                      fontSize: 13,
-                      fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
-          ],
-        ),
+      IconNotification(
+        key: UniqueKey(),
       ),
       IconButton(
         icon: ClipOval(
@@ -148,4 +115,76 @@ AppBar buildAppBar(BuildContext context,
       )
     ],
   );
+}
+
+class IconNotification extends StatefulWidget {
+  IconNotification({Key key}) : super(key: key);
+  @override
+  _IconNotidicationState createState() => _IconNotidicationState();
+}
+
+class _IconNotidicationState extends State<IconNotification> {
+  String _now;
+  Timer _everySecond;
+  int numberNoti = 0;
+  @override
+  void initState() {
+    super.initState();
+
+    // sets first value
+    _now = DateTime.now().second.toString();
+
+    // defines a timer
+    _everySecond = Timer.periodic(Duration(seconds: 20), (Timer t) async {
+      List<NotificationP> listNoti = await getNotification();
+      if (this.mounted) {
+        setState(() {
+          _now = DateTime.now().second.toString();
+          numberNoti = getNumberUnSeen(listNoti);
+        });
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          IconButton(
+            onPressed: () {
+              getNotification();
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) => NotidicationDialog(
+                        function: () => setState(() {
+                          numberNoti = 0;
+                        }),
+                      ));
+            },
+            icon: Icon(
+              Icons.notifications_outlined,
+              color: pItemColorChose,
+              size: 30,
+            ),
+          ),
+          Positioned(
+            left: 27.0,
+            bottom: 27,
+            child: Container(
+              decoration: BoxDecoration(color: Colors.white),
+              child: Text(
+                numberNoti.toString(),
+                style: TextStyle(
+                    color: Colors.red,
+                    fontSize: 13,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }

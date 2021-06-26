@@ -32,7 +32,9 @@ class DeviceScreen extends StatelessWidget {
           ),
           bottomNavigationBar: AnimatedBottomBar(),
           drawer: Drawer(
-            child: CustomDashboard(),
+            child: CustomDashboard(
+              key: UniqueKey(),
+            ),
           ),
           appBar: buildAppBar(context)),
     );
