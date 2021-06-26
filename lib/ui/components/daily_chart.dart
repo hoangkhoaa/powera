@@ -24,6 +24,7 @@ class _DailyChartState extends State<DailyChart> {
   Widget build(BuildContext context) {
     var data = getChartDataDay(deviceKey);
     return Stack(
+      alignment: Alignment.topRight,
       children: <Widget>[
         AspectRatio(
           aspectRatio: 1.70,
@@ -57,8 +58,6 @@ class _DailyChartState extends State<DailyChart> {
           ),
         ),
         SizedBox(
-          width: 60,
-          height: 34,
           child: TextButton(
             onPressed: () {
               setState(() {
@@ -68,7 +67,7 @@ class _DailyChartState extends State<DailyChart> {
             child: Text(
               'avg',
               style: TextStyle(
-                  fontSize: 12,
+                  fontSize: 14,
                   color:
                       showAvg ? Colors.white.withOpacity(0.5) : Colors.white),
             ),
@@ -128,9 +127,9 @@ class _DailyChartState extends State<DailyChart> {
           getTitles: (value) {
             switch (value.toInt()) {
               case 30:
-                return '30';
+                return '30 mins';
               case 60:
-                return '60';
+                return '60 mins';
             }
             return '';
           },
