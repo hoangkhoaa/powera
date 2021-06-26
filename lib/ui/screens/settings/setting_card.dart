@@ -8,6 +8,7 @@ import '../../../constants.dart';
 import '../../../size_config.dart';
 
 class SettingCard extends StatefulWidget {
+  final String unit;
   final String cardName;
   final String lable;
   final double maxVal;
@@ -21,6 +22,7 @@ class SettingCard extends StatefulWidget {
   SettingCard(
       {Key key,
       this.cardName,
+      this.unit = "",
       this.lable,
       this.minVal,
       this.curVal,
@@ -33,6 +35,7 @@ class SettingCard extends StatefulWidget {
 
   @override
   _SettingCardState createState() => _SettingCardState(
+      this.unit,
       this.cardName,
       this.lable,
       this.minVal,
@@ -46,6 +49,8 @@ class SettingCard extends StatefulWidget {
 }
 
 class _SettingCardState extends State<SettingCard> {
+  final String unit;
+
   final String cardName;
   final String lable;
   final double maxVal;
@@ -57,6 +62,7 @@ class _SettingCardState extends State<SettingCard> {
   final bool hasAuto;
   bool isActive;
   _SettingCardState(
+      this.unit,
       this.cardName,
       this.lable,
       this.minVal,
@@ -101,7 +107,7 @@ class _SettingCardState extends State<SettingCard> {
                   Flexible(
                     flex: 2,
                     child: Text(
-                      "${minVal.toInt()}",
+                      "${minVal.toInt()}" + unit,
                       style: TextStyle(
                           fontSize: getProportionateScreenWidth(15),
                           fontWeight: FontWeight.bold,
@@ -110,18 +116,19 @@ class _SettingCardState extends State<SettingCard> {
                     ),
                   ),
                   Flexible(
-                    flex: 8,
+                    flex: 7,
                     child: SliderCustom(
                       name: this.cardName,
                       curVal: curVal,
                       maxVal: maxVal,
                       minVal: minVal,
+                      unit: unit,
                     ),
                   ),
                   Flexible(
                     flex: 2,
                     child: Text(
-                      "${maxVal.toInt()}",
+                      "${maxVal.toInt()}" + unit,
                       style: TextStyle(
                           fontSize: getProportionateScreenWidth(15),
                           fontWeight: FontWeight.bold,

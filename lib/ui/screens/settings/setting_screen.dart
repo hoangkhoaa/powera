@@ -95,13 +95,14 @@ class SettingScreen extends StatelessWidget {
                             VerticalSpacing(of: 10),
                             SettingCard(
                               cardName: "heat",
-                              lable: "Water Pumper turn on when ",
+                              lable: "Speaker Buzzle turn on when ",
                               maxVal: 50,
                               minVal: 0,
                               curVal:
                                   snapshot.data['heatSensorValue'].toDouble(),
                               isActive: snapshot.data['heatAuto'],
                               hasAuto: true,
+                              unit: "°C",
                               setAutoFunction: (bool isAuto) async {
                                 SharedPreferences prefsTemp = await prefs;
                                 prefsTemp.setBool('heatAuto', isAuto);
