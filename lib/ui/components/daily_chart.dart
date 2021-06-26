@@ -173,7 +173,7 @@ class _DailyChartState extends State<DailyChart> {
             FlSpot(22, double.parse(data['23'])),
             FlSpot(23, double.parse(data['24'])),
           ],
-          isCurved: true,
+          isCurved: false,
           colors: gradientColors,
           barWidth: 2,
           isStrokeCapRound: true,
@@ -197,7 +197,7 @@ class _DailyChartState extends State<DailyChart> {
     }
     result = result / 24;
     return LineChartData(
-      lineTouchData: LineTouchData(enabled: false),
+      lineTouchData: LineTouchData(enabled: true),
       gridData: FlGridData(
         show: true,
         drawHorizontalLine: true,
@@ -260,7 +260,7 @@ class _DailyChartState extends State<DailyChart> {
           show: true,
           border: Border.all(color: const Color(0xff37434d), width: 0.5)),
       minX: 0,
-      maxX: 24,
+      maxX: 25,
       minY: 0,
       maxY: 70,
       lineBarsData: [
@@ -298,19 +298,16 @@ class _DailyChartState extends State<DailyChart> {
             ColorTween(begin: gradientColors[0], end: gradientColors[1])
                 .lerp(0.2),
           ],
-          barWidth: 5,
+          barWidth: 2,
           isStrokeCapRound: true,
           dotData: FlDotData(
             show: false,
           ),
-          belowBarData: BarAreaData(show: true, colors: [
-            ColorTween(begin: gradientColors[0], end: gradientColors[1])
-                .lerp(0.2)
-                .withOpacity(0.1),
-            ColorTween(begin: gradientColors[0], end: gradientColors[1])
-                .lerp(0.2)
-                .withOpacity(0.1),
-          ]),
+          belowBarData: BarAreaData(
+            show: true,
+            colors:
+                gradientColors.map((color) => color.withOpacity(0.3)).toList(),
+          ),
         ),
       ],
     );
