@@ -23,7 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final size = MediaQuery.of(context).size;
     final bool keyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
     final storage = new FlutterSecureStorage();
-    Future<Map<String, dynamic>> initLocalData = checkSettingSave();
+
     return Scaffold(
       backgroundColor: Global.white,
       body: Stack(
@@ -124,6 +124,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       await storage.write(
                           key: 'private_key', value: user.private_key);
                       await storage.write(key: 'role', value: user.role);
+                      Future<Map<String, dynamic>> initLocalData =
+                          checkSettingSave();
                       Navigator.popAndPushNamed(context, '/DeviceScreen');
                     }
                   },

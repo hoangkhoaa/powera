@@ -57,13 +57,15 @@ Future<Map<String, dynamic>> checkSettingSave() async {
 
 Future<void> updateSetting(Map<String, dynamic> data) async {
   final client = RetryClient(http.Client());
+  String private_key = await storage.read(key: 'private_key');
   try {
     var urlLight = Uri.parse(api_url + '/set_light_sensor');
     var responseLight = await http.post(urlLight, body: {
       'device': 'bk-iot-led',
       'auto': data['lightAuto'].toString(),
       'led_color': data['lightColorVale'].toString(),
-      'value': data['lightSensorValue'].toString()
+      'value': data['lightSensorValue'].toString(),
+      'private_key': private_key,
     });
     //print('Response Light status: ${responseLight.statusCode}');
     //print('Response Light body: ${responseLight.body}');
@@ -72,7 +74,8 @@ Future<void> updateSetting(Map<String, dynamic> data) async {
       'device': 'bk-iot-speaker',
       'auto': data['heatAuto'].toString(),
       'speaker_value': data['heatSpeakerValue'].toString(),
-      'value': data['heatSensorValue'].toString()
+      'value': data['heatSensorValue'].toString(),
+      'private_key': private_key,
     });
     //print('Response Temp status: ${responseTem.statusCode}');
     //print('Response Temp body: ${responseTem.body}');
@@ -80,7 +83,8 @@ Future<void> updateSetting(Map<String, dynamic> data) async {
     var responseHumid = await http.post(urlHumid, body: {
       'device': 'bk-iot-relay',
       'auto': data['pummerAuto'].toString(),
-      'value': data['startTime'] + "-" + data['endTime']
+      'value': data['startTime'] + "-" + data['endTime'],
+      'private_key': private_key,
     });
     //print('Response Temp status: ${responseHumid.statusCode}');
     //print('Response Temp body: ${responseHumid.body}');
@@ -92,13 +96,15 @@ Future<void> updateSetting(Map<String, dynamic> data) async {
 Future<void> updateLightSetting() async {
   SharedPreferences prefsTemp = await prefs;
   final client = RetryClient(http.Client());
+  String private_key = await storage.read(key: 'private_key');
   try {
     var urlLight = Uri.parse(api_url + '/set_light_sensor');
     var responseLight = await http.post(urlLight, body: {
       'device': 'bk-iot-led',
       'auto': prefsTemp.getBool('lightAuto').toString(),
       'led_color': prefsTemp.getInt("lightColorVale").toString(),
-      'value': prefsTemp.getInt('lightSensorValue').toString()
+      'value': prefsTemp.getInt('lightSensorValue').toString(),
+      'private_key': private_key,
     });
     print('Response Light status: ${responseLight.statusCode}');
     print('Response Light body: ${responseLight.body}');
@@ -110,13 +116,15 @@ Future<void> updateLightSetting() async {
 Future<void> updateHeatSetting() async {
   SharedPreferences prefsTemp = await prefs;
   final client = RetryClient(http.Client());
+  String private_key = await storage.read(key: 'private_key');
   try {
     var urlTem = Uri.parse(api_url + '/set_temp_sensor');
     var responseTem = await http.post(urlTem, body: {
       'device': 'bk-iot-speaker',
       'auto': prefsTemp.getBool('heatAuto').toString(),
       'speaker_value': prefsTemp.getInt("heatSpeakerValue").toString(),
-      'value': prefsTemp.getInt('heatSensorValue').toString()
+      'value': prefsTemp.getInt('heatSensorValue').toString(),
+      'private_key': private_key,
     });
     print('Response Temp status: ${responseTem.statusCode}');
     print('Response Temp body: ${responseTem.body}');
@@ -128,9 +136,11 @@ Future<void> updateHeatSetting() async {
 Future<void> updateWatterSetting() async {
   SharedPreferences prefsWatter = await prefs;
   final client = RetryClient(http.Client());
+  String private_key = await storage.read(key: 'private_key');
   try {
     var urlHumid = Uri.parse(api_url + '/set_humid_sensor');
     var responseHumid = await http.post(urlHumid, body: {
+      'private_key': private_key,
       'device': 'bk-iot-relay',
       'auto': prefsWatter.getBool('pummerAuto').toString(),
       'value': prefsWatter.getString('startTime') +

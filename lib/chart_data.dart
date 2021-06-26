@@ -9,6 +9,7 @@ import 'model/example_db.dart';
 
 Future<Map> getChartDataDay(String deviceName) async {
   final client = RetryClient(http.Client());
+  String private_key = await storage.read(key: 'private_key');
   String device = "";
   if (deviceName == "bk-iot-light") {
     device = "bk-iot-led";
@@ -21,6 +22,7 @@ Future<Map> getChartDataDay(String deviceName) async {
     var url = Uri.parse(api_url + '/get_data_chart_day');
     var response = await http.post(url, body: {
       'device': device,
+      'private_key': private_key,
     });
     Map resData = jsonDecode(response.body);
     print('Response  status: ${response.statusCode}');
@@ -35,6 +37,7 @@ Future<Map> getChartDataDay(String deviceName) async {
 
 Future<Map> getChartDataWeek(String deviceName) async {
   final client = RetryClient(http.Client());
+  String private_key = await storage.read(key: 'private_key');
   String device = "";
   if (deviceName == "bk-iot-light") {
     device = "bk-iot-led";
@@ -47,6 +50,7 @@ Future<Map> getChartDataWeek(String deviceName) async {
     var url = Uri.parse(api_url + '/get_data_chart_week');
     var response = await http.post(url, body: {
       'device': device,
+      'private_key': private_key,
     });
     Map resData = jsonDecode(response.body);
     print('Response  status: ${response.statusCode}');
