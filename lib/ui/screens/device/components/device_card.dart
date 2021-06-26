@@ -24,7 +24,9 @@ class DeviceCard extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(20),
               child: Text(
-                sender_device.name,
+                sender_device.name == "RELAY"
+                    ? "Water Pumper"
+                    : sender_device.name,
                 style: TextStyle(
                     fontSize: getProportionateScreenWidth(25),
                     fontWeight: FontWeight.bold,

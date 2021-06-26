@@ -6,12 +6,12 @@ final storage = new FlutterSecureStorage();
 String api_url = 'http://10.0.2.2:5000';
 //http://127.0.0.1:5000
 var deviceKeyMap = {
-  "LED light": "bk-iot-led",
+  "LED": "bk-iot-led",
   "Light sensor": "bk-iot-light",
-  "Speaker buzzer": "bk-iot-speaker",
+  "SPEAKER": "bk-iot-speaker",
   "Temperature sensor": "bk-iot-temp",
   "Humidity sensor": "bk-iot-humid",
-  "Water pump": "bk-iot-relay"
+  "Water Pumper": "bk-iot-relay"
 };
 
 var deviceDescriptionMap = {
@@ -40,7 +40,7 @@ var deviceKeyMapByNavState = {
 var dataDB = {
   'heat': [
     ScreenModel(
-        "Speaker buzzer",
+        "SPEAKER",
         """A speaker buzzer to arlert fire when receive the trigger from Temperature sensor. Speaker buzzer has value from range 0 to 1023 
         """,
         [
@@ -64,7 +64,7 @@ var dataDB = {
   ],
   'light': [
     ScreenModel(
-        "LED Light",
+        "LED",
         "LED Light to enlight Dragon fruit garden. There are 2 option for led light: RED and BLUE",
         [
           AttributeModel(attribute: "Status", value: "On"),
@@ -85,7 +85,7 @@ var dataDB = {
   ],
   'humid': [
     ScreenModel(
-        "Water pump",
+        "Water Pumper",
         "A Relay to control Water pump for Dragon fruit garden. It can be triggerd by manual or trigger from soil humidity",
         [
           AttributeModel(attribute: "Status", value: "On"),
