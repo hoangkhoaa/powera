@@ -141,13 +141,13 @@ class ChartDisDialog extends StatelessWidget {
         child: ListBody(
           children: const <Widget>[
             Text(
-              'Daily Chart shows information about the number of minuses that device turned on per hour in this day.The left axis displays minus and bottom axis displays hour of day.',
+              'Daily Chart shows information about the number of minuses that device turned on per hour in this day.The left axis displays minus and bottom axis displays hours of day.',
             ),
             Text(
-                'Daily Chart has average button which display the average minus per hour in that day.'),
+                'Daily Chart has average button which displays the average minus per hour in that day.'),
             Text(''),
             Text(
-                'Weekly Chart shows information about the avarage minus/hour in this week. The left axis displays minus and bottom axis displays day of week.'),
+                'Weekly Chart shows information about the avarage minus/hour in this week. The left axis displays minus and bottom axis displays days of week.'),
           ],
         ),
       ),
