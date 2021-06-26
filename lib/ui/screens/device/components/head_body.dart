@@ -75,7 +75,7 @@ class HomeHeader extends StatelessWidget {
           // ),
 
           Container(
-            height: getProportionateScreenHeight(370),
+            height: getProportionateScreenHeight(340),
             width: double.infinity,
             decoration: new BoxDecoration(
               color: pBackGroundColor,
@@ -117,7 +117,7 @@ class HomeHeader extends StatelessWidget {
             ),
           ),
           Positioned(
-            bottom: getProportionateScreenHeight(250),
+            bottom: getProportionateScreenHeight(210),
             child: Text(
               "Powera",
               style: TextStyle(

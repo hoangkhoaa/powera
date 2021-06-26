@@ -101,7 +101,7 @@ class _SettingCardState extends State<SettingCard> {
                   Flexible(
                     flex: 2,
                     child: Text(
-                      "$minVal",
+                      "${minVal.toInt()}",
                       style: TextStyle(
                           fontSize: getProportionateScreenWidth(15),
                           fontWeight: FontWeight.bold,
@@ -121,7 +121,7 @@ class _SettingCardState extends State<SettingCard> {
                   Flexible(
                     flex: 2,
                     child: Text(
-                      "$maxVal",
+                      "${maxVal.toInt()}",
                       style: TextStyle(
                           fontSize: getProportionateScreenWidth(15),
                           fontWeight: FontWeight.bold,

@@ -19,7 +19,7 @@ class _SelectChartState extends State<SelectChart> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: getProportionateScreenWidth(330),
+      width: getProportionateScreenWidth(335),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -83,7 +83,7 @@ class _SelectChartState extends State<SelectChart> {
             ],
           ),
           VerticalSpacing(
-            of: 5,
+            of: 10,
           ),
           seletedDateChart
               ? DailyChart(
