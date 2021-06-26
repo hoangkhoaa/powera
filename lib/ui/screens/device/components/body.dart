@@ -94,7 +94,7 @@ class Body extends StatelessWidget {
                     return new BlocProvider<AutoCubit>(
                         create: (context) {
                           //print("Snapshot : " + snapshot.data.toString());
-                          return AutoCubit(snapshot.data);
+                          return AutoCubit(0);
                         },
                         child: SafeArea(
                             top: false,
@@ -106,7 +106,7 @@ class Body extends StatelessWidget {
                                   // itemData: getScreenModleFollowState(state)
                                   sender_device: sender_device,
                                 ),
-                                new BlocBuilder<AutoCubit, bool>(
+                                new BlocBuilder<AutoCubit, int>(
                                     builder: (context, isAuto) {
                                   return ListAttributeCard(
                                     sender_device: sender_device,
