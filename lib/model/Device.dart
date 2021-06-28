@@ -102,3 +102,21 @@ class ReceiverDevice extends Device {
     }
   }
 }
+
+Future<String> getDeviceforUpdate(String deviceKey) async {
+  final client = RetryClient(http.Client());
+  try {
+    var url = Uri.parse(api_url + '/get_device');
+    String private_key = await storage.read(key: 'private_key');
+    var response = await http
+        .post(url, body: {'private_key': private_key, 'device': deviceKey});
+    print(response.body);
+    Map resData = jsonDecode(response.body);
+
+    String data = resData['data'].toString();
+    return data;
+    // this.unit = resData['unit'];
+  } finally {
+    client.close();
+  }
+}

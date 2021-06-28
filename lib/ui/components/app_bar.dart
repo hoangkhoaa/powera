@@ -154,10 +154,9 @@ class _IconNotidicationState extends State<IconNotification> {
         children: [
           IconButton(
             onPressed: () {
-              getNotification();
               showDialog(
                   context: context,
-                  builder: (BuildContext context) => NotidicationDialog(
+                  builder: (BuildContext context) => new NotidicationDialog(
                         function: () => setState(() {
                           numberNoti = 0;
                         }),

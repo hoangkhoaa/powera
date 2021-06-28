@@ -54,7 +54,7 @@ Future<void> checkNotification() async {
   final client = RetryClient(http.Client());
   String private_key = await storage.read(key: 'private_key');
   try {
-    var urlLight = Uri.parse(api_url + '/notifications');
+    var urlLight = Uri.parse(api_url + '/check_notification');
     var response = await http.post(urlLight, body: {
       'private_key': private_key,
     });

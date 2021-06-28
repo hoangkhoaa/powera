@@ -5,6 +5,7 @@ import 'package:powera/model/Device.dart';
 import 'package:powera/model/example_db.dart';
 import 'package:powera/model/screen_model.dart';
 import 'package:powera/setting_saves.dart';
+import 'package:powera/ui/screens/device/components/attribute_card_auto_update.dart';
 import 'package:powera/ui/screens/device/components/head_body.dart';
 import 'package:powera/size_config.dart';
 import 'package:powera/ui/screens/device/components/select_chart.dart';
@@ -72,6 +73,8 @@ class Body extends StatelessWidget {
                                 ),
                                 new BlocBuilder<AutoCubit, int>(
                                     builder: (context, isAuto) {
+                                  // print("RECEIVER DEIVCE : " +
+                                  //     receiver_device.dataLabel);
                                   return ListAttributeCard(
                                     sender_device: sender_device,
                                     receiver_device: receiver_device,
@@ -154,32 +157,6 @@ class ListAttributeCard extends StatelessWidget {
   }
   @override
   Widget build(BuildContext context) {
-    // return Container(
-    //     width: getProportionateScreenWidth(320),
-    //     child: Column(
-    //       mainAxisAlignment: MainAxisAlignment.start,
-    //       crossAxisAlignment: CrossAxisAlignment.center,
-    //       children: [
-    //         AttributeCard(
-    //           attribute: attributeList[0].attribute,
-    //           value: attributeList[0].value,
-    //           unit: attributeList[0].unit,
-    //           maxValue: attributeList[0].maxValue,
-    //           mintValue: attributeList[0].minValue,
-    //         ),
-    //         VerticalSpacing(
-    //           of: 10,
-    //         ),
-    //         AttributeCard(
-    //           attribute: "Auto",
-    //           value: isAutoAttribute ? "On" : "Off",
-    //           unit: "",
-    //         ),
-    //         VerticalSpacing(
-    //           of: 10,
-    //         ),
-    //       ],
-    //     ));
     Future<SharedPreferences> prefsTemp = prefs;
     return FutureBuilder<SharedPreferences>(
         future: prefsTemp,
@@ -206,12 +183,25 @@ class ListAttributeCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        AttributeCard(
-                          attribute: attributeList[0].attribute,
-                          value: attributeList[0].value,
-                          unit: attributeList[0].unit,
-                          maxValue: attributeList[0].maxValue,
-                          mintValue: attributeList[0].minValue,
+                        // AttributeCard(
+                        //   attribute: attributeList[0].attribute,
+                        //   value: attributeList[0].value,
+                        //   unit: attributeList[0].unit,
+                        //   maxValue: attributeList[0].maxValue,
+                        //   mintValue: attributeList[0].minValue,
+                        // ),
+
+                        // AttributeCard(
+                        //   attribute: receiver_device.dataLabel,
+                        //   value: receiver_device.data,
+                        //   unit: receiver_device.unit,
+                        //   maxValue: receiver_device.maxValue,
+                        //   mintValue: receiver_device.minValue,
+                        // ),
+
+                        new AutoUpdateAttributeCard(
+                          receiverDevice: receiver_device,
+                          key: UniqueKey(),
                         ),
                         VerticalSpacing(
                           of: 10,
@@ -235,7 +225,6 @@ class ListAttributeCard extends StatelessWidget {
 Future<bool> getAutoByDeviceKey(String receiveDeviceKey) async {
   SharedPreferences prefsTemp = await prefs;
   if (receiveDeviceKey == 'bk-iot-light') {
-    return true;
     return prefsTemp.getBool("lightAuto");
   } else if (receiveDeviceKey == 'bk-iot-temp') {
     return prefsTemp.getBool("heatAuto");

@@ -10,7 +10,7 @@ class NotidicationDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future<List<NotificationP>> listNoti = getNotification();
-    return AlertDialog(
+    return new AlertDialog(
       title: Center(
           child: Text(
         'Notification',
@@ -37,8 +37,10 @@ class NotidicationDialog extends StatelessWidget {
                     child: ListView.builder(
                         itemCount: snapshot.data.length,
                         itemBuilder: (context, index) {
+                          int length = snapshot.data.length;
                           return ListTile(
-                            title: NotificationItem(snapshot.data[index]),
+                            title: NotificationItem(
+                                snapshot.data[length - index - 1]),
                           );
                         }),
                   );
@@ -60,7 +62,7 @@ class NotidicationDialog extends StatelessWidget {
 }
 
 class NotificationItem extends StatelessWidget {
-  NotificationP item;
+  final NotificationP item;
   NotificationItem(this.item);
   @override
   Widget build(BuildContext context) {
@@ -69,7 +71,7 @@ class NotificationItem extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           border: item.isSeen
-              ? Border.all(color: pItemOnColor, width: 2)
+              ? Border.all(color: pTextColorGray3, width: 2)
               : Border.all(color: pItemOnColor, width: 2),
           borderRadius: BorderRadius.circular(10),
         ),
